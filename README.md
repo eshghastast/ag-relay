@@ -22,7 +22,7 @@ official Antigravity clients use, then translates the answers back to OpenAI for
 **Relay چیه؟** یه ابزار کوچیک و متن‌بازه که سهمیه‌ی Antigravity اکانت گوگلت (Gemini 3.8 Flash، ‏Claude Sonnet/Opus، ‏GPT-OSS) رو به یه آدرس استاندارد تبدیل می‌کنه تا هر برنامه‌ای که «OpenAI Compatible» قبول می‌کنه (مثل 9Router، ‏Claude Desktop، ‏zcode، ‏Cherry Studio و...) بتونه از داخل ایران به‌صورت مستقیم ازش استفاده کنه. هزینه‌ش صفره: روی سهمیه‌ی خودت و هاست رایگان کار می‌کنه.
 
 **نصب سریع (بدون ترمینال):**
-۱. صفحه‌ی ستاپ رو باز کن: [eshghastast.github.io/ag-relay](https://eshghastast.github.io/ag-relay/) — اعتبارنامه‌ی اپ Antigravity رو وارد کن، با گوگل وارد شو و «پک نصب» (توکن + کلید Relay + پسورد داشبورد) رو تحویل بگیر. همه‌چیز توی مرورگر خودت انجام می‌شه.
+۱. صفحه‌ی ستاپ رو باز کن: [eshghastast.github.io/ag-relay](https://eshghastast.github.io/ag-relay/setup.html) — اعتبارنامه‌ی اپ Antigravity رو وارد کن، با گوگل وارد شو و «پک نصب» (توکن + کلید Relay + پسورد داشبورد) رو تحویل بگیر. همه‌چیز توی مرورگر خودت انجام می‌شه.
 ۲. دکمه‌ی **Deploy with Vercel** پایین‌تر رو بزن و مقادیر پک رو توی فرم Vercel وارد کن.
 ۳. داشبورد رو باز کن، پسورد رو بزن، کلید رو ثبت کن و یه مدل رو تست کن. تمام!
 
