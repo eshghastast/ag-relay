@@ -38,6 +38,19 @@
   <div class="card">
     <h2><span class="stepnum">۱</span>اعتبارنامه‌ی اپ Antigravity</h2>
     <p class="dim">دو مقدار زیر مال اپ رسمی Antigravity هستن (توی راهنمای پروژه — بخش Client credentials — نوشته از کجا پیداشون کنی). این‌جا واردشون کن؛ فقط توی همین تب استفاده می‌شن.</p>
+    <details style="border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin:10px 0;background:var(--panel2)">
+      <summary style="cursor:pointer;font-weight:700">❓ این دو تا رو از کجا پیدا کنم؟</summary>
+      <p class="dim">اول یه خیال راحت: این دو مقدار، رمز شخصی تو نیستن — اعتبارنامه‌ی عمومیِ اپ دسکتاپ Antigravity هستن که گوگل همراه خود اپ پخش کرده. دو راه برای گرفتنشون هست:</p>
+      <p class="dim"><b>راه ۱ — از اپ رسمی Antigravity (سریع‌تر):</b><br>
+      ۱. اپ رسمی Antigravity رو روی کامپیوترت نصب کن و یه بار باهاش وارد شو.<br>
+      ۲. این دو مقدار داخل فایل‌های نصب اپ هستن: توی پوشه‌ی نصب برنامه، عبارت <span dir="ltr">apps.googleusercontent.com</span> رو جست‌وجو کن؛ رشته‌ای که پیداش می‌کنی Client ID ـه و مقدار کناریش که با <span dir="ltr">GOCSPX</span> شروع می‌شه Client Secret ـه.<br>
+      ۳. همین دو تا رو این‌جا پیست کن. (توی سورس روترهای متن‌باز مثل 9Router هم همین مقادیر برای پرووایدر Antigravity هست.)</p>
+      <p class="dim"><b>راه ۲ — ساخت اعتبارنامه‌ی شخصی (رسمی‌ترین راه):</b><br>
+      ۱. برو به <span dir="ltr">console.cloud.google.com</span> و یه پروژه بساز.<br>
+      ۲. از بخش APIs &amp; Services، ‏API مربوط به Cloud Code رو فعال کن.<br>
+      ۳. از Credentials بزن Create Credentials ← OAuth client ID و نوع رو <b>Desktop app</b> انتخاب کن.<br>
+      ۴. گوگل Client ID و Client Secret شخصی خودت رو می‌سازه؛ همونا رو این‌جا وارد کن.</p>
+    </details>
     <label>Client ID</label>
     <input id="clientId" dir="ltr" placeholder="...apps.googleusercontent.com">
     <label>Client Secret</label>
