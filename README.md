@@ -45,6 +45,11 @@ official Antigravity clients use, then translates the answers back to OpenAI for
 
 3. Open your deployment, unlock the dashboard with `DASH_PASSWORD`, save the relay key once — done.
 
+**Vercel deploy tips (from a real first run):**
+- In **Vercel Team**, pick your existing personal scope (**Hobby**) — never "Create a Team": new teams are **Pro (paid)** only.
+- **Git Scope** must be a GitHub account connected to that Vercel account (usually the one you signed up with), with the Vercel GitHub app installed. If the list is empty, install/authorize the app and grant **All repositories** — Vercel needs it to create your copy.
+- Your copy is created as a **private** repo under your account — expected; the original template repo stays public.
+
 ## Quickstart — local
 
 ```bash
