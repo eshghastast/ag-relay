@@ -118,8 +118,10 @@ The relay logs in through the public Antigravity desktop OAuth client
 (`client_id` is the same one shipped in the official app and in open-source routers).
 Desktop OAuth clients cannot keep a secret; the matching `client_secret` is distributed with
 those clients. Provide it via the `AG_CLIENT_SECRET` environment variable — this repo does not
-hardcode it. You can also register **your own** OAuth client in Google Cloud Console
-(Desktop type, enable the Cloud Code API) and use its id/secret instead.
+hardcode it. A self-registered OAuth client does **not** work here (verified the hard way): the token is
+issued, but the relay's calls are attributed to your Cloud project, and Google does not allow
+enabling the private Cloud Code API (`cloudcode-pa.googleapis.com`) on personal projects
+(`gcloud services enable` → `PERMISSION_DENIED`). Use the official app's client credentials.
 
 ## 🤖 Models
 
