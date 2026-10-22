@@ -1,6 +1,23 @@
-# ag-relay — رله‌ی Antigravity
+<div align="center">
 
-**استفاده از سهمیه‌ی Antigravity (مدل‌های Gemini و Claude) در همه‌ی برنامه‌ها — از داخل ایران، به‌صورت مستقیم**
+# ⚡ ag-relay — رله‌ی Antigravity
+
+### استفاده از سهمیه‌ی Antigravity در همه‌ی برنامه‌ها — از داخل ایران، به‌صورت مستقیم
+
+**Gemini 3.8 Flash · Claude Sonnet 4.6 · Claude Opus 4.6 · GPT-OSS 120B**
+
+<p>
+  <img src="https://img.shields.io/badge/Deploy-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Deploy on Vercel">
+  <img src="https://img.shields.io/badge/API-OpenAI_Compatible-412991?style=for-the-badge&logo=openai&logoColor=white" alt="OpenAI Compatible">
+  <img src="https://img.shields.io/badge/Cost-Free-2ea44f?style=for-the-badge" alt="Free">
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="MIT License">
+</p>
+<p>
+  <a href="https://eshghastast.github.io/ag-relay/setup.html"><img src="https://img.shields.io/badge/🧰_Setup_page-no_terminal_needed-2456d6?style=for-the-badge" alt="Setup page"></a>
+  <a href="https://t.me/kara_ai_offer"><img src="https://img.shields.io/badge/📺_Tutorials-Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram tutorials"></a>
+</p>
+
+</div>
 
 Use your **Antigravity** model quota (Gemini 3.8 Flash, Claude Sonnet/Opus 4.6, GPT-OSS 120B)
 from any **OpenAI-compatible** app — your own code, chat UIs, agent frameworks, anything that
@@ -16,6 +33,16 @@ official Antigravity clients use, then translates the answers back to OpenAI for
 - **Cost:** $0. It runs on your quota and free hosting.
 - **Two ways to run it:** locally on your machine, or as a serverless relay on Vercel
   (useful when your apps can't reach Google directly — e.g. geo-blocked networks).
+
+
+## ✨ امکانات
+
+| | |
+|---|---|
+| 🚀 **سریع** — مسیر کوتاه تا بک‌اند رسمی گوگل، با استریم زنده (SSE) | 📊 **داشبورد فارسی** — سهمیه‌ی هر دو استخر، وضعیت و راهنمای قدم‌به‌قدم |
+| 🔒 **امن** — همه‌ی رازها فقط توی متغیرهای محیطی؛ هیچ‌چیز توی کد نیست | 💬 **چت داخلی** — مکالمه‌ی چندنوبتی با ذخیره‌ی خودکار تا ۳۰ گفت‌وگو |
+| 🧪 **تست مدل‌ها** — تست تکی یا «تست همه» با زمان پاسخ و وضعیت هر مدل | 📈 **آمار مصرف** — شمارنده‌ی دائمی درخواست‌ها به تفکیک مدل |
+| 🧰 **نصب بدون ترمینال** — صفحه‌ی ستاپ + دکمه‌ی دیپلوی یک‌کلیکه | 🌗 **دو تم** — حالت روشن و تیره، کاملاً ریسپانسیو |
 
 ## 🇮🇷 راهنمای فارسی
 
@@ -36,7 +63,7 @@ official Antigravity clients use, then translates the answers back to OpenAI for
 
 ---
 
-## Fastest setup — no terminal
+## ⚡ Fastest setup — no terminal
 
 1. Open the **setup page** (`setup.html` in this repo — serve it via GitHub Pages or just open the file): enter the Antigravity client credentials, click "Sign in with Google", paste the callback URL back, and the page hands you a ready pack: your refresh token plus an auto-generated `RELAY_API_KEY` and `DASH_PASSWORD`. Everything runs locally in your browser; nothing is stored or sent anywhere except Google.
 2. Click the deploy button and paste the values into Vercel's env form:
@@ -50,7 +77,7 @@ official Antigravity clients use, then translates the answers back to OpenAI for
 - **Git Scope** must be a GitHub account connected to that Vercel account (usually the one you signed up with), with the Vercel GitHub app installed. If the list is empty, install/authorize the app and grant **All repositories** — Vercel needs it to create your copy.
 - Your copy is created as a **private** repo under your account — expected; the original template repo stays public.
 
-## Quickstart — local
+## 🖥️ Quickstart — local
 
 ```bash
 git clone <this repo> ag-relay && cd ag-relay   # Node 18+, no dependencies
@@ -72,7 +99,7 @@ curl http://localhost:8787/v1/chat/completions \
 
 Streaming (`"stream": true`) is supported.
 
-## Quickstart — Vercel relay
+## ☁️ Quickstart — Vercel relay
 
 1. Fork/clone this repo and import it into Vercel (it's a plain functions project — `api/`, `lib/`, `vercel.json`).
 2. Run `npm run login` locally once to get your refresh token.
@@ -85,7 +112,7 @@ Streaming (`"stream": true`) is supported.
 
 Keep the refresh token secret: whoever has it can spend your quota.
 
-## Client credentials
+## 🔑 Client credentials
 
 The relay logs in through the public Antigravity desktop OAuth client
 (`client_id` is the same one shipped in the official app and in open-source routers).
@@ -94,7 +121,7 @@ those clients. Provide it via the `AG_CLIENT_SECRET` environment variable — th
 hardcode it. You can also register **your own** OAuth client in Google Cloud Console
 (Desktop type, enable the Cloud Code API) and use its id/secret instead.
 
-## Models
+## 🤖 Models
 
 Whatever your account's Antigravity plan exposes. Typical set:
 
@@ -110,7 +137,7 @@ Quota is percentage-based and shared per model group (Gemini pool vs Claude+GPT 
 with a short-window refresh and a weekly cap on paid plans; free plans refresh weekly.
 There is no official token counter — heavy agent loops can drain a free account quickly.
 
-## Honest warnings
+## ⚠️ Honest warnings
 
 - This talks to Google's internal Code Assist API the way the official client does, but it is
   **not an official client**. Routing your quota through third-party tooling may violate
@@ -118,7 +145,7 @@ There is no official token counter — heavy agent loops can drain a free accoun
 - The risk is per-account: it does not affect accounts you don't log in with.
 - No telemetry, no middleman: requests go from wherever you run this straight to Google.
 
-## Security
+## 🔐 Security
 
 - All credentials (Google refresh token, OAuth client credentials, relay API
   key, dashboard password) are supplied through **environment variables** —
@@ -130,7 +157,7 @@ There is no official token counter — heavy agent loops can drain a free accoun
   the Antigravity license rather than your main account.
 - Full notes: [SECURITY.md](SECURITY.md).
 
-## Layout
+## 🗂️ Layout
 
 - `lib/core.js` — the whole translator (token refresh, project resolution, request/response mapping, SSE)
 - `api/chat.js`, `api/models.js` — Vercel function entry points (`/v1/chat/completions`, `/v1/models`)
@@ -138,6 +165,6 @@ There is no official token counter — heavy agent loops can drain a free accoun
 - `bin/ag-serve.mjs` — local server (same core, Node `http`)
 - `local-test.mjs` — end-to-end smoke test against the real backend using `./.tokens.json`
 
-## License
+## 📄 License
 
 MIT
