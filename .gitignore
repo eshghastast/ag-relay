@@ -1,0 +1,11 @@
+.tokens.json
+.oauth-session.json
+.env
+.env.*
+.vercel
+~/.ag-relay
+node_modules
+.tokens*.json
+.vtools.json
+.metadata.json
+!.env.example

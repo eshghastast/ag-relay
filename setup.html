@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relay — نصب سریع بدون ترمینال</title>
+<style>
+  :root{--bg:#0b0e14;--panel:#12172a;--panel2:#0f1424;--border:#1f2740;--text:#e6e6e6;--dim:#8b94a3;--accent:#1d4ed8;--code:#1a2030}
+  *{box-sizing:border-box}
+  body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:22px}
+  .wrap{max-width:680px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 6px} h2{font-size:16px;margin:0 0 8px}
+  .dim{color:var(--dim);font-size:13px;line-height:1.9}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;margin:14px 0;box-shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.25)}
+  input,textarea,button{font:inherit;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text);padding:9px 12px;width:100%}
+  textarea{direction:ltr;text-align:left;font-size:12px}
+  button{background:var(--accent);border-color:var(--accent);color:#fff;cursor:pointer;width:auto;padding:9px 18px}
+  button:hover{background:#2563eb}
+  button.ghost{background:var(--panel2);color:var(--text);border-color:var(--border)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 4px}
+  .out{background:var(--code);border:1px solid var(--border);border-radius:10px;padding:10px 12px;direction:ltr;text-align:left;word-break:break-all;font-size:12.5px}
+  .hidden{display:none}
+  a{color:#93c5fd}
+  .brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+  footer{color:var(--dim);font-size:13px;text-align:center;margin:22px 0 6px;line-height:2}
+  .stepnum{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;align-items:center;justify-content:center;font-weight:700;margin-inline-end:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <h1>⚡ Relay — نصب سریع</h1>
+    <span class="dim" id="brandLine"></span>
+  </div>
+  <p class="dim">این صفحه کمکت می‌کنه بدون ترمینال و بدون نصب هیچ برنامه‌ای، «توکن گوگل» و کلیدهای لازم برای نصب Relay رو بگیری. همه‌چیز فقط توی مرورگر خودت انجام می‌شه؛ هیچ اطلاعاتی به هیچ سروری فرستاده نمی‌شه و این صفحه هیچ‌چیز رو ذخیره نمی‌کنه.</p>
+
+  <div class="card">
+    <h2><span class="stepnum">۱</span>اعتبارنامه‌ی اپ Antigravity</h2>
+    <p class="dim">دو مقدار زیر مال اپ رسمی Antigravity هستن (توی راهنمای پروژه — بخش Client credentials — نوشته از کجا پیداشون کنی). این‌جا واردشون کن؛ فقط توی همین تب استفاده می‌شن.</p>
+    <label>Client ID</label>
+    <input id="clientId" dir="ltr" placeholder="...apps.googleusercontent.com">
+    <label>Client Secret</label>
+    <input id="clientSecret" dir="ltr" type="password" placeholder="GOCSPX-...">
+  </div>
+
+  <div class="card">
+    <h2><span class="stepnum">۲</span>ورود با گوگل</h2>
+    <p class="dim">دکمه رو بزن، با اکانتی که می‌خوای Relay روش کار کنه وارد شو (توصیه: اکانت جدا، نه اصلی) و اجازه بده. بعد گوگل به یه آدرس localhost می‌فرستدت که باز نمی‌شه — طبیعیه! کل آدرس رو از نوار آدرس مرورگر کپی کن و این‌جا پیست کن.</p>
+    <div class="row">
+      <button id="loginBtn">🔐 ورود با گوگل</button>
+    </div>
+    <label>آدرس برگشتی (Callback URL) رو این‌جا پیست کن:</label>
+    <textarea id="callbackUrl" rows="3" placeholder="http://localhost:8080/callback?code=..."></textarea>
+    <div class="row" style="margin-top:10px">
+      <button id="exchangeBtn">دریافت توکن</button>
+      <span class="dim" id="exchangeMsg"></span>
+    </div>
+  </div>
+
+  <div class="card hidden" id="resultCard">
+    <h2><span class="stepnum">۳</span>پک نصب تو آماده‌ست 🎉</h2>
+    <p class="dim">این مقادیر رو موقع نصب توی Vercel وارد می‌کنی. کلید Relay و پسورد داشبورد رو خودکار برات ساختم. <b>این صفحه رو تا تموم شدن نصب نبند و مقادیر رو جای امن نگه دار.</b></p>
+    <label>AG_REFRESH_TOKEN (توکن گوگل — مثل رمز اکانتت، دست کسی نده)</label>
+    <div class="row"><div class="out" style="flex:1" id="outToken"></div><button class="ghost" data-copy="outToken">کپی</button></div>
+    <label>RELAY_API_KEY (کلید Relay)</label>
+    <div class="row"><div class="out" style="flex:1" id="outKey"></div><button class="ghost" data-copy="outKey">کپی</button></div>
+    <label>DASH_PASSWORD (پسورد داشبورد)</label>
+    <div class="row"><div class="out" style="flex:1" id="outPass"></div><button class="ghost" data-copy="outPass">کپی</button></div>
+    <h2 style="margin-top:18px">حالا نصب با یک کلیک:</h2>
+    <p class="dim">دکمه‌ی زیر پروژه رو توی Vercel خودت می‌سازه و ازت می‌خواد همین مقادیر رو وارد کنی (به‌علاوه‌ی Client ID و Secret قدم ۱). بعد از Deploy، آدرس سرویس تو می‌شه: <span dir="ltr">https://&lt;پروژه‌ت&gt;.vercel.app/v1</span></p>
+    <div class="row">
+      <a id="deployBtn" href="#" target="_blank" rel="noopener"><button>🚀 نصب Relay روی Vercel</button></a>
+    </div>
+  </div>
+
+  <footer id="footerLine"></footer>
+</div>
+
+<script>
+// ---- branding (forks: change these two lines to your own channel) ----
+var CHANNEL_NAME = "KARA AI";
+var CHANNEL_URL = "https://t.me/kara_ai_offer";
+var REPO_URL = "https://github.com/eshghastast/ag-relay";
+
+var $ = function(id){ return document.getElementById(id); };
+$("brandLine").innerHTML = 'ساخته‌شده توسط <a href="' + CHANNEL_URL + '" target="_blank" rel="noopener">' + CHANNEL_NAME + '</a>';
+$("footerLine").innerHTML = '⚡ Relay — ابزار متن‌باز <a href="' + CHANNEL_URL + '" target="_blank" rel="noopener">' + CHANNEL_NAME + '</a> · آموزش قدم‌به‌قدم توی کانال ماست.';
+
+var REDIRECT = "http://localhost:8080/callback";
+var SCOPES = [
+  "https://www.googleapis.com/auth/cloud-platform",
+  "https://www.googleapis.com/auth/userinfo.email",
+  "https://www.googleapis.com/auth/userinfo.profile",
+  "https://www.googleapis.com/auth/cclog",
+  "https://www.googleapis.com/auth/experimentsandconfigs"
+].join(" ");
+
+function b64u(bytes){
+  var s = "";
+  bytes.forEach(function(b){ s += String.fromCharCode(b); });
+  return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+function randHex(n){
+  var a = new Uint8Array(n);
+  crypto.getRandomValues(a);
+  return Array.prototype.map.call(a, function(b){ return ("0" + b.toString(16)).slice(-2); }).join("");
+}
+async function pkce(){
+  var verifier = b64u(crypto.getRandomValues(new Uint8Array(32)));
+  var digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(verifier));
+  return { verifier: verifier, challenge: b64u(new Uint8Array(digest)) };
+}
+
+$("loginBtn").onclick = async function(){
+  var cid = $("clientId").value.trim();
+  if (!cid) { alert("اول Client ID رو توی قدم ۱ وارد کن."); return; }
+  var p = await pkce();
+  sessionStorage.setItem("pkce_verifier", p.verifier);
+  var state = b64u(crypto.getRandomValues(new Uint8Array(16)));
+  sessionStorage.setItem("oauth_state", state);
+  var params = new URLSearchParams({
+    client_id: cid,
+    redirect_uri: REDIRECT,
+    response_type: "code",
+    scope: SCOPES,
+    access_type: "offline",
+    prompt: "consent",
+    state: state,
+    code_challenge: p.challenge,
+    code_challenge_method: "S256"
+  });
+  window.open("https://accounts.google.com/o/oauth2/v2/auth?" + params.toString(), "_blank");
+};
+
+$("exchangeBtn").onclick = async function(){
+  var msg = $("exchangeMsg");
+  var raw = $("callbackUrl").value.trim();
+  var cid = $("clientId").value.trim();
+  var secret = $("clientSecret").value.trim();
+  if (!raw || !cid || !secret) { msg.textContent = "آدرس برگشتی، Client ID و Client Secret هر سه لازمن."; return; }
+  var code = "";
+  try { code = new URL(raw).searchParams.get("code") || ""; }
+  catch (e) {
+    var m = raw.match(/code=([^&\s]+)/);
+    code = m ? decodeURIComponent(m[1]) : "";
+  }
+  if (!code) { msg.textContent = "توی آدرسی که پیست کردی کد پیدا نشد. کل آدرس نوار مرورگر رو کپی کن."; return; }
+  msg.textContent = "در حال گرفتن توکن...";
+  try {
+    var body = new URLSearchParams({
+      code: code,
+      client_id: cid,
+      client_secret: secret,
+      redirect_uri: REDIRECT,
+      grant_type: "authorization_code",
+      code_verifier: sessionStorage.getItem("pkce_verifier") || ""
+    });
+    var r = await fetch("https://oauth2.googleapis.com/token", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body });
+    var j = await r.json();
+    if (!j.refresh_token) { msg.textContent = "توکن برنگشت: " + ((j.error_description || j.error || "خطای نامشخص")) + " — اگه قبلاً وارد شدی، یه بار دیگه از قدم ۲ شروع کن."; return; }
+    msg.textContent = "";
+    $("outToken").textContent = j.refresh_token;
+    $("outKey").textContent = "sk-relay-" + randHex(24);
+    $("outPass").textContent = "relay-" + randHex(4);
+    var env = "AG_REFRESH_TOKEN,AG_CLIENT_ID,AG_CLIENT_SECRET,RELAY_API_KEY,DASH_PASSWORD";
+    var deploy = "https://vercel.com/new/clone?repository-url=" + encodeURIComponent(REPO_URL) +
+      "&env=" + encodeURIComponent(env) +
+      "&envDescription=" + encodeURIComponent("Paste the values from the Relay setup page: your Google refresh token, the Antigravity client credentials, and the generated relay key + dashboard password.") +
+      "&project-name=ag-relay&repository-name=ag-relay";
+    $("deployBtn").href = deploy;
+    $("resultCard").classList.remove("hidden");
+    $("resultCard").scrollIntoView({ behavior: "smooth" });
+  } catch (e) { msg.textContent = "خطا در اتصال به گوگل: " + e.message; }
+};
+
+document.querySelectorAll("[data-copy]").forEach(function(b){
+  b.onclick = async function(){
+    var el = $(b.getAttribute("data-copy"));
+    try { await navigator.clipboard.writeText(el.textContent); b.textContent = "کپی شد ✓"; setTimeout(function(){ b.textContent = "کپی"; }, 2000); }
+    catch (e) {}
+  };
+});
+</script>
+</body>
+</html>
