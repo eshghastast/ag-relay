@@ -45,11 +45,18 @@
       ۱. اپ رسمی Antigravity رو روی کامپیوترت نصب کن و یه بار باهاش وارد شو.<br>
       ۲. این دو مقدار داخل فایل‌های نصب اپ هستن: توی پوشه‌ی نصب برنامه، عبارت <span dir="ltr">apps.googleusercontent.com</span> رو جست‌وجو کن؛ رشته‌ای که پیداش می‌کنی Client ID ـه و مقدار کناریش که با <span dir="ltr">GOCSPX</span> شروع می‌شه Client Secret ـه.<br>
       ۳. همین دو تا رو این‌جا پیست کن. (توی سورس روترهای متن‌باز مثل 9Router هم همین مقادیر برای پرووایدر Antigravity هست.)</p>
-      <p class="dim"><b>راه ۲ — ساخت اعتبارنامه‌ی شخصی (رسمی‌ترین راه):</b><br>
-      ۱. برو به <span dir="ltr">console.cloud.google.com</span>؛ اگه پروژه نداری، از منوی انتخاب پروژه (بالای صفحه) بزن <b>New Project</b>، یه اسم بده و Create کن و مطمئن شو همون پروژه انتخاب شده.<br>
-      ۲. از بخش APIs &amp; Services اول <b>OAuth consent screen</b> رو کامل کن (Get started ← اسم دلخواه ← ایمیلت ← Audience: ‏External ← Create).<br>
-      ۳. از Credentials بزن Create Credentials ← OAuth client ID و نوع رو <b>Desktop app</b> انتخاب کن.<br>
-      ۴. گوگل Client ID و Client Secret شخصی خودت رو می‌سازه؛ همونا رو این‌جا وارد کن.</p>
+      <p class="dim"><b>راه ۲ — ساخت اعتبارنامه‌ی شخصی (رسمی‌ترین راه)، قدم‌به‌قدم:</b><br>
+      ۱. برو به <span dir="ltr">console.cloud.google.com</span> و با حسابت وارد شو.<br>
+      ⚠️ اگه گفت «Google Cloud access blocked» و ازت فعال‌کردن ورود دومرحله‌ای خواست، تعجب نکن؛ برای همه اجباریه: دکمه‌ی <span dir="ltr">Enable MFA</span> رو بزن و از بخش Security گزینه‌ی ورود دومرحله‌ای (2-Step Verification) رو با اپ Authenticator روشن کن، چند دقیقه صبر کن و صفحه رو رفرش کن.<br>
+      ۲. اگه پروژه نداری: از منوی انتخاب پروژه (بالای صفحه) بزن <b>New Project</b>، یه اسم بده (مثلاً Relay) و Create کن — بعد مطمئن شو همون پروژه بالای صفحه انتخاب شده.<br>
+      ۳. از کارت <b>APIs &amp; Services</b> برو به <b>OAuth consent screen</b> و دکمه‌ی Get started رو بزن: اسم دلخواه (مثلاً Relay)، ایمیل خودت برای پشتیبانی، ‏Audience روی <b>External</b> و آخر Create.<br>
+      ۴. حالا برو به <b>Credentials</b> ← دکمه‌ی <b>+ Create Credentials</b> ← <b>OAuth client ID</b>.<br>
+      ۵. توی Application type حتماً گزینه‌ی <b>Desktop app</b> رو انتخاب کن. اسمش هر چی می‌تونه باشه (فقط یه برچسبه). تیکِ «Use this client for an AI-powered agent» رو <b>نزن</b>. دکمه‌ی Create رو بزن.<br>
+      ۶. پنجره‌ای باز می‌شه با <b>Client ID</b> و <b>Client Secret</b> — جفتش رو کپی کن و این‌جا پیست کن.<br>
+      ۷. وقتی با «ورود با گوگل»ی این صفحه لاگین می‌کنی، چون اپ خودت در حالت تست (Testing) ـه، فقط اکانت‌هایی می‌تونن وارد شن که «تستر» باشن: از منوی <b>Google Auth Platform ← Audience</b> بخش <b>Test users</b>، ایمیلی که می‌خوای باهاش وارد شی رو Add کن. وگرنه ارور <span dir="ltr">403: access_denied</span> می‌گیری.<br>
+      ۸. وسط لاگین یه صفحه میاد «Google hasn't verified this app» — چون اپ خودته، <b>Continue</b> رو بزن.<br>
+      ۹. صفحه‌ی بعد، ازت می‌خواد دسترسی‌ها رو انتخاب کنی: <b>هر سه تیک رو بزن</b> (بالای لیست Select all هست) — مخصوصاً دسترسی داده‌های Google Cloud؛ بدون اون، توکن صادر می‌شه ولی رله باهاش جواب نمی‌گیره.<br>
+      ۱۰. بعد از تأیید، مرورگر می‌ره به یه آدرس <span dir="ltr">localhost</span> که باز نمی‌شه — طبیعیه! <b>کل آدرس رو از نوار آدرس کپی کن</b> و برگرد این‌جا توی کادر مرحله‌ی ۲ پیست کن. ⚠️ عجله کن: کدی که توی آدرسه یه‌بارمصرفه و حدود ۱۰ دقیقه عمر داره؛ اگه دیر شد، فقط کافیه دوباره «ورود با گوگل» رو بزنی.</p>
     </details>
     <label>Client ID</label>
     <input id="clientId" dir="ltr" placeholder="...apps.googleusercontent.com">
