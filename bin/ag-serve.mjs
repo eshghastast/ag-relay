@@ -7,11 +7,29 @@ import { join } from "node:path";
 import { createServer } from "node:http";
 
 const cfgFile = join(homedir(), ".ag-relay", "config.json");
-if (!existsSync(cfgFile)) { console.error("No config found — run `npm run login` first."); process.exit(1); }
-const cfg = JSON.parse(readFileSync(cfgFile, "utf8"));
-process.env.AG_REFRESH_TOKEN = cfg.refresh_token;
-process.env.AG_CLIENT_ID = cfg.client_id;
-process.env.AG_CLIENT_SECRET = cfg.client_secret;
+// Two ways to configure: a login config file (from `npm run login`), or
+// plain environment variables — the Docker/VPS path, where no config file
+// exists. Config file wins when present.
+let cfg;
+if (existsSync(cfgFile)) {
+  cfg = JSON.parse(readFileSync(cfgFile, "utf8"));
+} else {
+  cfg = {
+    refresh_token: process.env.AG_REFRESH_TOKEN || "",
+    client_id: process.env.AG_CLIENT_ID || "",
+    client_secret: process.env.AG_CLIENT_SECRET || "",
+    project_id: process.env.AG_PROJECT_ID || "",
+    relay_api_key: process.env.RELAY_API_KEY || "",
+  };
+  if (!cfg.refresh_token || !cfg.client_id || !cfg.client_secret) {
+    console.error("No config found. Either run `npm run login` first, or set");
+    console.error("AG_REFRESH_TOKEN, AG_CLIENT_ID and AG_CLIENT_SECRET in the environment.");
+    process.exit(1);
+  }
+}
+if (cfg.refresh_token) process.env.AG_REFRESH_TOKEN = cfg.refresh_token;
+if (cfg.client_id) process.env.AG_CLIENT_ID = cfg.client_id;
+if (cfg.client_secret) process.env.AG_CLIENT_SECRET = cfg.client_secret;
 if (cfg.project_id) process.env.AG_PROJECT_ID = cfg.project_id;
 if (cfg.relay_api_key) process.env.RELAY_API_KEY = cfg.relay_api_key;
 

@@ -1,0 +1,17 @@
+# ag-relay on your own VPS with Docker Compose.
+# 1) cp .env.example .env  — then fill in the values from the setup page.
+# 2) docker compose up -d --build
+# 3) Point any OpenAI-compatible client at http://<your-VPS-IP>:8787/v1
+#    with Authorization: Bearer <RELAY_API_KEY>.
+# Never commit the real .env file.
+services:
+  ag-relay:
+    build: .
+    container_name: ag-relay
+    restart: unless-stopped
+    ports:
+      - "8787:8787"
+    env_file:
+      - .env
+    environment:
+      - PORT=8787

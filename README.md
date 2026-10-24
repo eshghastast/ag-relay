@@ -31,7 +31,8 @@ official Antigravity clients use, then translates the answers back to OpenAI for
 > Built and maintained by **KARA AI** — Telegram channel: [t.me/kara_ai_offer](https://t.me/kara_ai_offer) · Instagram: [@kara_ai_offer](https://instagram.com/kara_ai_offer). Step-by-step Persian tutorials live in the channel.
 
 - **Cost:** $0. It runs on your quota and free hosting.
-- **Two ways to run it:** locally on your machine, or as a serverless relay on Vercel
+- **Three ways to run it:** locally on your machine, in Docker on your own VPS
+  (always-on server), or as a serverless relay on Vercel
   (useful when your apps can't reach Google directly — e.g. geo-blocked networks).
 
 
@@ -98,6 +99,35 @@ curl http://localhost:8787/v1/chat/completions \
 ```
 
 Streaming (`"stream": true`) is supported.
+
+## 🐳 Docker + VPS شخصی — سرور همیشه‌روشن خودت
+
+اگه Vercel نمی‌خوای و یه VPS داری (یا همین روش رو روی کامپیوتر خودت می‌خوای)، با داکر
+بدون فایل کانفیگ بالا میاد — فقط متغیرهای محیطی:
+
+```bash
+git clone https://github.com/eshghastast/ag-relay.git && cd ag-relay
+cp .env.example .env   # مقادیر پک ستاپ (توکن + کلید Relay) رو توش بنویس؛ هرگز کامیتش نکن
+docker compose up -d --build
+```
+
+یا تک‌دستوری، بدون فایل:
+
+```bash
+docker build -t ag-relay .
+docker run -d --name ag-relay --restart unless-stopped -p 8787:8787 \
+  -e AG_REFRESH_TOKEN=... -e AG_CLIENT_ID=... -e AG_CLIENT_SECRET=... \
+  -e RELAY_API_KEY=... ag-relay
+```
+
+بعد توی هر برنامه‌ی OpenAI-Compatible:
+
+- Base URL: `http://<IPسرورت>:8787/v1`
+- API key: همون `RELAY_API_KEY`
+
+نکته‌ها: پورت 8787 رو توی فایروال VPS باز کن؛ `AG_PROJECT_ID` رو خالی بذار (خودکار
+پیدا می‌شه)؛ برای استفاده‌ی جدی، حتماً `RELAY_API_KEY` بذار — بدون کلید، رله روی
+پورت باز همه‌ی درخواست‌ها رو رد می‌کنه. لاگ: `docker logs -f ag-relay`.
 
 ## ☁️ Quickstart — Vercel relay
 
