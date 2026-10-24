@@ -142,6 +142,30 @@ docker run -d --name ag-relay --restart unless-stopped -p 8787:8787 \
 
 Keep the refresh token secret: whoever has it can spend your quota.
 
+## ☁️ Netlify — پورت دوم (Functions)
+
+اگه Vercel نمی‌خوای ولی همچنان سرورلس می‌خوای، همون کد روی Netlify Functions هم
+اجرا می‌شه — بدون کپی منطق: هر فانکشن Netlify فقط یه wrapper نازک دور همون
+هندلرهای `api/`ـه (`netlify/functions/` + آداپتور `netlify/lib/adapter.mjs`):
+
+1. ریپو رو توی Netlify ایمپورت کن (Import from Git). Netlify خودش `netlify.toml`
+   رو می‌خونه: فانکشن‌ها از `netlify/functions/` و مسیرهای `/v1/...` بهشون وصل می‌شن.
+2. توی Site settings → Environment variables همون متغیرها رو بذار:
+   - `AG_REFRESH_TOKEN` — از `~/.ag-relay/config.json` (بعد از `npm run login`)
+   - `AG_CLIENT_ID`, `AG_CLIENT_SECRET` — (بخش Client credentials پایین)
+   - `RELAY_API_KEY` — کلید خودت؛ بدون اون رله همه‌ی درخواست‌ها رو رد می‌کنه
+   - `DASH_PASSWORD` — پسورد داشبورد (`/`)
+   - `AG_PROJECT_ID` — **خالی بذار** (خودکار پیدا می‌شه؛ همون هشدار Vercel این‌جا هم برقراره)
+3. Deploy. آدرس: `https://<your-site>.netlify.app/v1`.
+
+تفاوت‌ها با Vercel:
+- استریم چت کار می‌کنه ولی بافری برمی‌گرده: جواب کامل که آماده شد، کل SSE یک‌جا
+  فرستاده می‌شه (نه توکن‌به‌توکن). برای استریم واقعی، مسیر Docker/VPS رو ببین.
+- آمار مصرف (`/api/stats`) روی Netlify در دسترس نیست — اون قسمت با Vercel Blob
+  کار می‌کنه و این‌جا `available: false` برمی‌گردونه. خود رله و داشبورد کامل کار می‌کنن.
+- سقف اجرای فانکشن‌های سینک Netlify ۶۰ ثانیه‌ست (مثل Vercel)؛ نسل‌های خیلی طولانی
+  ممکنه بهش بخورن — اون‌وقت هم مسیر Docker/VPS جوابه.
+
 ## 🔑 Client credentials
 
 The relay logs in through the public Antigravity desktop OAuth client
@@ -192,6 +216,7 @@ There is no official token counter — heavy agent loops can drain a free accoun
 
 - `lib/core.js` — the whole translator (token refresh, project resolution, request/response mapping, SSE)
 - `api/chat.js`, `api/models.js` — Vercel function entry points (`/v1/chat/completions`, `/v1/models`)
+- `netlify/functions/`, `netlify/lib/adapter.mjs`, `netlify.toml` — the Netlify port: thin wrappers over the same `api/` handlers, same URLs
 - `bin/ag-login.mjs` — interactive OAuth login → `~/.ag-relay/config.json`
 - `bin/ag-serve.mjs` — local server (same core, Node `http`)
 - `local-test.mjs` — end-to-end smoke test against the real backend using `./.tokens.json`

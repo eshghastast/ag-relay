@@ -1,0 +1,42 @@
+# Netlify port (port 2): the same relay on Netlify Functions instead of
+# Vercel. Each function in netlify/functions/ is a thin wrapper over the
+# shared handler in api/ (see netlify/lib/adapter.mjs), so there is no
+# second copy of the relay logic to keep in sync.
+[build]
+  functions = "netlify/functions"
+
+# Rewrites mirror vercel.json so clients use the same URLs on either host.
+[[redirects]]
+  from = "/v1/chat/completions"
+  to = "/.netlify/functions/chat"
+  status = 200
+
+[[redirects]]
+  from = "/v1/models"
+  to = "/.netlify/functions/models"
+  status = 200
+
+[[redirects]]
+  from = "/chat/completions"
+  to = "/.netlify/functions/chat"
+  status = 200
+
+[[redirects]]
+  from = "/models"
+  to = "/.netlify/functions/models"
+  status = 200
+
+[[redirects]]
+  from = "/api/stats"
+  to = "/.netlify/functions/stats"
+  status = 200
+
+[[redirects]]
+  from = "/api/status-data"
+  to = "/.netlify/functions/status-data"
+  status = 200
+
+[[redirects]]
+  from = "/"
+  to = "/.netlify/functions/status"
+  status = 200

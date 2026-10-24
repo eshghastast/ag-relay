@@ -3,6 +3,7 @@
 .env
 .env.*
 .vercel
+.netlify
 ~/.ag-relay
 node_modules
 .tokens*.json
