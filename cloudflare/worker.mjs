@@ -45,6 +45,7 @@ const ROUTES = {
   "/api/stats": () => import("../api/stats.js"),
   "/api/status-data": () => import("../api/status-data.js"),
   "/api/version": () => import("../api/version.js"),
+  "/api/update": () => import("../api/update.js"),
   "/": () => import("../api/status.js"),
 };
 

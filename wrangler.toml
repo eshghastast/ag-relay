@@ -3,6 +3,9 @@
 #
 # Secrets are set with `wrangler secret put <NAME>` — never in this file:
 #   AG_REFRESH_TOKEN, AG_CLIENT_ID, AG_CLIENT_SECRET, RELAY_API_KEY, DASH_PASSWORD
+# Optional, for the dashboard one-click updater (POST /api/update):
+#   GH_SYNC_REPO (owner/repo of this deployment's connected repo),
+#   GH_SYNC_TOKEN (GitHub token with `repo` scope on that repo).
 # AG_PROJECT_ID: leave unset (auto-resolved; see README).
 #
 # nodejs_compat is required: lib/core.js imports node:crypto and uses

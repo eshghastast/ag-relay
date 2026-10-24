@@ -15,6 +15,9 @@
     },
     "api/status-data.js": {
       "maxDuration": 60
+    },
+    "api/update.js": {
+      "maxDuration": 60
     }
   },
   "rewrites": [

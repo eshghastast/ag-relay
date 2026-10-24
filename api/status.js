@@ -333,7 +333,7 @@ export default async function handler(req, res) {
   <div id="updateBanner" class="banner" style="display:none"></div>
   <footer>
     <span>⚡ ${brand} · Open-source Relay for Antigravity</span>
-    <span><span id="verInfo"></span> <button id="checkUpdate" class="ghost small">بررسی به‌روزرسانی</button></span>
+    <span><span id="verInfo"></span> <button id="checkUpdate" class="ghost small">بررسی به‌روزرسانی</button> <button id="updateBtn" class="ghost small" style="display:none">به‌روزرسانی</button></span>
     <span class="socials">${socials}</span>
   </footer>
 </div>
@@ -432,8 +432,42 @@ $("checkUpdate").onclick = async function(){
     var j = await r.json();
     var latest = (j.sha || "").slice(0, 7);
     if (!latest) { showUpdateNote(""); return; }
-    showUpdateNote(latest === installedCommit ? "به‌روز ✓" : "نسخه‌ی جدید در ریپو هست؛ اگه پروژه‌ت به گیت وصله خودکار به‌روز می‌شه، وگرنه توی داشبورد هاست دکمه‌ی Redeploy رو بزن.");
+    if (latest === installedCommit) {
+      $("updateBtn").style.display = "none";
+      showUpdateNote("به‌روز ✓");
+    } else {
+      $("updateBtn").style.display = "inline-block";
+      showUpdateNote("نسخه‌ی جدید در ریپو هست (" + latest + ")؛ دکمه‌ی به‌روزرسانی ریپوی متصل به این دیپلوی رو با آخرین master سینک می‌کنه (نیاز به GH_SYNC_REPO و GH_SYNC_TOKEN توی متغیرهای محیطی هاست داره).");
+    }
   } catch (e) { showUpdateNote(""); }
+};
+// ---------- one-click updater (dashboard password required) ----------
+// POST /api/update pushes upstream master into this deployment's own repo
+// (GH_SYNC_REPO) via the GitHub API; the host auto-deploys on that push
+// when the project is git-connected to the same repo. A failed run pushes
+// nothing. Local changes in that repo are overwritten — hence the confirm.
+$("updateBtn").onclick = async function(){
+  if (!dashPass()) {
+    alert("اول با پسورد داشبورد آنلاک کن.");
+    $("lockOverlay").style.display = "flex";
+    return;
+  }
+  if (!confirm("این کار محتوای ریپوی متصل به این دیپلوی رو با آخرین master جایگزین می‌کنه؛ تغییرهای خودت توی اون ریپو از دست می‌ره. ادامه بدم؟")) return;
+  showUpdateNote("در حال به‌روزرسانی...");
+  try {
+    var r = await fetch("/api/update", { method: "POST", headers: { "x-dash-password": dashPass() } });
+    var j = await r.json();
+    if (!r.ok) {
+      if (j.error && j.error.code === "not_configured") {
+        showUpdateNote("آپدیتر تنظیم نشده: توی داشبورد هاست دو متغیر GH_SYNC_REPO (مثلا user/ag-relay) و GH_SYNC_TOKEN (توکن گیت‌هاب با دسترسی repo) رو بذار و یه ریدیپلوی بزن.");
+      } else {
+        showUpdateNote("خطا: " + (j.error ? j.error.message : r.status));
+      }
+      return;
+    }
+    $("updateBtn").style.display = "none";
+    showUpdateNote("به‌روز شد: " + j.to + " · " + j.changed + " فایل از " + j.files + " فایل عوض شد. اگه پروژه به گیت وصله، هاست روی پوش جدید خودکار دیپلوی می‌کنه؛ وگرنه از ریپوی به‌روز شده دیپلوی بگیر.");
+  } catch (e) { showUpdateNote("خطا در اتصال."); }
 };
 loadVersion();
 
