@@ -310,6 +310,14 @@ export default async function handler(req, res) {
           <div id="chatList" style="margin-bottom:10px"></div>
           <div class="row">
             <select id="model"></select>
+            <span class="dim">سطح تفکر (مدل‌های Gemini Flash):</span>
+            <select id="reasoning" title="سطح تفکر (مدل‌های Gemini Flash)">
+              <option value="auto">خودکار</option>
+              <option value="low">کم</option>
+              <option value="medium">متوسط</option>
+              <option value="high">زیاد</option>
+            </select>
+            <span id="reasonNote" class="dim"></span>
             <button id="newChat" class="small ghost">مکالمه‌ی جدید</button>
           </div>
           <div id="chatLog" class="chatlog"></div>
@@ -322,8 +330,10 @@ export default async function handler(req, res) {
     </main>
   </div>
 
+  <div id="updateBanner" class="banner" style="display:none"></div>
   <footer>
     <span>⚡ ${brand} · Open-source Relay for Antigravity</span>
+    <span><span id="verInfo"></span> <button id="checkUpdate" class="ghost small">بررسی به‌روزرسانی</button></span>
     <span class="socials">${socials}</span>
   </footer>
 </div>
@@ -395,6 +405,38 @@ async function unlockWith(pass){
 $("unlockBtn").onclick = function(){ unlockWith($("passInput").value); };
 $("passInput").addEventListener("keydown", function(e){ if (e.key === "Enter") $("unlockBtn").click(); });
 
+// ---------- version + update check (public, no auth) ----------
+// Best-effort only: any failure hides the notice, never shows an error.
+var installedCommit = "";
+async function loadVersion(){
+  try {
+    var r = await fetch("/api/version");
+    if (!r.ok) return;
+    var j = await r.json();
+    installedCommit = j.commit || "";
+    if (installedCommit) $("verInfo").textContent = "نسخه: " + installedCommit;
+  } catch (e) { /* silent */ }
+}
+function showUpdateNote(text){
+  var b = $("updateBanner");
+  if (!text) { b.style.display = "none"; b.textContent = ""; return; }
+  b.textContent = text;
+  b.style.display = "block";
+}
+$("checkUpdate").onclick = async function(){
+  if (!installedCommit || installedCommit === "dev") { showUpdateNote(""); return; }
+  showUpdateNote("در حال بررسی...");
+  try {
+    var r = await fetch("https://api.github.com/repos/eshghastast/ag-relay/commits/master");
+    if (!r.ok) { showUpdateNote(""); return; }
+    var j = await r.json();
+    var latest = (j.sha || "").slice(0, 7);
+    if (!latest) { showUpdateNote(""); return; }
+    showUpdateNote(latest === installedCommit ? "به‌روز ✓" : "نسخه‌ی جدید در ریپو هست؛ اگه پروژه‌ت به گیت وصله خودکار به‌روز می‌شه، وگرنه توی داشبورد هاست دکمه‌ی Redeploy رو بزن.");
+  } catch (e) { showUpdateNote(""); }
+};
+loadVersion();
+
 // ---------- render quota, catalog, models table ----------
 function pctOf(f){ return Math.max(0, Math.min(100, Math.round((f || 0) * 100))); }
 function barColor(p){ return p > 50 ? "#4ade80" : p > 20 ? "#facc15" : "#f87171"; }
@@ -456,6 +498,24 @@ async function chatOnce(model, messages){
   if (!r.ok) throw new Error((j.error && j.error.message) || ("HTTP " + r.status));
   return j;
 }
+
+// ---------- reasoning picker (Gemini Flash family only) ----------
+// The backend has no separate reasoning parameter: for Gemini Flash the
+// thinking level IS the model variant (gemini-3.8-flash-low/medium/high),
+// so picking a level just switches the model dropdown. Other models keep
+// their own fixed reasoning (e.g. opus-4-6-thinking is thinking by design).
+// The send path (chatOnce) is unchanged: it sends the model id as-is.
+$("reasoning").onchange = function(){
+  var lvl = $("reasoning").value;
+  var note = $("reasonNote");
+  note.textContent = "";
+  if (lvl === "auto") return;
+  var m = $("model").value || "";
+  var fam = m.match(/^(gemini-3\.8-flash)-(low|medium|high)$/);
+  if (fam) { $("model").value = fam[1] + "-" + lvl; }
+  else { note.textContent = "برای این مدل سطح reasoning جداگانه نداره (خود مدل thinking هست یا نسخه‌ی ثابت)"; }
+};
+$("model").onchange = function(){ $("reasonNote").textContent = ""; };
 
 // ---------- per-model + all-model tests ----------
 async function testOne(model){
