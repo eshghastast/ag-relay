@@ -106,8 +106,8 @@ Streaming (`"stream": true`) is supported.
 3. Set these project environment variables in Vercel:
    - `AG_REFRESH_TOKEN` — from `~/.ag-relay/config.json`
    - `AG_CLIENT_ID`, `AG_CLIENT_SECRET` — the client credentials (see below)
-   - `RELAY_API_KEY` — invent a long random string; your apps must send it as `Authorization: Bearer <key>`
-   - `AG_PROJECT_ID` — optional; speeds up cold starts (printed by `local-test.mjs`)
+   - `RELAY_API_KEY` — invent a long random string; your apps must send it as `Authorization: Bearer <key>`. Required: without it the relay refuses all `/v1` requests (fail closed); `RELAY_OPEN=1` only for an intentionally open local dev relay.
+   - `AG_PROJECT_ID` — optional; speeds up cold starts. **Leave it unset (recommended)** — the relay auto-resolves your account's managed Code Assist project (e.g. `aicode-consumers`). ⚠️ Never set it to the Google Cloud project that hosts your OAuth client: the private Cloud Code API can never be enabled on a personal project (Google returns `PERMISSION_DENIED`), so the relay dies with a misleading "Cloud Code Private API is not enabled in your project" error. Only set this if you know your *managed* project ID for sure.
 4. Deploy. Your endpoint is `https://<your-project>.vercel.app/v1`.
 
 Keep the refresh token secret: whoever has it can spend your quota.

@@ -11,7 +11,9 @@ function groupOf(id) {
 export default async function handler(req, res) {
   const pass = process.env.DASH_PASSWORD || process.env.RELAY_API_KEY || "";
   const given = req.headers["x-dash-password"] || "";
-  if (pass && given !== pass) { res.status(401).json({ error: { message: "wrong dashboard password" } }); return; }
+  // Fail closed: with neither password set, the dashboard stays locked
+  // (previously the check was skipped entirely when pass was empty).
+  if (!pass || given !== pass) { res.status(401).json({ error: { message: "wrong dashboard password" } }); return; }
   try {
     const token = await getAccessToken();
     const project = await getProjectId(token);

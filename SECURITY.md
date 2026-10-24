@@ -18,7 +18,13 @@ credentials like account passwords.
   rotate it (replace `RELAY_API_KEY` and redeploy) if it leaks. Rotation
   instantly invalidates the old key.
 - **Protect the dashboard.** Set `DASH_PASSWORD`; without it anyone who
-  finds your relay URL can see quota and usage information.
+  finds your relay URL can see quota and usage information. If neither
+  `DASH_PASSWORD` nor `RELAY_API_KEY` is set, the dashboard refuses all
+  requests (fail closed) instead of serving quota data unauthenticated.
+- **An unconfigured relay serves nobody.** Without `RELAY_API_KEY` the
+  `/v1` endpoints refuse every request. An intentionally open relay (local
+  dev only) must opt in with `RELAY_OPEN=1` — never set that on a public
+  deployment.
 - **Protect the host account.** The only way to change the deployed code is
   through your hosting account (e.g. Vercel). Enable two-factor
   authentication on it and on the Google account the relay runs under.
