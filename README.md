@@ -166,6 +166,42 @@ Keep the refresh token secret: whoever has it can spend your quota.
 - سقف اجرای فانکشن‌های سینک Netlify ۶۰ ثانیه‌ست (مثل Vercel)؛ نسل‌های خیلی طولانی
   ممکنه بهش بخورن — اون‌وقت هم مسیر Docker/VPS جوابه.
 
+## ☁️ Cloudflare Workers — پورت سوم
+
+اگه دنبال لبه‌ی جهانی و استریم واقعی هستی، همون کد روی Cloudflare Workers هم
+اجرا می‌شه — ورودی `cloudflare/worker.mjs` + آداپتور `cloudflare/lib/adapter.mjs`
+که هندلرهای `api/` رو پشت fetch()‎ استاندارد Workers می‌نشونه (بدون کپی منطق):
+
+1. Wrangler رو نصب کن: `npm install -g wrangler` (یا `npx wrangler`).
+2. سکرت‌ها رو بذار — مقادیر واقعی هرگز توی فایل نمی‌رن:
+   ```bash
+   wrangler secret put AG_REFRESH_TOKEN
+   wrangler secret put AG_CLIENT_ID
+   wrangler secret put AG_CLIENT_SECRET
+   wrangler secret put RELAY_API_KEY
+   wrangler secret put DASH_PASSWORD
+   ```
+   (`AG_PROJECT_ID` رو **خالی بذار** — خودکار پیدا می‌شه؛ همون هشدار Vercel.)
+3. `npm install` (برای باندل‌شدن وابستگی‌ها) بعد `wrangler deploy`.
+   آدرس: `https://ag-relay.<subdomain-شما>.workers.dev/v1`.
+
+تفاوت‌ها با Vercel و Netlify:
+- استریم واقعی: برخلاف Netlify که جواب رو بافر می‌کنه، این‌جا SSE توکن‌به‌توکن
+  از استریم Response رد می‌شه.
+- آمار مصرف (`/api/stats`) این‌جا هم `available: false`ـه — با Vercel Blob کار
+  می‌کنه که روی Workers نیست. رله و داشبورد کامل کار می‌کنن.
+- محدودیت‌های Workers (مستندات رسمی Cloudflare): پلن رایگان ۱۰۰٬۰۰۰ درخواست
+  در روز، ۱۲۸ مگابایت حافظه و ۵۰ ساب‌ری‌کوئست به‌ازای هر درخواست می‌ده. سقف CPU
+  روی Free فقط ۱۰ میلی‌ثانیه‌ست — ولی CPU یعنی زمان پردازش، نه انتظار I/O:
+  رله بیش‌تر وقتش رو منتظر گوگل می‌مونه، پس زمان نسل به سقف نمی‌خوره؛ چیزی که
+  CPU می‌خوره ترجمه‌ی JSON هر چانکه، پس نسل‌های خیلی طولانی ممکنه روی Free به
+  سقف بخورن. پلن Paid تا ۵ دقیقه CPU می‌ده.
+- نکته‌ی فنی: چون `lib/core.js` از `node:crypto` و `process.env` استفاده
+  می‌کنه، `wrangler.toml` فلگ `nodejs_compat` رو فعال می‌کنه و ورودی Worker
+  متغیرهای binding رو قبل از لود هندلرها توی `process.env` می‌نشونه. دیپلوی
+  واقعی با `wrangler deploy` هنوز برای تأیید نهایی لازمه (مخصوصاً باندل‌شدن
+  `@vercel/blob` که فقط برای stats استفاده می‌شه).
+
 ## 🔑 Client credentials
 
 The relay logs in through the public Antigravity desktop OAuth client
@@ -217,6 +253,7 @@ There is no official token counter — heavy agent loops can drain a free accoun
 - `lib/core.js` — the whole translator (token refresh, project resolution, request/response mapping, SSE)
 - `api/chat.js`, `api/models.js` — Vercel function entry points (`/v1/chat/completions`, `/v1/models`)
 - `netlify/functions/`, `netlify/lib/adapter.mjs`, `netlify.toml` — the Netlify port: thin wrappers over the same `api/` handlers, same URLs
+- `cloudflare/worker.mjs`, `cloudflare/lib/adapter.mjs`, `wrangler.toml` — the Workers port: same `api/` handlers behind fetch(), with true SSE streaming
 - `bin/ag-login.mjs` — interactive OAuth login → `~/.ag-relay/config.json`
 - `bin/ag-serve.mjs` — local server (same core, Node `http`)
 - `local-test.mjs` — end-to-end smoke test against the real backend using `./.tokens.json`

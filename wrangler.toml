@@ -1,0 +1,14 @@
+# Cloudflare Workers port (port 3) of ag-relay.
+# Deploy: npm install && npx wrangler deploy
+#
+# Secrets are set with `wrangler secret put <NAME>` — never in this file:
+#   AG_REFRESH_TOKEN, AG_CLIENT_ID, AG_CLIENT_SECRET, RELAY_API_KEY, DASH_PASSWORD
+# AG_PROJECT_ID: leave unset (auto-resolved; see README).
+#
+# nodejs_compat is required: lib/core.js imports node:crypto and uses
+# Buffer. Everything else in the shared code is Workers-native.
+
+name = "ag-relay"
+main = "cloudflare/worker.mjs"
+compatibility_date = "2026-10-24"
+compatibility_flags = ["nodejs_compat"]

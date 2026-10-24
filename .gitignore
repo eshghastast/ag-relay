@@ -4,6 +4,8 @@
 .env.*
 .vercel
 .netlify
+.wrangler
+dev.vars
 ~/.ag-relay
 node_modules
 .tokens*.json
