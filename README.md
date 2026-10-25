@@ -281,3 +281,5 @@ There is no official token counter — heavy agent loops can drain a free accoun
 ## 📄 License
 
 MIT
+
+<!-- updater e2e test: 2026-10-25 -->
