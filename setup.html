@@ -7,8 +7,8 @@
 <style>
   :root{--bg:#020617;--panel:#0E1223;--panel2:#0B1120;--border:#1E293B;--text:#E2E8F0;--dim:#94A3B8;--accent:#22C55E;--accent2:#38BDF8;--code:#010409}
   *{box-sizing:border-box}
-  body{font-family:Tahoma,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:24px 16px;line-height:2}
-  .wrap{max-width:780px;margin:0 auto}
+  body{font-family:Tahoma,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0;line-height:2}
+  .layout{display:flex;gap:20px;padding:20px;align-items:flex-start}
   h1{font-size:24px;margin:0 0 8px} h2{font-size:18px;margin:0 0 10px} h3{font-size:15px;margin:18px 0 6px}
   .dim{color:var(--dim);font-size:14px}
   .badge{display:inline-block;background:#052E16;color:#86EFAC;border:1px solid #14532D;border-radius:999px;padding:2px 12px;font-size:12px}
@@ -41,27 +41,64 @@
   .hidden{display:none}
   a{color:#86EFAC}
   .brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-  footer{color:var(--dim);font-size:13px;text-align:center;margin:22px 0 6px;line-height:2}
+  .site-header{border-bottom:1px solid var(--border);background:var(--panel)}
+  .head-inner{padding:22px 24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
+  .head-about{color:var(--dim);font-size:14px;max-width:680px;margin:8px 0}
+  .channel-chip{text-align:end;flex-shrink:0}
+  .channel-chip b{display:block;font-size:18px}
+  .site-footer{border-top:1px solid var(--border);background:var(--panel);margin-top:8px}
+  .foot-inner{padding:20px 24px}
+  .sidebar{width:250px;flex-shrink:0;position:sticky;top:16px}
+  .side-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px}
+  .side-card h3{margin:0 0 8px;font-size:15px}
+  .side-nav a{display:block;color:var(--text);text-decoration:none;padding:6px 10px;border-radius:8px;font-size:14px}
+  .side-nav a:hover{background:var(--panel2);color:#86EFAC}
+  main{flex:1;min-width:0}
+  @media (max-width:820px){
+    .layout{flex-direction:column}
+    .sidebar{width:auto;position:static}
+    .side-nav{display:flex;flex-wrap:wrap;gap:6px}
+    .side-nav a{display:inline-block}
+  }
   ol,ul{padding-inline-start:20px}
   li{margin:6px 0}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="brand">
-    <h1>⚡ Relay — راهنمای کامل نصب</h1>
-    <span class="badge">بدون ترمینالِ پیچیده · با حساب رایگان هم کار می‌کند</span>
-    <span class="dim" id="brandLine"></span>
+<header class="site-header">
+  <div class="head-inner">
+    <div>
+      <h1>⚡ Relay — راهنمای کامل نصب</h1>
+      <span class="badge">بدون ترمینالِ پیچیده · با حساب رایگان هم کار می‌کند</span>
+      <p class="head-about">Relay ابزار متن‌باز KARA AI است؛ مدل‌های Antigravity را با حساب گوگل خودت و روی Vercel خودت اجرا می‌کند، بدون سرور واسط و بدون اینکه توکنت دست کسی باشد.</p>
+      <span class="dim" id="brandLine"></span>
+    </div>
+    <div class="channel-chip">
+      <b>KARA AI</b>
+      <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">t.me/kara_ai_offer</a>
+    </div>
   </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="side-card">
+      <h3>فهرست راهنما</h3>
+      <nav class="side-nav">
+        <a href="#needs">چی لازم داری؟</a>
+        <a href="#step1">مرحله ۱: اعتبارنامه</a>
+        <a href="#step2">مرحله ۲: ورود با گوگل</a>
+        <a href="#troubleshoot">اگه گیر کردی</a>
+        <a href="#security">امنیت</a>
+      </nav>
+    </div>
+    <div class="side-card">
+      <h3>KARA AI</h3>
+      <p class="dim">کانال ما برای آفرهای هوش مصنوعی و آموزش‌های کاربردی.</p>
+      <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">t.me/kara_ai_offer</a>
+    </div>
+  </aside>
+  <main>
   <p class="dim">این راهنما قدم‌به‌قدم نشانت می‌دهد چطور با اکانت خودت یک Relay شخصی بسازی: اول اعتبارنامه‌ی اپ را از برنامه‌ای که نصب داری برمی‌داری، بعد با حساب گوگل خودت وارد می‌شوی و توکن می‌گیری، و آخر با یک کلیک روی Vercel نصبش می‌کنی. همه‌ی کارها فقط توی مرورگر خودت انجام می‌شود؛ این صفحه هیچ‌چیز را ذخیره نمی‌کند و هیچ اطلاعاتی به هیچ سروری نمی‌فرستد.</p>
-
-  <div class="nav">
-    <a href="#needs">چی لازم داری؟</a>
-    <a href="#step1">مرحله ۱: اعتبارنامه</a>
-    <a href="#step2">مرحله ۲: ورود با گوگل</a>
-    <a href="#troubleshoot">اگه گیر کردی</a>
-    <a href="#security">امنیت</a>
-  </div>
 
   <div class="card" id="needs">
     <h2>چی لازم داری؟</h2>
@@ -207,8 +244,18 @@ $secs | Sort-Object -Unique</code></pre>
     <p class="dim">شناسه و سکرت مرحله‌ی ۱، اعتبارنامه‌ی عمومی خود اپ هستند و رمز شخصی تو نیستند. ولی توکن مرحله‌ی ۲ و کلید Relay و پسورد داشبورد مرحله‌ی ۳، رازهای شخصی تو هستند؛ هیچ‌وقت آن‌ها را در کانال عمومی، اسکرین‌شات یا ویدئو نشان نده. اگر خواستی ویدئوی آموزشی بسازی، موقع تدوین روی این مقدارها را بپوشان.</p>
   </div>
 
-  <footer id="footerLine"></footer>
+  </main>
 </div>
+<footer class="site-footer">
+  <div class="foot-inner">
+    <div>
+      <b>⚡ Relay</b> — ابزار متن‌باز <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">KARA AI</a>
+      <div class="dim">کانال: <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">t.me/kara_ai_offer</a> · سورس: <a href="https://github.com/eshghastast/ag-relay" target="_blank" rel="noopener">github.com/eshghastast/ag-relay</a></div>
+      <div class="dim">درباره‌ی پروژه: Relay مدل‌های Antigravity را با حساب گوگل خودت و روی Vercel خودت در دسترس می‌گذارد؛ بدون سرور واسط، بدون اشتراک‌گذاری توکن و کاملاً متن‌باز.</div>
+    </div>
+    <div id="footerLine" class="dim" style="margin-top:8px"></div>
+  </div>
+</footer>
 
 <script>
 // ---- branding (forks: change these two lines to your own channel) ----
