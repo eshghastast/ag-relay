@@ -3,78 +3,178 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Relay — نصب سریع بدون ترمینال</title>
+<title>Relay — راهنمای کامل نصب</title>
 <style>
-  :root{--bg:#0b0e14;--panel:#12172a;--panel2:#0f1424;--border:#1f2740;--text:#e6e6e6;--dim:#8b94a3;--accent:#1d4ed8;--code:#1a2030}
+  :root{--bg:#020617;--panel:#0E1223;--panel2:#0B1120;--border:#1E293B;--text:#E2E8F0;--dim:#94A3B8;--accent:#22C55E;--accent2:#38BDF8;--code:#010409}
   *{box-sizing:border-box}
-  body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:22px}
-  .wrap{max-width:680px;margin:0 auto}
-  h1{font-size:22px;margin:0 0 6px} h2{font-size:16px;margin:0 0 8px}
-  .dim{color:var(--dim);font-size:13px;line-height:1.9}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;margin:14px 0;box-shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.25)}
+  body{font-family:Tahoma,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:24px 16px;line-height:2}
+  .wrap{max-width:780px;margin:0 auto}
+  h1{font-size:24px;margin:0 0 8px} h2{font-size:18px;margin:0 0 10px} h3{font-size:15px;margin:18px 0 6px}
+  .dim{color:var(--dim);font-size:14px}
+  .badge{display:inline-block;background:#052E16;color:#86EFAC;border:1px solid #14532D;border-radius:999px;padding:2px 12px;font-size:12px}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+  .nav a{color:var(--text);text-decoration:none;border:1px solid var(--border);border-radius:999px;padding:4px 14px;font-size:13px;background:var(--panel)}
+  .nav a:hover{border-color:var(--accent)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;margin:16px 0}
+  .stepnum{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#04120A;align-items:center;justify-content:center;font-weight:700;margin-inline-end:8px}
+  .route{border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0;background:var(--panel2)}
+  .route.a{border-top:3px solid var(--accent)}
+  .route.b{border-top:3px solid var(--accent2)}
+  .route h3{margin-top:0;font-size:16px}
+  .callout{border-radius:12px;padding:12px 16px;margin:12px 0;font-size:14px}
+  .tip{background:#052E16;border:1px solid #14532D}
+  .warn{background:#451A03;border:1px solid #92400E}
+  .note{background:#082F49;border:1px solid #0C4A6E}
+  .codeblock{background:var(--code);border:1px solid var(--border);border-radius:12px;margin:10px 0;overflow:hidden}
+  .codehead{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-bottom:1px solid var(--border);font-size:12px;color:var(--dim)}
+  .codehead button{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:3px 12px;cursor:pointer;font:inherit;font-size:12px}
+  pre{margin:0;padding:12px;overflow-x:auto}
+  code{direction:ltr;text-align:left;font-family:Consolas,"Courier New",monospace;font-size:12.5px}
   input,textarea,button{font:inherit;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text);padding:9px 12px;width:100%}
   textarea{direction:ltr;text-align:left;font-size:12px}
-  button{background:var(--accent);border-color:var(--accent);color:#fff;cursor:pointer;width:auto;padding:9px 18px}
-  button:hover{background:#2563eb}
-  button.ghost{background:var(--panel2);color:var(--text);border-color:var(--border)}
+  button{background:var(--accent);border-color:var(--accent);color:#04120A;cursor:pointer;width:auto;padding:9px 18px;font-weight:700}
+  button:hover{filter:brightness(1.1)}
+  button.ghost{background:var(--panel2);color:var(--text);border-color:var(--border);font-weight:400}
   .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   label{display:block;font-size:13px;color:var(--dim);margin:10px 0 4px}
   .out{background:var(--code);border:1px solid var(--border);border-radius:10px;padding:10px 12px;direction:ltr;text-align:left;word-break:break-all;font-size:12.5px}
   .hidden{display:none}
-  a{color:#93c5fd}
+  a{color:#86EFAC}
   .brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
   footer{color:var(--dim);font-size:13px;text-align:center;margin:22px 0 6px;line-height:2}
-  .stepnum{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;align-items:center;justify-content:center;font-weight:700;margin-inline-end:6px}
+  ol,ul{padding-inline-start:20px}
+  li{margin:6px 0}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="brand">
-    <h1>⚡ Relay — نصب سریع</h1>
+    <h1>⚡ Relay — راهنمای کامل نصب</h1>
+    <span class="badge">بدون ترمینالِ پیچیده · با حساب رایگان هم کار می‌کند</span>
     <span class="dim" id="brandLine"></span>
   </div>
-  <p class="dim">این صفحه کمکت می‌کنه بدون ترمینال، «توکن گوگل» و کلیدهای لازم برای نصب Relay رو بگیری. فقط کافیه یکی از این دو برنامه رو نصب داشته باشی: اپ Antigravity یا 9Router. همه‌چیز فقط توی مرورگر خودت انجام می‌شه؛ هیچ اطلاعاتی به هیچ سروری فرستاده نمی‌شه و این صفحه هیچ‌چیز رو ذخیره نمی‌کنه.</p>
+  <p class="dim">این راهنما قدم‌به‌قدم نشانت می‌دهد چطور با اکانت خودت یک Relay شخصی بسازی: اول اعتبارنامه‌ی اپ را از برنامه‌ای که نصب داری برمی‌داری، بعد با حساب گوگل خودت وارد می‌شوی و توکن می‌گیری، و آخر با یک کلیک روی Vercel نصبش می‌کنی. همه‌ی کارها فقط توی مرورگر خودت انجام می‌شود؛ این صفحه هیچ‌چیز را ذخیره نمی‌کند و هیچ اطلاعاتی به هیچ سروری نمی‌فرستد.</p>
 
-  <div class="card">
+  <div class="nav">
+    <a href="#needs">چی لازم داری؟</a>
+    <a href="#step1">مرحله ۱: اعتبارنامه</a>
+    <a href="#step2">مرحله ۲: ورود با گوگل</a>
+    <a href="#troubleshoot">اگه گیر کردی</a>
+    <a href="#security">امنیت</a>
+  </div>
+
+  <div class="card" id="needs">
+    <h2>چی لازم داری؟</h2>
+    <ul>
+      <li><b>یکی از این دو برنامه روی کامپیوترت:</b> اپ Antigravity یا 9Router. هر کدام را داری کافی است؛ لازم نیست هر دو را نصب کنی.</li>
+      <li><b>یک حساب گوگل:</b> حساب رایگان هم جواب می‌دهد (تست‌شده). بهتر است حساب جدا باشد، نه حساب اصلی‌ات.</li>
+      <li><b>یک حساب Vercel:</b> ساخت حساب رایگان است.</li>
+      <li><b>پاورشل ویندوز:</b> برای دستورهای استخراج زیر. نیازی به نصب برنامه‌ی اضافه نیست.</li>
+    </ul>
+    <div class="callout note">نکته: این راهنما را تا آخر با همان حسابی که می‌خواهی Relay رویش کار کند جلو برو؛ وسط راه حساب را عوض نکن.</div>
+  </div>
+
+  <div class="card" id="step1">
     <h2><span class="stepnum">۱</span>اعتبارنامه‌ی اپ Antigravity</h2>
-    <p class="dim">دو مقدار زیر رو از یکی از راه‌های داخل کادر بگیر؛ فقط توی همین تب استفاده می‌شن.</p>
-    <details style="border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin:10px 0;background:var(--panel2)">
-      <summary style="cursor:pointer;font-weight:700">❓ این دو تا رو از کجا پیدا کنم؟</summary>
-      <p class="dim">اول یه خیال راحت: این دو مقدار، رمز شخصی تو نیستن — اعتبارنامه‌ی عمومیِ اپ دسکتاپ Antigravity هستن که گوگل همراه خود اپ پخش کرده. از یکی از این دو منبع بگیرشون:</p>
-      <p class="dim"><b>راه ۱ — از اپ رسمی Antigravity:</b><br>
-      ۱. اپ رسمی Antigravity رو روی کامپیوترت نصب کن و یه بار باهاش وارد شو.<br>
-      ۲. توی پوشه‌ی نصب برنامه، عبارت <span dir="ltr">apps.googleusercontent.com</span> رو جست‌وجو کن. ممکنه چند شناسه و چند سکرت پیدا بشه؛ سکرت واقعی دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> هست و لزوماً کنار شناسه نیست، پس اگه جفت اول جواب نداد جفت‌های دیگه رو امتحان کن.<br>
-      ۳. فایل‌های خیلی بزرگ رو با نوت‌پد باز نکن (هنگ می‌کنه)؛ با پاورشل استخراج کن.<br>
-      ۴. همین دو تا رو این‌جا پیست کن.</p>
-      <p class="dim"><b>راه ۱ب — از 9Router (اگه نصبش داری، نیازی به نصب Antigravity نیست):</b><br>
-      ۱. پوشه‌ی نصب 9Router رو برای عبارت <span dir="ltr">apps.googleusercontent.com</span> جست‌وجو کن؛ همون مقادیر توی فایل‌های نصبش هست.<br>
-      ۲. مثل راه ۱، شناسه و سکرت ۲۸ کاراکتری رو بردار؛ اینجا هم دو جفت هست و جفت درست با تست مشخص می‌شه.<br>
-      ۳. همین دو تا رو این‌جا پیست کن.</p>
-      <p class="dim"><b>⚠️ کلاینت شخصی نساز:</b> ساخت اعتبارنامه‌ی شخصی توی کنسول گوگل برای این کار جواب نمی‌ده؛ پروژه‌ی شخصی به سرویس خصوصی Cloud Code دسترسی نداره و رله ارور می‌ده. فقط از راه ۱ یا ۱ب استفاده کن.</p>
-    </details>
+    <p class="dim">دو مقدار لازم داری: Client ID و Client Secret. این دو مقدار، رمز شخصی تو نیستند؛ اعتبارنامه‌ی عمومیِ اپ دسکتاپ Antigravity هستند که گوگل همراه خود اپ پخش کرده. بسته به اینکه کدام برنامه را داری، یکی از دو راه زیر را برو:</p>
+
+    <div class="route a">
+      <h3>راه الف — از اپ رسمی Antigravity</h3>
+      <ol>
+        <li>اپ رسمی Antigravity را روی کامپیوترت نصب کن. برای همین استخراج، وارد شدن به اپ لازم نیست؛ مقدارها توی خود فایل‌های نصب هستند.</li>
+        <li>پاورشل را باز کن و این دستور را بزن تا فایل‌هایی که مقدار را دارند پیدا شوند:</li>
+      </ol>
+      <div class="codeblock">
+        <div class="codehead"><span>پاورشل — پیدا کردن فایل‌ها</span><button data-copy-code>کپی</button></div>
+        <pre><code>findstr /S /M "apps.googleusercontent.com" "$env:LOCALAPPDATA\Programs\antigravity\*"</code></pre>
+      </div>
+      <ol start="3">
+        <li>حالا این اسکریپت را بزن تا شناسه‌ها و سکرت‌ها تمیز و بدون تکرار چاپ شوند:</li>
+      </ol>
+      <div class="codeblock">
+        <div class="codehead"><span>پاورشل — استخراج شناسه و سکرت</span><button data-copy-code>کپی</button></div>
+        <pre><code>$root = "$env:LOCALAPPDATA\Programs\antigravity"
+$ids = @()
+$secs = @()
+Get-ChildItem -Path $root -Recurse -File | ForEach-Object {
+    $text = [System.IO.File]::ReadAllText($_.FullName, [System.Text.Encoding]::GetEncoding(28591))
+    foreach ($m in [regex]::Matches($text, '[0-9]+-[a-z0-9]+\.apps\.googleusercontent\.com')) { $ids += $m.Value }
+    foreach ($m in [regex]::Matches($text, 'GOCSPX-[A-Za-z0-9_-]{28}')) { $secs += $m.Value }
+}
+$ids | Sort-Object -Unique
+$secs | Sort-Object -Unique</code></pre>
+      </div>
+      <ol start="4">
+        <li>دو لیست می‌بینی: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردار و پایین همین صفحه، توی مرحله‌ی ۱، پیست کن. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کن (نکته‌ی زیر را بخوان).</li>
+      </ol>
+      <div class="callout tip">نکته: فایل‌های خیلی بزرگ را با نوت‌پد باز نکن؛ هنگ می‌کند. همین اسکریپت بالا کار استخراج را می‌کند و لازم نیست فایل را باز کنی.</div>
+    </div>
+
+    <div class="route b">
+      <h3>راه ب — از 9Router (اگر نصبش داری، نیازی به نصب Antigravity نیست)</h3>
+      <ol>
+        <li><b>اول:</b> توی 9Router از بخش Providers یک بار Antigravity را اضافه کن. بعد از این کار، مقدارها توی فایل‌های نصب 9Router هستند.</li>
+        <li>پاورشل را باز کن و این دو دستور را بزن تا اول مسیر نصب پیدا شود و بعد فایل‌های حاوی مقدار مشخص شوند:</li>
+      </ol>
+      <div class="codeblock">
+        <div class="codehead"><span>پاورشل — مسیر نصب و پیدا کردن فایل‌ها</span><button data-copy-code>کپی</button></div>
+        <pre><code>$pkg = Join-Path (npm root -g) "9router"
+findstr /S /M "apps.googleusercontent.com" "$pkg\*"</code></pre>
+      </div>
+      <ol start="3">
+        <li>حالا این اسکریپت را بزن تا شناسه‌ها و سکرت‌ها تمیز و بدون تکرار چاپ شوند:</li>
+      </ol>
+      <div class="codeblock">
+        <div class="codehead"><span>پاورشل — استخراج شناسه و سکرت</span><button data-copy-code>کپی</button></div>
+        <pre><code>$pkg = Join-Path (npm root -g) "9router"
+$root = Join-Path $pkg "app\.next-cli-build"
+$ids = @()
+$secs = @()
+Get-ChildItem -Path $root -Recurse -File | ForEach-Object {
+    $text = [System.IO.File]::ReadAllText($_.FullName, [System.Text.Encoding]::GetEncoding(28591))
+    foreach ($m in [regex]::Matches($text, '[0-9]+-[a-z0-9]+\.apps\.googleusercontent\.com')) { $ids += $m.Value }
+    foreach ($m in [regex]::Matches($text, 'GOCSPX-[A-Za-z0-9_-]{28}')) { $secs += $m.Value }
+}
+$ids | Sort-Object -Unique
+$secs | Sort-Object -Unique</code></pre>
+      </div>
+      <ol start="4">
+        <li>دو لیست می‌بینی: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردار و پایین همین صفحه، توی مرحله‌ی ۱، پیست کن. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کن.</li>
+      </ol>
+      <div class="callout note">نکته: اگر از آن پوشه چیزی درنیامد، اسکریپت را یک بار روی کل پوشه‌ی نصب 9Router هم امتحان کن؛ در بعضی نسخه‌ها مقدارها توی پوشه‌ی دیگری از همان نصب هستند.</div>
+    </div>
+
+    <div class="callout warn"><b>چند نکته که خودمان یاد گرفتیم:</b><br>
+    • سکرت واقعی دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> است؛ اگر رشته‌ی بلندتری دیدی، دنباله‌اش اضافه‌ی فایل است و فقط همان ۲۸ کاراکتر را بردار.<br>
+    • دو لیست جدا جدا مرتب می‌شوند، پس «اولی با اولی» لزوماً جفت نیست؛ جفت درست با تست مشخص می‌شود: وقتی مرحله‌ی ۲ توکن برگرداند، یعنی جفت درست است.<br>
+    • با دو شناسه و دو سکرت، حداکثر ۴ ترکیب وجود دارد؛ پس اگر اولی نشد، ناامید نشو و بقیه را امتحان کن.</div>
+
+    <div class="callout warn"><b>⚠️ کلاینت شخصی نساز:</b> ساخت اعتبارنامه‌ی شخصی توی کنسول گوگل برای این کار جواب نمی‌دهد؛ پروژه‌ی شخصی به سرویس خصوصی Cloud Code دسترسی ندارد و رله ارور می‌دهد. فقط از راه الف یا ب استفاده کن.</div>
+
     <label>Client ID</label>
     <input id="clientId" dir="ltr" placeholder="...apps.googleusercontent.com">
     <label>Client Secret</label>
     <input id="clientSecret" dir="ltr" type="password" placeholder="GOCSPX-...">
   </div>
 
-  <div class="card">
+  <div class="card" id="step2">
     <h2><span class="stepnum">۲</span>ورود با گوگل</h2>
-    <p class="dim">دکمه رو بزن، با اکانتی که می‌خوای Relay روش کار کنه وارد شو (توصیه: اکانت جدا، نه اصلی) و اجازه بده. حساب رایگان گوگل هم جواب می‌ده (تست‌شده) و با اعتبارنامه‌ی رسمی نیازی به اضافه‌کردن تستر نیست. بعد گوگل به یه آدرس localhost می‌فرستدت که باز نمی‌شه — طبیعیه! کل آدرس رو از نوار آدرس مرورگر کپی کن و این‌جا پیست کن.</p>
+    <p class="dim">دکمه را بزن و با همان حسابی که می‌خواهی Relay رویش کار کند وارد شو و دسترسی را تایید کن. حساب رایگان گوگل هم جواب می‌دهد (تست‌شده) و با اعتبارنامه‌ی رسمی نیازی به اضافه‌کردن تستر نیست. بعد گوگل تو را به یک آدرس localhost می‌فرستد که باز نمی‌شود — طبیعی است! کل آدرس را از نوار آدرس مرورگر کپی کن و اینجا پیست کن.</p>
     <div class="row">
       <button id="loginBtn">🔐 ورود با گوگل</button>
     </div>
-    <label>آدرس برگشتی (Callback URL) رو این‌جا پیست کن:</label>
+    <label>آدرس برگشتی (Callback URL) را اینجا پیست کن:</label>
     <textarea id="callbackUrl" rows="3" placeholder="http://localhost:8080/callback?code=..."></textarea>
     <div class="row" style="margin-top:10px">
       <button id="exchangeBtn">دریافت توکن</button>
       <span class="dim" id="exchangeMsg"></span>
     </div>
+    <div class="callout note">نکته‌ها: کدی که توی آدرس است یک‌بارمصرف است و حدود ۱۰ دقیقه عمر دارد؛ اگر دیر شد، فقط کافی است دوباره «ورود با گوگل» را بزنی. اگر توکن برنگشت، اول جفت شناسه و سکرت را عوض کن (بخش «اگه گیر کردی» را ببین). بعد از دریافت توکن، مرحله‌ی ۳ همین‌جا باز می‌شود.</div>
   </div>
 
   <div class="card hidden" id="resultCard">
     <h2><span class="stepnum">۳</span>پک نصب تو آماده‌ست 🎉</h2>
-    <p class="dim">این مقادیر رو موقع نصب توی Vercel وارد می‌کنی. کلید Relay و پسورد داشبورد رو خودکار برات ساختم. <b>این صفحه رو تا تموم شدن نصب نبند و مقادیر رو جای امن نگه دار.</b></p>
+    <p class="dim">این مقادیر را موقع نصب توی Vercel وارد می‌کنی. کلید Relay و پسورد داشبورد را خودکار برایت ساختم. <b>این صفحه را تا تمام شدن نصب نبند و مقادیر را جای امن نگه دار.</b></p>
     <label>AG_REFRESH_TOKEN (توکن گوگل — مثل رمز اکانتت، دست کسی نده)</label>
     <div class="row"><div class="out" style="flex:1" id="outToken"></div><button class="ghost" data-copy="outToken">کپی</button></div>
     <label>RELAY_API_KEY (کلید Relay)</label>
@@ -82,10 +182,29 @@
     <label>DASH_PASSWORD (پسورد داشبورد)</label>
     <div class="row"><div class="out" style="flex:1" id="outPass"></div><button class="ghost" data-copy="outPass">کپی</button></div>
     <h2 style="margin-top:18px">حالا نصب با یک کلیک:</h2>
-    <p class="dim">دکمه‌ی زیر پروژه رو توی Vercel خودت می‌سازه و ازت می‌خواد همین مقادیر رو وارد کنی (به‌علاوه‌ی Client ID و Secret قدم ۱). بعد از Deploy، آدرس سرویس تو می‌شه: <span dir="ltr">https://&lt;پروژه‌ت&gt;.vercel.app/v1</span></p>
+    <p class="dim">دکمه‌ی زیر پروژه را توی Vercel خودت می‌سازد و ازت می‌خواهد همین مقادیر را وارد کنی (به‌علاوه‌ی Client ID و Secret مرحله‌ی ۱). بعد از Deploy، آدرس سرویس تو می‌شود: <span dir="ltr">https://&lt;پروژه‌ت&gt;.vercel.app/v1</span></p>
     <div class="row">
       <a id="deployBtn" href="#" target="_blank" rel="noopener"><button>🚀 نصب Relay روی Vercel</button></a>
     </div>
+  </div>
+
+  <div class="card" id="troubleshoot">
+    <h2>اگه گیر کردی</h2>
+    <h3>توکن برنگشت یا ارور ورود آمد</h3>
+    <p class="dim">معمولاً جفت شناسه و سکرت اشتباه است. ترکیب دیگری از همان دو لیست را امتحان کن تا توکن برگردد؛ همان‌طور که گفتیم، برگشتن توکن یعنی جفت درست است.</p>
+    <h3>کد منقضی شد</h3>
+    <p class="dim">کد حدود ۱۰ دقیقه عمر دارد. دوباره «ورود با گوگل» را بزن و این بار زودتر آدرس را پیست کن.</p>
+    <h3>آدرس برگشتی کد نداشت</h3>
+    <p class="dim">کل نوار آدرس مرورگر را کپی کن، نه فقط بخشی از آن. کد بعد از <span dir="ltr">code=</span> می‌آید.</p>
+    <h3>پوشه‌ی نصب را پیدا نکردی</h3>
+    <p class="dim">برای 9Router دستور <span dir="ltr">where.exe 9router</span> یا <span dir="ltr">npm root -g</span> مسیر نصب را نشان می‌دهد. برای اپ Antigravity، پوشه‌ی نصب معمولاً زیر <span dir="ltr">%LOCALAPPDATA%\Programs\antigravity</span> است.</p>
+    <h3>بعد از Deploy داشبورد مدل‌ها را نشان نداد</h3>
+    <p class="dim">اول مطمئن شو Deploy کامل شده و وضعیتش READY است. بعد پسورد داشبورد را درست وارد کن. اگر باز هم ارور پروژه دیدی، توکن را با همان مراحل دوباره بگیر.</p>
+  </div>
+
+  <div class="card" id="security">
+    <h2>امنیت</h2>
+    <p class="dim">شناسه و سکرت مرحله‌ی ۱، اعتبارنامه‌ی عمومی خود اپ هستند و رمز شخصی تو نیستند. ولی توکن مرحله‌ی ۲ و کلید Relay و پسورد داشبورد مرحله‌ی ۳، رازهای شخصی تو هستند؛ هیچ‌وقت آن‌ها را در کانال عمومی، اسکرین‌شات یا ویدئو نشان نده. اگر خواستی ویدئوی آموزشی بسازی، موقع تدوین روی این مقدارها را بپوشان.</p>
   </div>
 
   <footer id="footerLine"></footer>
@@ -128,7 +247,7 @@ async function pkce(){
 
 $("loginBtn").onclick = async function(){
   var cid = $("clientId").value.trim();
-  if (!cid) { alert("اول Client ID رو توی قدم ۱ وارد کن."); return; }
+  if (!cid) { alert("اول Client ID رو توی مرحله‌ی ۱ وارد کن."); return; }
   var p = await pkce();
   sessionStorage.setItem("pkce_verifier", p.verifier);
   var state = b64u(crypto.getRandomValues(new Uint8Array(16)));
@@ -172,7 +291,7 @@ $("exchangeBtn").onclick = async function(){
     });
     var r = await fetch("https://oauth2.googleapis.com/token", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body });
     var j = await r.json();
-    if (!j.refresh_token) { msg.textContent = "توکن برنگشت: " + ((j.error_description || j.error || "خطای نامشخص")) + " — اگه قبلاً وارد شدی، یه بار دیگه از قدم ۲ شروع کن."; return; }
+    if (!j.refresh_token) { msg.textContent = "توکن برنگشت: " + ((j.error_description || j.error || "خطای نامشخص")) + " — اگه قبلاً وارد شدی، یه بار دیگه از مرحله‌ی ۲ شروع کن."; return; }
     msg.textContent = "";
     $("outToken").textContent = j.refresh_token;
     $("outKey").textContent = "sk-relay-" + randHex(24);
@@ -192,6 +311,14 @@ document.querySelectorAll("[data-copy]").forEach(function(b){
   b.onclick = async function(){
     var el = $(b.getAttribute("data-copy"));
     try { await navigator.clipboard.writeText(el.textContent); b.textContent = "کپی شد ✓"; setTimeout(function(){ b.textContent = "کپی"; }, 2000); }
+    catch (e) {}
+  };
+});
+
+document.querySelectorAll("[data-copy-code]").forEach(function(b){
+  b.onclick = async function(){
+    var code = b.parentElement.parentElement.querySelector("code");
+    try { await navigator.clipboard.writeText(code.innerText); b.textContent = "کپی شد ✓"; setTimeout(function(){ b.textContent = "کپی"; }, 2000); }
     catch (e) {}
   };
 });
