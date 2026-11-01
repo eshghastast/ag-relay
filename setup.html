@@ -20,7 +20,8 @@
   .route{border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0;background:var(--panel2)}
   .route.a{border-top:3px solid var(--accent)}
   .route.b{border-top:3px solid var(--accent2)}
-  .route h3{margin-top:0;font-size:16px}
+  .route h3{margin-top:0;font-size:16px;display:flex;align-items:center;gap:10px}
+  .route h3 img{width:30px;height:30px;border-radius:8px;flex-shrink:0}
   .callout{border-radius:12px;padding:12px 16px;margin:12px 0;font-size:14px}
   .tip{background:#052E16;border:1px solid #14532D}
   .warn{background:#451A03;border:1px solid #92400E}
@@ -51,14 +52,15 @@
   .sidebar{width:250px;flex-shrink:0;position:sticky;top:16px}
   .side-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px}
   .side-card h3{margin:0 0 8px;font-size:15px}
-  .side-nav a{display:block;color:var(--text);text-decoration:none;padding:6px 10px;border-radius:8px;font-size:14px}
+  .side-nav a{display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;padding:6px 10px;border-radius:8px;font-size:14px}
+  .side-nav img{width:22px;height:22px;border-radius:6px;flex-shrink:0}
   .side-nav a:hover{background:var(--panel2);color:#86EFAC}
   main{flex:1;min-width:0}
   @media (max-width:820px){
     .layout{flex-direction:column}
     .sidebar{width:auto;position:static}
     .side-nav{display:flex;flex-wrap:wrap;gap:6px}
-    .side-nav a{display:inline-block}
+    .side-nav a{display:inline-flex}
   }
   ol,ul{padding-inline-start:20px}
   li{margin:6px 0}
@@ -86,6 +88,8 @@
       <nav class="side-nav">
         <a href="#needs">چی لازم داری؟</a>
         <a href="#step1">مرحله ۱: اعتبارنامه</a>
+        <a href="#route-antigravity"><img src="assets/antigravity.png" alt="">اتصال با Antigravity</a>
+        <a href="#route-9router"><img src="assets/9router.svg" alt="">اتصال با 9Router</a>
         <a href="#step2">مرحله ۲: ورود با گوگل</a>
         <a href="#troubleshoot">اگه گیر کردی</a>
         <a href="#security">امنیت</a>
@@ -115,8 +119,8 @@
     <h2><span class="stepnum">۱</span>اعتبارنامه‌ی اپ Antigravity</h2>
     <p class="dim">دو مقدار لازم داری: Client ID و Client Secret. این دو مقدار، رمز شخصی تو نیستند؛ اعتبارنامه‌ی عمومیِ اپ دسکتاپ Antigravity هستند که گوگل همراه خود اپ پخش کرده. بسته به اینکه کدام برنامه را داری، یکی از دو راه زیر را برو:</p>
 
-    <div class="route a">
-      <h3>راه الف — از اپ رسمی Antigravity</h3>
+    <div class="route a" id="route-antigravity">
+      <h3><img src="assets/antigravity.png" alt="">راه الف — از اپ رسمی Antigravity</h3>
       <ol>
         <li>اپ رسمی Antigravity را روی کامپیوترت نصب کن. برای همین استخراج، وارد شدن به اپ لازم نیست؛ مقدارها توی خود فایل‌های نصب هستند.</li>
         <li>پاورشل را باز کن و این دستور را بزن تا فایل‌هایی که مقدار را دارند پیدا شوند:</li>
@@ -147,8 +151,8 @@ $secs | Sort-Object -Unique</code></pre>
       <div class="callout tip">نکته: فایل‌های خیلی بزرگ را با نوت‌پد باز نکن؛ هنگ می‌کند. همین اسکریپت بالا کار استخراج را می‌کند و لازم نیست فایل را باز کنی.</div>
     </div>
 
-    <div class="route b">
-      <h3>راه ب — از 9Router (اگر نصبش داری، نیازی به نصب Antigravity نیست)</h3>
+    <div class="route b" id="route-9router">
+      <h3><img src="assets/9router.svg" alt="">راه ب — از 9Router (اگر نصبش داری، نیازی به نصب Antigravity نیست)</h3>
       <ol>
         <li><b>اول:</b> توی 9Router از بخش Providers یک بار Antigravity را اضافه کن. بعد از این کار، مقدارها توی فایل‌های نصب 9Router هستند.</li>
         <li>پاورشل را باز کن و این دو دستور را بزن تا اول مسیر نصب پیدا شود و بعد فایل‌های حاوی مقدار مشخص شوند:</li>
