@@ -9,17 +9,19 @@
   *{box-sizing:border-box}
   body{font-family:Tahoma,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0;line-height:2}
   .layout{display:flex;gap:20px;padding:20px;align-items:flex-start}
-  h1{font-size:24px;margin:0 0 8px} h2{font-size:18px;margin:0 0 10px} h3{font-size:15px;margin:18px 0 6px}
+  h1{font-size:24px;margin:0} h2{font-size:18px;margin:0 0 10px;display:flex;align-items:center;gap:10px} h2::after{content:"";flex:1;height:1px;background:var(--border)} h3{font-size:15px;margin:18px 0 6px}
   .dim{color:var(--dim);font-size:14px}
   .badge{display:inline-block;background:#052E16;color:#86EFAC;border:1px solid #14532D;border-radius:999px;padding:2px 12px;font-size:12px}
   .nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
   .nav a{color:var(--text);text-decoration:none;border:1px solid var(--border);border-radius:999px;padding:4px 14px;font-size:13px;background:var(--panel)}
   .nav a:hover{border-color:var(--accent)}
   .card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;margin:16px 0}
+  .card:hover{border-color:#243349}
   .stepnum{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#04120A;align-items:center;justify-content:center;font-weight:700;margin-inline-end:8px}
   .route{border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0;background:var(--panel2)}
   .route.a{border-top:3px solid var(--accent)}
   .route.b{border-top:3px solid var(--accent2)}
+  .route:hover{border-color:#243349}
   .route h3{margin-top:0;font-size:16px;display:flex;align-items:center;gap:10px}
   .route h3 img{width:30px;height:30px;border-radius:8px;flex-shrink:0}
   .callout{border-radius:12px;padding:12px 16px;margin:12px 0;font-size:14px}
@@ -36,23 +38,27 @@
   button{background:var(--accent);border-color:var(--accent);color:#04120A;cursor:pointer;width:auto;padding:9px 18px;font-weight:700}
   button:hover{filter:brightness(1.1)}
   button.ghost{background:var(--panel2);color:var(--text);border-color:var(--border);font-weight:400}
+  input:focus,textarea:focus{outline:none;border-color:var(--accent)}
   .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   label{display:block;font-size:13px;color:var(--dim);margin:10px 0 4px}
   .out{background:var(--code);border:1px solid var(--border);border-radius:10px;padding:10px 12px;direction:ltr;text-align:left;word-break:break-all;font-size:12.5px}
   .hidden{display:none}
   a{color:#86EFAC}
   .brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-  .site-header{border-bottom:1px solid var(--border);background:var(--panel)}
-  .head-inner{padding:22px 24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
+  .site-header{border-bottom:1px solid var(--border);background:var(--panel);position:sticky;top:0;z-index:20}
+  .head-inner{padding:16px 24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
+  .brand-row{display:flex;align-items:center;gap:12px}
+  .brand-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#22C55E,#0EA5E9);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;flex-shrink:0}
   .head-about{color:var(--dim);font-size:14px;max-width:680px;margin:8px 0}
   .channel-chip{text-align:end;flex-shrink:0}
   .channel-chip b{display:block;font-size:18px}
   .site-footer{border-top:1px solid var(--border);background:var(--panel);margin-top:8px}
-  .foot-inner{padding:20px 24px}
+  .foot-inner{padding:20px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .sidebar{width:250px;flex-shrink:0;position:sticky;top:16px}
   .side-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px}
   .side-card h3{margin:0 0 8px;font-size:15px}
-  .side-nav a{display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;padding:6px 10px;border-radius:8px;font-size:14px}
+  .side-nav a{display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;padding:9px 12px;border-radius:8px;font-size:14px}
+  .side-nav svg{flex-shrink:0}
   .side-nav img{width:22px;height:22px;border-radius:6px;flex-shrink:0}
   .side-nav a:hover{background:var(--panel2);color:#86EFAC}
   main{flex:1;min-width:0}
@@ -70,7 +76,7 @@
 <header class="site-header">
   <div class="head-inner">
     <div>
-      <h1>⚡ Relay — راهنمای کامل نصب</h1>
+      <div class="brand-row"><div class="brand-mark">⚡</div><h1>Relay — راهنمای کامل نصب</h1></div>
       <span class="badge">بدون ترمینالِ پیچیده · با حساب رایگان هم کار می‌کند</span>
       <p class="head-about">Relay ابزار متن‌باز KARA AI است؛ مدل‌های Antigravity را با حساب گوگل خودت و روی Vercel خودت اجرا می‌کند، بدون سرور واسط و بدون اینکه توکنت دست کسی باشد.</p>
       <span class="dim" id="brandLine"></span>
@@ -86,13 +92,13 @@
     <div class="side-card">
       <h3>فهرست راهنما</h3>
       <nav class="side-nav">
-        <a href="#needs">چی لازم داری؟</a>
-        <a href="#step1">مرحله ۱: اعتبارنامه</a>
+        <a href="#needs"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>چی لازم داری؟</a>
+        <a href="#step1"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>مرحله ۱: اعتبارنامه</a>
         <a href="#route-antigravity"><img src="assets/antigravity.png" alt="">اتصال با Antigravity</a>
         <a href="#route-9router"><img src="assets/9router.svg" alt="">اتصال با 9Router</a>
-        <a href="#step2">مرحله ۲: ورود با گوگل</a>
-        <a href="#troubleshoot">اگه گیر کردی</a>
-        <a href="#security">امنیت</a>
+        <a href="#step2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>مرحله ۲: ورود با گوگل</a>
+        <a href="#troubleshoot"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>اگه گیر کردی</a>
+        <a href="#security"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>امنیت</a>
       </nav>
     </div>
     <div class="side-card">
