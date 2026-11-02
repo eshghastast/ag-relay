@@ -61,6 +61,17 @@
   .side-nav svg{flex-shrink:0}
   .side-nav img{width:22px;height:22px;border-radius:6px;flex-shrink:0}
   .side-nav a:hover{background:var(--panel2);color:#86EFAC}
+  .screen{display:none}
+  .screen.active{display:block}
+  .side-nav a.active{background:#12281A;color:#86EFAC}
+  .step-nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+  .pick{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pick-btn{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:right;width:100%;font-weight:400}
+  .pick-btn:hover{border-color:var(--accent);filter:none}
+  .pick-btn img{width:34px;height:34px;border-radius:8px;display:block;margin-bottom:8px}
+  .pick-btn b{display:block;font-size:15px}
+  #route-antigravity,#route-9router{display:none}
+  #route-antigravity.show,#route-9router.show{display:block}
   main{flex:1;min-width:0}
   @media (max-width:820px){
     .layout{flex-direction:column}
@@ -109,8 +120,9 @@
   </aside>
   <main>
   <p class="dim">این راهنما قدم‌به‌قدم نشانت می‌دهد چطور با اکانت خودت یک Relay شخصی بسازی: اول اعتبارنامه‌ی اپ را از برنامه‌ای که نصب داری برمی‌داری، بعد با حساب گوگل خودت وارد می‌شوی و توکن می‌گیری، و آخر با یک کلیک روی Vercel نصبش می‌کنی. همه‌ی کارها فقط توی مرورگر خودت انجام می‌شود؛ این صفحه هیچ‌چیز را ذخیره نمی‌کند و هیچ اطلاعاتی به هیچ سروری نمی‌فرستد.</p>
+  <div class="dim small" id="stepIndicator" style="margin-bottom:4px"></div>
 
-  <div class="card" id="needs">
+  <div class="card screen" id="needs">
     <h2>چی لازم داری؟</h2>
     <ul>
       <li><b>یکی از این دو برنامه روی کامپیوترت:</b> اپ Antigravity یا 9Router. هر کدام را داری کافی است؛ لازم نیست هر دو را نصب کنی.</li>
@@ -119,11 +131,21 @@
       <li><b>پاورشل ویندوز:</b> برای دستورهای استخراج زیر. نیازی به نصب برنامه‌ی اضافه نیست.</li>
     </ul>
     <div class="callout note">نکته: این راهنما را تا آخر با همان حسابی که می‌خواهی Relay رویش کار کند جلو برو؛ وسط راه حساب را عوض نکن.</div>
+    <div class="step-nav"><span></span><button type="button" data-goto="step1">مرحله‌ی بعد: اعتبارنامه ←</button></div>
   </div>
 
-  <div class="card" id="step1">
+  <div class="card screen" id="step1">
     <h2><span class="stepnum">۱</span>اعتبارنامه‌ی اپ Antigravity</h2>
     <p class="dim">دو مقدار لازم داری: Client ID و Client Secret. این دو مقدار، رمز شخصی تو نیستند؛ اعتبارنامه‌ی عمومیِ اپ دسکتاپ Antigravity هستند که گوگل همراه خود اپ پخش کرده. بسته به اینکه کدام برنامه را داری، یکی از دو راه زیر را برو:</p>
+    <div class="callout note">نکته: دستورهای این صفحه به نام کاربری کامپیوترت کاری ندارند؛ <span dir="ltr">$env:LOCALAPPDATA</span> و <span dir="ltr">npm root -g</span> خودشان مسیر مخصوص همان کاربر را پیدا می‌کنند، پس روی هر کامپیوتری همین دستورها را بدون تغییر بزن.</div>
+    <div id="routePicker">
+      <p class="dim">کدام برنامه را داری؟ یکی را انتخاب کن تا فقط دستورهای همان یکی را ببینی:</p>
+      <div class="pick">
+        <button type="button" class="pick-btn" data-route="route-antigravity"><img src="assets/antigravity.png" alt=""><b>اپ رسمی Antigravity</b><span class="dim">اگر اپ Antigravity را نصب داری</span></button>
+        <button type="button" class="pick-btn" data-route="route-9router"><img src="assets/9router.svg" alt=""><b>9Router</b><span class="dim">اگر 9Router را نصب داری؛ نیازی به نصب Antigravity نیست</span></button>
+      </div>
+    </div>
+    <div id="routeBack" class="hidden" style="margin-bottom:12px"><button type="button" class="ghost" id="routeBackBtn">→ انتخاب دوباره‌ی برنامه</button></div>
 
     <div class="route a" id="route-antigravity">
       <h3><img src="assets/antigravity.png" alt="">راه الف — از اپ رسمی Antigravity</h3>
@@ -202,9 +224,10 @@ $secs | Sort-Object -Unique</code></pre>
     <input id="clientId" dir="ltr" placeholder="...apps.googleusercontent.com">
     <label>Client Secret</label>
     <input id="clientSecret" dir="ltr" type="password" placeholder="GOCSPX-...">
+    <div class="step-nav"><button type="button" class="ghost" data-goto="needs">→ مرحله‌ی قبل</button><button type="button" data-goto="step2">مرحله‌ی بعد: ورود با گوگل ←</button></div>
   </div>
 
-  <div class="card" id="step2">
+  <div class="card screen" id="step2">
     <h2><span class="stepnum">۲</span>ورود با گوگل</h2>
     <p class="dim">دکمه را بزن و با همان حسابی که می‌خواهی Relay رویش کار کند وارد شو و دسترسی را تایید کن. حساب رایگان گوگل هم جواب می‌دهد (تست‌شده) و با اعتبارنامه‌ی رسمی نیازی به اضافه‌کردن تستر نیست. بعد گوگل تو را به یک آدرس localhost می‌فرستد که باز نمی‌شود — طبیعی است! کل آدرس را از نوار آدرس مرورگر کپی کن و اینجا پیست کن.</p>
     <div class="row">
@@ -217,6 +240,7 @@ $secs | Sort-Object -Unique</code></pre>
       <span class="dim" id="exchangeMsg"></span>
     </div>
     <div class="callout note">نکته‌ها: کدی که توی آدرس است یک‌بارمصرف است و حدود ۱۰ دقیقه عمر دارد؛ اگر دیر شد، فقط کافی است دوباره «ورود با گوگل» را بزنی. اگر توکن برنگشت، اول جفت شناسه و سکرت را عوض کن (بخش «اگه گیر کردی» را ببین). بعد از دریافت توکن، مرحله‌ی ۳ همین‌جا باز می‌شود.</div>
+    <div class="step-nav"><button type="button" class="ghost" data-goto="step1">→ مرحله‌ی قبل</button><button type="button" data-goto="troubleshoot">مرحله‌ی بعد: رفع اشکال ←</button></div>
   </div>
 
   <div class="card hidden" id="resultCard">
@@ -235,23 +259,48 @@ $secs | Sort-Object -Unique</code></pre>
     </div>
   </div>
 
-  <div class="card" id="troubleshoot">
+  <div class="card screen" id="troubleshoot">
     <h2>اگه گیر کردی</h2>
     <h3>توکن برنگشت یا ارور ورود آمد</h3>
-    <p class="dim">معمولاً جفت شناسه و سکرت اشتباه است. ترکیب دیگری از همان دو لیست را امتحان کن تا توکن برگردد؛ همان‌طور که گفتیم، برگشتن توکن یعنی جفت درست است.</p>
-    <h3>کد منقضی شد</h3>
-    <p class="dim">کد حدود ۱۰ دقیقه عمر دارد. دوباره «ورود با گوگل» را بزن و این بار زودتر آدرس را پیست کن.</p>
+    <p class="dim">اول خونسرد باش؛ این خطا تقریباً همیشه یعنی جفت شناسه و سکرت با هم جور نیستند، نه اینکه حسابت خراب باشد. دلیلش این است: توی فایل‌های اپ، معمولاً دو شناسه و دو سکرتِ متفاوت هست (مال دو کلاینت مختلف گوگل) و فقط یکی از جفت‌ها کلاینتِ واقعیِ Antigravity است. دو لیستی که اسکریپت چاپ کرد، هر کدام جداگانه مرتب شده‌اند، پس «اولی با اولی» لزوماً جفت درست نیست؛ فقط وقتی مرحله‌ی ۲ توکن برگرداند، معلوم می‌شود جفت درست را زده‌ای.</p>
+    <p class="dim"><b>مثال با اسم‌های فرضی (نه کد واقعی):</b> فرض کن لیست شناسه‌ها این دوتاست: «شناسه‌ی الف» و «شناسه‌ی ب»، و لیست سکرت‌ها هم این دوتاست: «سکرت ۱» و «سکرت ۲». پس فقط ۴ ترکیب ممکن است: الف+۱، الف+۲، ب+۱، ب+۲. هر بار یکی را توی مرحله‌ی ۱ می‌زنی و «دریافت توکن» را می‌زنی؛ ترکیب‌هایی که جواب نمی‌دهند ارور می‌دهند و رد می‌شوند. همان ترکیبی که توکن برگرداند، جفت درست است و دیگر لازم نیست بقیه را امتحان کنی. اگر هر ۴ ترکیب را زدی و هیچ‌کدام توکن نداد، یعنی یا سکرت را ناقص کپی کرده‌ای (سکرت دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> است) یا از راه اشتباه استخراج کرده‌ای؛ یک بار دیگر اسکریپت همان راه را بزن و خروجی را با دقت کپی کن.</p>
+    <h3>کد منقضی شد (یا ارور کد نامعتبر آمد)</h3>
+    <p class="dim">کدی که توی آدرس برگشتی است، یک‌بارمصرف است و فقط حدود ۱۰ دقیقه عمر دارد؛ یعنی فقط یک بار می‌شود با آن توکن گرفت و بعد از ۱۰ دقیقه دیگر به درد نمی‌خورد. اگر دیر کردی، یا همان کد را دوبار زدی، این ارور طبیعی است و ربطی به شناسه و سکرت ندارد. راه‌حلش ساده است: دوباره «ورود با گوگل» را بزن تا گوگل یک کد تازه بدهد، این بار همان لحظه کل آدرس را کپی کن و سریع «دریافت توکن» را بزن. نکته: هر بار که «ورود با گوگل» را می‌زنی، فقط همان کدِ آخری معتبر است؛ کدهای قبلی خودبه‌خود باطل می‌شوند.</p>
     <h3>آدرس برگشتی کد نداشت</h3>
     <p class="dim">کل نوار آدرس مرورگر را کپی کن، نه فقط بخشی از آن. کد بعد از <span dir="ltr">code=</span> می‌آید.</p>
     <h3>پوشه‌ی نصب را پیدا نکردی</h3>
     <p class="dim">برای 9Router دستور <span dir="ltr">where.exe 9router</span> یا <span dir="ltr">npm root -g</span> مسیر نصب را نشان می‌دهد. برای اپ Antigravity، پوشه‌ی نصب معمولاً زیر <span dir="ltr">%LOCALAPPDATA%\Programs\antigravity</span> است.</p>
     <h3>بعد از Deploy داشبورد مدل‌ها را نشان نداد</h3>
     <p class="dim">اول مطمئن شو Deploy کامل شده و وضعیتش READY است. بعد پسورد داشبورد را درست وارد کن. اگر باز هم ارور پروژه دیدی، توکن را با همان مراحل دوباره بگیر.</p>
+    <div class="step-nav"><button type="button" class="ghost" data-goto="step2">→ مرحله‌ی قبل</button><button type="button" data-goto="security">مرحله‌ی بعد: امنیت ←</button></div>
   </div>
 
-  <div class="card" id="security">
+  <div class="card screen" id="security">
     <h2>امنیت</h2>
-    <p class="dim">شناسه و سکرت مرحله‌ی ۱، اعتبارنامه‌ی عمومی خود اپ هستند و رمز شخصی تو نیستند. ولی توکن مرحله‌ی ۲ و کلید Relay و پسورد داشبورد مرحله‌ی ۳، رازهای شخصی تو هستند؛ هیچ‌وقت آن‌ها را در کانال عمومی، اسکرین‌شات یا ویدئو نشان نده. اگر خواستی ویدئوی آموزشی بسازی، موقع تدوین روی این مقدارها را بپوشان.</p>
+    <p class="dim">این راهنما طوری ساخته شده که هیچ رازی از مرورگر تو بیرون نمی‌رود، ولی چند راز هست که خودت باید مثل رمز حسابت ازشان محافظت کنی. اول فرقشان را بشناس:</p>
+    <h3>چه چیزی راز نیست</h3>
+    <p class="dim">شناسه و سکرت مرحله‌ی ۱، اعتبارنامه‌ی عمومیِ خود اپ Antigravity هستند؛ همراه فایل‌های نصب پخش شده‌اند و رمز شخصی تو نیستند. دانستنشان به‌تنهایی به کسی دسترسی به حسابت نمی‌دهد.</p>
+    <h3>چه چیزی راز است و چرا</h3>
+    <ul>
+      <li><b>توکن گوگل (AG_REFRESH_TOKEN):</b> کلید ورود به سهمیه‌ی Antigravity حساب توست؛ هر کس آن را داشته باشد می‌تواند با سهمیه‌ی تو مدل صدا بزند. مثل رمز حسابت نگهش دار.</li>
+      <li><b>کلید Relay (RELAY_API_KEY):</b> هر کس این کلید را داشته باشد می‌تواند از رله‌ی تو استفاده کند و سهمیه‌ات را مصرف کند.</li>
+      <li><b>پسورد داشبورد (DASH_PASSWORD):</b> کلید ورود به صفحه‌ی مدیریت رله‌ی توست.</li>
+    </ul>
+    <h3>کجا نگهشان دار</h3>
+    <ul>
+      <li>فقط توی متغیرهای محیطی (Environment Variables) پروژه‌ی Vercel؛ Vercel آن‌ها را رمزنگاری‌شده نگه می‌دارد. هیچ‌وقت آن‌ها را توی کد، گیت‌هاب، فایل README یا پیام عمومی ننویس.</li>
+      <li>این صفحه هیچ مقداری را ذخیره یا ارسال نمی‌کند؛ همه‌ی کارها فقط توی مرورگر خودت انجام می‌شود. با این حال، بعد از تمام شدن نصب، تب را ببند تا مقادیر از حافظه‌ی موقت مرورگر پاک شوند.</li>
+      <li>حساب گوگلی که برای رله استفاده می‌کنی، بهتر است حساب جدا باشد نه حساب اصلی‌ات؛ این‌طوری اگر روزی رازی لو رفت، فقط همان حساب درگیر است.</li>
+    </ul>
+    <h3>اگر چیزی لو رفت — فوری این سه کار را بکن</h3>
+    <ol>
+      <li>توی حساب گوگلت دسترسی اپ را قطع کن: <span dir="ltr">myaccount.google.com → Security → Third-party access</span> و دسترسی مربوط به Antigravity را حذف کن؛ این کار توکن قبلی را باطل می‌کند.</li>
+      <li>توی همین راهنما یک توکن تازه بگیر و کلید Relay و پسورد داشبورد تازه بساز.</li>
+      <li>مقادیر تازه را توی Vercel جایگزین کن و دوباره Deploy بزن تا مقادیر لو‌رفته دیگر کار نکنند.</li>
+    </ol>
+    <h3>موقع ضبط ویدئو یا اسکرین‌شات</h3>
+    <p class="dim">موقع تدوین، روی توکن، کلید و پسورد را کامل بپوشان؛ حتی چند فریم لو رفتن کافی است تا کسی آن را بردارد. برای ویدئوی آموزشی امن‌تر است که با یک پروژه‌ی آزمایشی و مقادیر یک‌بارمصرف ضبط کنی و بعد از ضبط، آن پروژه را پاک کنی.</p>
+    <div class="step-nav"><button type="button" class="ghost" data-goto="troubleshoot">→ مرحله‌ی قبل</button><span></span></div>
   </div>
 
   </main>
@@ -379,6 +428,54 @@ document.querySelectorAll("[data-copy-code]").forEach(function(b){
     catch (e) {}
   };
 });
+</script>
+<script>
+// ---- wizard: one screen at a time + route picker (content/IDs/JS above untouched) ----
+(function(){
+  var ORDER = ["needs","step1","step2","troubleshoot","security"];
+  var NAMES = {needs:"چی لازم داری؟",step1:"مرحله ۱: اعتبارنامه",step2:"مرحله ۲: ورود با گوگل",troubleshoot:"اگه گیر کردی",security:"امنیت"};
+  function W(id){ return document.getElementById(id); }
+  function selectRoute(id){
+    ["route-antigravity","route-9router"].forEach(function(r){ W(r).classList.remove("show"); });
+    if(id){ W(id).classList.add("show"); W("routePicker").classList.add("hidden"); W("routeBack").classList.remove("hidden"); }
+  }
+  function showPicker(){
+    ["route-antigravity","route-9router"].forEach(function(r){ W(r).classList.remove("show"); });
+    W("routePicker").classList.remove("hidden"); W("routeBack").classList.add("hidden");
+  }
+  function showScreen(id){
+    if(ORDER.indexOf(id) < 0) return;
+    ORDER.forEach(function(s){ W(s).classList.remove("active"); });
+    W(id).classList.add("active");
+    document.querySelectorAll(".side-nav a").forEach(function(a){
+      var h = a.getAttribute("href") || "";
+      a.classList.toggle("active", h === "#" + id);
+    });
+    W("stepIndicator").textContent = "صفحه‌ی " + (ORDER.indexOf(id) + 1) + " از " + ORDER.length + ": " + NAMES[id];
+    window.scrollTo({top: 0, behavior: "smooth"});
+  }
+  document.querySelectorAll(".side-nav a").forEach(function(a){
+    a.addEventListener("click", function(e){
+      var h = a.getAttribute("href") || "";
+      if(h.charAt(0) !== "#") return;
+      e.preventDefault();
+      var target = h.slice(1);
+      if(target === "route-antigravity" || target === "route-9router"){ showScreen("step1"); selectRoute(target); }
+      else { showScreen(target); }
+    });
+  });
+  document.querySelectorAll("[data-goto]").forEach(function(b){
+    b.addEventListener("click", function(){ showScreen(b.getAttribute("data-goto")); });
+  });
+  document.querySelectorAll("[data-route]").forEach(function(b){
+    b.addEventListener("click", function(){ selectRoute(b.getAttribute("data-route")); });
+  });
+  W("routeBackBtn").addEventListener("click", showPicker);
+  var start = (location.hash || "").replace("#", "");
+  if(start === "route-antigravity" || start === "route-9router"){ showScreen("step1"); selectRoute(start); }
+  else if(ORDER.indexOf(start) >= 0){ showScreen(start); }
+  else { showScreen("needs"); }
+})();
 </script>
 </body>
 </html>
