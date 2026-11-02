@@ -51,6 +51,7 @@ body {
   line-height: 1.9;
   font-size: 15px;
   min-height: 100vh;
+  overflow-x: clip;
 }
 a { color: var(--green-text); text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -82,6 +83,7 @@ li { margin: 7px 0; }
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
+  min-width: 0;
 }
 .brand-mark {
   width: 40px;
@@ -110,6 +112,7 @@ li { margin: 7px 0; }
   gap: 12px;
   flex-wrap: wrap;
   padding: 0 16px;
+  min-width: 0;
 }
 .badge-pill {
   display: inline-flex;
@@ -129,9 +132,11 @@ li { margin: 7px 0; }
   font-size: 13px;
   line-height: 1.6;
   display: none;
+  min-width: 0;
 }
 .channel-chip {
   flex-shrink: 0;
+  min-width: 0;
   text-align: center;
   background: var(--surface2);
   border: 1px solid var(--border);
@@ -638,6 +643,9 @@ label {
     grid-template-columns: 1fr 1fr;
     gap: 14px;
   }
+  .head-inner { flex-wrap: wrap; height: auto; padding: 14px 16px; }
+  .head-title { white-space: normal; }
+  .head-meta { flex-basis: 100%; padding: 0; }
 }
 @media (max-width: 600px) {
   .sidebar { grid-template-columns: 1fr; }
@@ -818,7 +826,9 @@ label {
             <span class="codehead-label">پاورشل — پیدا کردن فایل‌ها</span>
             <button data-copy-code>کپی</button>
           </div>
-          <pre><code>findstr /S /M "apps.googleusercontent.com" "$env:LOCALAPPDATA\Programs\antigravity\*"</code></pre>
+          <pre><code># در همه‌ی فایل‌های پوشه‌ی نصب Antigravity دنبال عبارت apps.googleusercontent.com می‌گردد
+# کلید S یعنی زیرپوشه‌ها را هم بگردد و کلید M یعنی فقط نام فایل‌ها را نشان بدهد، نه خود متن را
+findstr /S /M "apps.googleusercontent.com" "$env:LOCALAPPDATA\Programs\antigravity\*"</code></pre>
         </div>
         <ol start="3">
           <li>سپس این اسکریپت را اجرا کنید تا شناسه‌ها و سکرت‌ها به‌صورت مرتب و بدون تکرار چاپ شوند:</li>
@@ -828,15 +838,24 @@ label {
             <span class="codehead-label">پاورشل — استخراج شناسه و سکرت</span>
             <button data-copy-code>کپی</button>
           </div>
-          <pre><code>$root = "$env:LOCALAPPDATA\Programs\antigravity"
+          <pre><code># پوشه‌ی نصب Antigravity را به‌عنوان ریشه‌ی جستجو انتخاب می‌کند
+$root = "$env:LOCALAPPDATA\Programs\antigravity"
+# دو لیست خالی می‌سازد: یکی برای شناسه‌ها و یکی برای سکرت‌ها
 $ids = @()
 $secs = @()
+# همه‌ی فایل‌های آن پوشه و زیرپوشه‌هایش را یکی‌یکی بررسی می‌کند
 Get-ChildItem -Path $root -Recurse -File | ForEach-Object {
+# متن هر فایل را با رمزگذاری لاتین می‌خواند تا کاراکترهای فایل‌های باینری هم درست خوانده شوند
     $text = [System.IO.File]::ReadAllText($_.FullName, [System.Text.Encoding]::GetEncoding(28591))
+# شناسه‌های مشتری گوگل را با الگو پیدا می‌کند و به لیست شناسه‌ها اضافه می‌کند
     foreach ($m in [regex]::Matches($text, '[0-9]+-[a-z0-9]+\.apps\.googleusercontent\.com')) { $ids += $m.Value }
+# سکرت‌ها را با الگو پیدا می‌کند و به لیست سکرت‌ها اضافه می‌کند
     foreach ($m in [regex]::Matches($text, 'GOCSPX-[A-Za-z0-9_-]{28}')) { $secs += $m.Value }
+# پایان بررسی فایل‌ها
 }
+# شناسه‌ها را مرتب می‌کند و تکراری‌ها را حذف می‌کند
 $ids | Sort-Object -Unique
+# سکرت‌ها را مرتب می‌کند و تکراری‌ها را حذف می‌کند
 $secs | Sort-Object -Unique</code></pre>
         </div>
         <ol start="4">
@@ -863,7 +882,9 @@ $secs | Sort-Object -Unique</code></pre>
             <span class="codehead-label">پاورشل — مسیر نصب و پیدا کردن فایل‌ها</span>
             <button data-copy-code>کپی</button>
           </div>
-          <pre><code>$pkg = Join-Path (npm root -g) "9router"
+          <pre><code># مسیر پوشه‌ی نصب سراسری 9Router را پیدا می‌کند و در متغیر pkg می‌گذارد
+$pkg = Join-Path (npm root -g) "9router"
+# در همه‌ی فایل‌های آن پوشه دنبال عبارت apps.googleusercontent.com می‌گردد و فقط نام فایل‌ها را نشان می‌دهد
 findstr /S /M "apps.googleusercontent.com" "$pkg\*"</code></pre>
         </div>
         <ol start="3">
@@ -874,16 +895,26 @@ findstr /S /M "apps.googleusercontent.com" "$pkg\*"</code></pre>
             <span class="codehead-label">پاورشل — استخراج شناسه و سکرت</span>
             <button data-copy-code>کپی</button>
           </div>
-          <pre><code>$pkg = Join-Path (npm root -g) "9router"
+          <pre><code># مسیر پوشه‌ی نصب سراسری 9Router را پیدا می‌کند
+$pkg = Join-Path (npm root -g) "9router"
+# از داخل آن، پوشه‌ی ساخته‌شده‌ی برنامه را به‌عنوان ریشه‌ی جستجو انتخاب می‌کند
 $root = Join-Path $pkg "app\.next-cli-build"
+# دو لیست خالی می‌سازد: یکی برای شناسه‌ها و یکی برای سکرت‌ها
 $ids = @()
 $secs = @()
+# همه‌ی فایل‌های آن پوشه و زیرپوشه‌هایش را یکی‌یکی بررسی می‌کند
 Get-ChildItem -Path $root -Recurse -File | ForEach-Object {
+# متن هر فایل را با رمزگذاری لاتین می‌خواند
     $text = [System.IO.File]::ReadAllText($_.FullName, [System.Text.Encoding]::GetEncoding(28591))
+# شناسه‌های مشتری گوگل را پیدا می‌کند و به لیست شناسه‌ها اضافه می‌کند
     foreach ($m in [regex]::Matches($text, '[0-9]+-[a-z0-9]+\.apps\.googleusercontent\.com')) { $ids += $m.Value }
+# سکرت‌ها را پیدا می‌کند و به لیست سکرت‌ها اضافه می‌کند
     foreach ($m in [regex]::Matches($text, 'GOCSPX-[A-Za-z0-9_-]{28}')) { $secs += $m.Value }
+# پایان بررسی فایل‌ها
 }
+# شناسه‌ها را مرتب می‌کند و تکراری‌ها را حذف می‌کند
 $ids | Sort-Object -Unique
+# سکرت‌ها را مرتب می‌کند و تکراری‌ها را حذف می‌کند
 $secs | Sort-Object -Unique</code></pre>
         </div>
         <ol start="4">
@@ -898,10 +929,10 @@ $secs | Sort-Object -Unique</code></pre>
       <div class="callout warn">
         <span class="callout-icon">⚠️</span>
         <span class="callout-body">
-          <b>چند نکته‌ی آموخته‌شده:</b><br>
-          • سکرت واقعی دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> است؛ اگر رشته‌ی بلندتری مشاهده کردید، دنباله‌اش اضافه‌ی فایل است و فقط همان ۲۸ کاراکتر را بردارید.<br>
-          • دو لیست جداگانه مرتب می‌شوند، پس «اولی با اولی» لزوماً جفت نیست؛ جفت درست با آزمایش مشخص می‌شود: وقتی مرحله‌ی ۲ توکن برگرداند، یعنی جفت درست است.<br>
-          • با دو شناسه و دو سکرت، حداکثر ۴ ترکیب وجود دارد؛ پس اگر اولی نشد، بقیه را امتحان کنید.
+          <b>از تجربه‌ی ما: چرا جفت درست فوری پیدا نمی‌شود؟</b><br>
+          • وقتی اسکریپت را اجرا می‌کنید، دو لیست جدا می‌بینید: یکی شناسه‌ها و یکی سکرت‌ها. این دو لیست از دو کلاینت متفاوت گوگل می‌آیند که هر دو داخل فایل‌های اپ هستند، و اسکریپت هر لیست را جداگانه مرتب می‌کند. پس اینکه شناسه‌ی اول با سکرت اول جفت باشد، فقط یک حدس است، نه یک قاعده.<br>
+          • تنها راه مطمئن شدن، امتحان کردن است: یک شناسه و یک سکرت را در مرحله‌ی ۱ وارد کنید و مرحله‌ی ۲ را اجرا کنید. اگر توکن برگشت، همان جفت درست است و کار تمام است. اگر خطا آمد، ترکیب بعدی را امتحان کنید. با دو شناسه و دو سکرت، در بدترین حالت فقط ۴ ترکیب وجود دارد، پس خیلی زود به جواب می‌رسید.<br>
+          • یک دام رایج هم هست: گاهی سکرتی که از فایل درمی‌آید، بلندتر از حد واقعی است، چون دنباله‌اش تکه‌ای از داده‌های اطراف آن در فایل است. سکرت واقعی دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> است؛ بقیه‌ی رشته را نادیده بگیرید و فقط همان ۲۸ کاراکتر را وارد کنید.
         </span>
       </div>
 
