@@ -615,13 +615,17 @@ label {
 .foot-inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 20px 24px;
+  padding: 22px 24px;
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 24px;
   flex-wrap: wrap;
 }
-.foot-inner b { font-size: 15px; }
+.foot-brand { font-size: 15px; font-weight: 700; }
+.foot-links { color: var(--text-dim); font-size: 13px; margin-top: 6px; }
+.foot-about { color: var(--text-dim); font-size: 13px; margin-top: 4px; max-width: 640px; }
+#footerLine { color: var(--text-dim); font-size: 13px; margin-top: 6px; }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
@@ -665,7 +669,7 @@ label {
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         با حساب رایگان هم کار می‌کند
       </span>
-      <p class="head-about">Relay ابزار متن‌باز KARA AI است؛ مدل‌های Antigravity را با حساب گوگل خودت و روی Vercel خودت اجرا می‌کند، بدون سرور واسط و بدون اینکه توکنت دست کسی باشد.</p>
+      <p class="head-about">Relay ابزار متن‌باز KARA AI است؛ مدل‌های Antigravity را با حساب گوگل شما و روی Vercel شما اجرا می‌کند، بدون سرور واسط و بدون دسترسی دیگران به توکن شما.</p>
     </div>
     <div class="channel-chip">
       <b>KARA AI</b>
@@ -681,7 +685,7 @@ label {
       <nav class="side-nav">
         <a href="#needs" class="active">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          چی لازم داری؟
+          پیش‌نیازها
         </a>
         <a href="#step1">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
@@ -701,7 +705,7 @@ label {
         </a>
         <a href="#troubleshoot">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          اگه گیر کردی
+          رفع اشکال
         </a>
         <a href="#security">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -732,11 +736,11 @@ label {
     <div class="intro-bar">
       <div class="step-indicator-wrap">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span id="stepIndicator">صفحه‌ی ۱ از ۵: چی لازم داری؟</span>
+        <span id="stepIndicator">صفحه‌ی ۱ از ۵: پیش‌نیازها</span>
       </div>
     </div>
     <div class="intro-desc">
-      این راهنما قدم‌به‌قدم نشانت می‌دهد چطور با اکانت خودت یک Relay شخصی بسازی: اول اعتبارنامه‌ی اپ را از برنامه‌ای که نصب داری برمی‌داری، بعد با حساب گوگل خودت وارد می‌شوی و توکن می‌گیری، و آخر با یک کلیک روی Vercel نصبش می‌کنی. همه‌ی کارها فقط توی مرورگر خودت انجام می‌شود؛ این صفحه هیچ‌چیز را ذخیره نمی‌کند و هیچ اطلاعاتی به هیچ سروری نمی‌فرستد.
+      این راهنما قدم‌به‌قدم نشان می‌دهد چگونه با حساب خود یک Relay شخصی بسازید: ابتدا اعتبارنامه‌ی اپ را از برنامه‌ای که نصب کرده‌اید برمی‌دارید، سپس با حساب گوگل خود وارد می‌شوید و توکن دریافت می‌کنید، و در پایان با یک کلیک آن را روی Vercel نصب می‌کنید. همه‌ی مراحل فقط در مرورگر شما انجام می‌شود؛ این صفحه چیزی را ذخیره نمی‌کند و هیچ اطلاعاتی به هیچ سروری ارسال نمی‌شود.
     </div>
 
     <div class="card screen active" id="needs">
@@ -745,18 +749,18 @@ label {
           <span class="stepnum">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           </span>
-          چی لازم داری؟
+          پیش‌نیازها
         </h2>
       </div>
       <ul>
-        <li><b>یکی از این دو برنامه روی کامپیوترتنصب داری:</b> اپ Antigravity یا 9Router. هر کدام را داری کافی است؛ لازم نیست هر دو را نصب کنی.</li>
-        <li><b>یک حساب گوگل:</b> حساب رایگان هم جواب می‌دهد (تست‌شده). بهتر است حساب جدا باشد، نه حساب اصلی‌ات.</li>
+        <li><b>یکی از این دو برنامه روی کامپیوتر شما نصب شده باشد:</b> اپ Antigravity یا 9Router. هر کدام را داشته باشید کافی است؛ لازم نیست هر دو را نصب کنید.</li>
+        <li><b>یک حساب گوگل:</b> حساب رایگان هم کار می‌کند (آزمایش‌شده). بهتر است حساب جداگانه باشد، نه حساب اصلی شما.</li>
         <li><b>یک حساب Vercel:</b> ساخت حساب رایگان است.</li>
-        <li><b>پاورشل ویندوز:</b> برای دستورهای استخراج زیر. نیازی به نصب برنامه‌ی اضافه نیست.</li>
+        <li><b>پاورشل ویندوز:</b> برای دستورهای استخراج زیر. نیازی به نصب برنامه‌ی اضافی نیست.</li>
       </ul>
       <div class="callout note">
         <span class="callout-icon">💡</span>
-        <span class="callout-body">نکته: این راهنما را تا آخر با همان حسابی که می‌خواهی Relay رویش کار کند جلو برو؛ وسط راه حساب را عوض نکن.</span>
+        <span class="callout-body">نکته: این راهنما را تا پایان با همان حسابی دنبال کنید که قرار است Relay روی آن کار کند؛ در میانه‌ی راه حساب را تغییر ندهید.</span>
       </div>
       <div class="step-nav">
         <span></span>
@@ -771,26 +775,26 @@ label {
           اعتبارنامه‌ی اپ Antigravity
         </h2>
       </div>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">دو مقدار لازم داری: Client ID و Client Secret. این دو مقدار، رمز شخصی تو نیستند؛ اعتبارنامه‌ی عمومیِ اپ دسکتاپ Antigravity هستند که گوگل همراه خود اپ پخش کرده. بسته به اینکه کدام برنامه را داری، یکی از دو راه زیر را برو:</p>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">دو مقدار لازم دارید: Client ID و Client Secret. این دو مقدار، رمز شخصی شما نیستند؛ اعتبارنامه‌ی عمومیِ اپ دسکتاپ Antigravity هستند که گوگل همراه خود اپ منتشر کرده است. بسته به اینکه کدام برنامه را دارید، یکی از دو راه زیر را دنبال کنید:</p>
       <div class="callout note">
         <span class="callout-icon">💡</span>
-        <span class="callout-body">نکته: دستورهای این صفحه به نام کاربری کامپیوترت کاری ندارند؛ <span dir="ltr">$env:LOCALAPPDATA</span> و <span dir="ltr">npm root -g</span> خودشان مسیر مخصوص همان کاربر را پیدا می‌کنند، پس روی هر کامپیوتری همین دستورها را بدون تغییر بزن.</span>
+        <span class="callout-body">نکته: دستورهای این صفحه به نام کاربری کامپیوتر شما کاری ندارند؛ <span dir="ltr">$env:LOCALAPPDATA</span> و <span dir="ltr">npm root -g</span> خودشان مسیر مخصوص همان کاربر را پیدا می‌کنند، پس روی هر کامپیوتری همین دستورها را بدون تغییر اجرا کنید.</span>
       </div>
 
       <div id="routePicker">
-        <p class="pick-label">کدام برنامه را داری؟ یکی را انتخاب کن تا فقط دستورهای همان یکی را ببینی:</p>
+        <p class="pick-label">کدام برنامه را دارید؟ یکی را انتخاب کنید تا فقط دستورهای همان برنامه را ببینید:</p>
         <div class="pick">
           <button type="button" class="pick-btn a" data-route="route-antigravity">
             <span class="pick-badge green">راه الف</span>
             <img src="assets/antigravity.png" alt="Antigravity">
             <b>اپ رسمی Antigravity</b>
-            <span class="pick-sub">اگر اپ Antigravity را نصب داری</span>
+            <span class="pick-sub">اگر اپ Antigravity را نصب کرده‌اید</span>
           </button>
           <button type="button" class="pick-btn b" data-route="route-9router">
             <span class="pick-badge blue">راه ب</span>
             <img src="assets/9router.svg" alt="9Router">
             <b>9Router</b>
-            <span class="pick-sub">اگر 9Router را نصب داری؛ نیازی به نصب Antigravity نیست</span>
+            <span class="pick-sub">اگر 9Router را نصب کرده‌اید؛ نیازی به نصب Antigravity نیست</span>
           </button>
         </div>
       </div>
@@ -806,8 +810,8 @@ label {
           <span class="route-tag a">Antigravity</span>
         </h3>
         <ol>
-          <li>اپ رسمی Antigravity را روی کامپیوترت نصب کن. برای همین استخراج، وارد شدن به اپ لازم نیست؛ مقدارها توی خود فایل‌های نصب هستند.</li>
-          <li>پاورشل را باز کن و این دستور را بزن تا فایل‌هایی که مقدار را دارند پیدا شوند:</li>
+          <li>اپ رسمی Antigravity را روی کامپیوتر خود نصب کنید. برای همین استخراج، ورود به اپ لازم نیست؛ مقدارها در خود فایل‌های نصب هستند.</li>
+          <li>پاورشل را باز کنید و این دستور را اجرا کنید تا فایل‌هایی که مقدار را دارند پیدا شوند:</li>
         </ol>
         <div class="codeblock">
           <div class="codehead">
@@ -817,7 +821,7 @@ label {
           <pre><code>findstr /S /M "apps.googleusercontent.com" "$env:LOCALAPPDATA\Programs\antigravity\*"</code></pre>
         </div>
         <ol start="3">
-          <li>حالا این اسکریپت را بزن تا شناسه‌ها و سکرت‌ها تمیز و بدون تکرار چاپ شوند:</li>
+          <li>سپس این اسکریپت را اجرا کنید تا شناسه‌ها و سکرت‌ها به‌صورت مرتب و بدون تکرار چاپ شوند:</li>
         </ol>
         <div class="codeblock">
           <div class="codehead">
@@ -836,23 +840,23 @@ $ids | Sort-Object -Unique
 $secs | Sort-Object -Unique</code></pre>
         </div>
         <ol start="4">
-          <li>دو لیست می‌بینی: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردار و پایین همین صفحه، توی فیلدهای مرحله‌ی ۱، پیست کن. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کن (نکته‌ی زیر را بخوان).</li>
+          <li>دو لیست مشاهده می‌کنید: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردارید و پایین همین صفحه، در فیلدهای مرحله‌ی ۱، وارد کنید. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کنید (نکته‌ی زیر را بخوانید).</li>
         </ol>
         <div class="callout tip">
           <span class="callout-icon">✅</span>
-          <span class="callout-body">نکته: فایل‌های خیلی بزرگ را با نوت‌پد باز نکن؛ هنگ می‌کند. همین اسکریپت بالا کار استخراج را می‌کند و لازم نیست فایل را باز کنی.</span>
+          <span class="callout-body">نکته: فایل‌های خیلی بزرگ را با نوت‌پد باز نکنید؛ هنگ می‌کند. همین اسکریپت بالا کار استخراج را انجام می‌دهد و لازم نیست فایل را باز کنید.</span>
         </div>
       </div>
 
       <div class="route b" id="route-9router">
         <h3>
           <img src="assets/9router.svg" alt="9Router">
-          راه ب — از 9Router (اگر نصبش داری، نیازی به نصب Antigravity نیست)
+          راه ب — از 9Router (اگر نصبش دارید، نیازی به نصب Antigravity نیست)
           <span class="route-tag b">9Router</span>
         </h3>
         <ol>
-          <li><b>اول:</b> توی 9Router از بخش Providers یک بار Antigravity را اضافه کن. بعد از این کار، مقدارها توی فایل‌های نصب 9Router هستند.</li>
-          <li>پاورشل را باز کن و این دو دستور را بزن تا اول مسیر نصب پیدا شود و بعد فایل‌های حاوی مقدار مشخص شوند:</li>
+          <li><b>اول:</b> در 9Router از بخش Providers یک بار Antigravity را اضافه کنید. پس از این کار، مقدارها در فایل‌های نصب 9Router هستند.</li>
+          <li>پاورشل را باز کنید و این دو دستور را اجرا کنید تا ابتدا مسیر نصب پیدا شود و سپس فایل‌های حاوی مقدار مشخص شوند:</li>
         </ol>
         <div class="codeblock">
           <div class="codehead">
@@ -863,7 +867,7 @@ $secs | Sort-Object -Unique</code></pre>
 findstr /S /M "apps.googleusercontent.com" "$pkg\*"</code></pre>
         </div>
         <ol start="3">
-          <li>حالا این اسکریپت را بزن تا شناسه‌ها و سکرت‌ها تمیز و بدون تکرار چاپ شوند:</li>
+          <li>سپس این اسکریپت را اجرا کنید تا شناسه‌ها و سکرت‌ها به‌صورت مرتب و بدون تکرار چاپ شوند:</li>
         </ol>
         <div class="codeblock">
           <div class="codehead">
@@ -883,28 +887,28 @@ $ids | Sort-Object -Unique
 $secs | Sort-Object -Unique</code></pre>
         </div>
         <ol start="4">
-          <li>دو لیست می‌بینی: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردار و پایین همین صفحه، توی فیلدهای مرحله‌ی ۱، پیست کن. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کن.</li>
+          <li>دو لیست مشاهده می‌کنید: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردارید و پایین همین صفحه، در فیلدهای مرحله‌ی ۱، وارد کنید. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کنید.</li>
         </ol>
         <div class="callout note">
           <span class="callout-icon">💡</span>
-          <span class="callout-body">نکته: اگر از آن پوشه چیزی درنیامد، اسکریپت را یک بار روی کل پوشه‌ی نصب 9Router هم امتحان کن؛ در بعضی نسخه‌ها مقدارها توی پوشه‌ی دیگری از همان نصب هستند.</span>
+          <span class="callout-body">نکته: اگر از آن پوشه چیزی به دست نیامد، اسکریپت را یک بار روی کل پوشه‌ی نصب 9Router هم امتحان کنید؛ در بعضی نسخه‌ها مقدارها در پوشه‌ی دیگری از همان نصب هستند.</span>
         </div>
       </div>
 
       <div class="callout warn">
         <span class="callout-icon">⚠️</span>
         <span class="callout-body">
-          <b>چند نکته که خودمان یاد گرفتیم:</b><br>
-          • سکرت واقعی دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> است؛ اگر رشته‌ی بلندتری دیدی، دنباله‌اش اضافه‌ی فایل است و فقط همان ۲۸ کاراکتر را بردار.<br>
-          • دو لیست جدا جدا مرتب می‌شوند، پس «اولی با اولی» لزوماً جفت نیست؛ جفت درست با تست مشخص میشود: وقتی مرحله‌ی ۲ توکن برگرداند، یعنی جفت درست است.<br>
-          • با دو شناسه و دو سکرت، حداکثر ۴ ترکیب وجود دارد؛ پس اگر اولی نشد، ناامید نشو و بقیه را امتحان کن.
+          <b>چند نکته‌ی آموخته‌شده:</b><br>
+          • سکرت واقعی دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> است؛ اگر رشته‌ی بلندتری مشاهده کردید، دنباله‌اش اضافه‌ی فایل است و فقط همان ۲۸ کاراکتر را بردارید.<br>
+          • دو لیست جداگانه مرتب می‌شوند، پس «اولی با اولی» لزوماً جفت نیست؛ جفت درست با آزمایش مشخص می‌شود: وقتی مرحله‌ی ۲ توکن برگرداند، یعنی جفت درست است.<br>
+          • با دو شناسه و دو سکرت، حداکثر ۴ ترکیب وجود دارد؛ پس اگر اولی نشد، بقیه را امتحان کنید.
         </span>
       </div>
 
       <div class="callout warn">
         <span class="callout-icon">⚠️</span>
         <span class="callout-body">
-          <b>کلاینت شخصی نساز:</b> ساخت اعتبارنامه‌ی شخصی توی کنسول گوگل برای این کار جواب نمی‌دهد؛ پروژه‌ی شخصی به سرویس خصوصی Cloud Code دسترسی ندارد و رله ارور می‌دهد. فقط از راه الف یا ب استفاده کن.
+          <b>کلاینت شخصی نساز:</b> ساخت اعتبارنامه‌ی شخصی در کنسول گوگل برای این کار جواب نمی‌دهد؛ پروژه‌ی شخصی به سرویس خصوصی Cloud Code دسترسی ندارد و رله خطا می‌دهد. فقط از راه الف یا ب استفاده کنید.
         </span>
       </div>
 
@@ -926,13 +930,13 @@ $secs | Sort-Object -Unique</code></pre>
           ورود با گوگل
         </h2>
       </div>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">دکمه را بزن و با همان حسابی که می‌خواهی Relay رویش کار کند وارد شو و دسترسی را تایید کن. حساب رایگان گوگل هم جواب می‌دهد (تست‌شده) و با اعتبارنامه‌ی رسمی نیازی به اضافه‌کردن تستر نیست. بعد گوگل تو را به یک آدرس localhost می‌فرستد که باز نمی‌شود — طبیعی است! کل آدرس را از نوار آدرس مرورگر کپی کن و اینجا پیست کن.</p>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">دکمه را بزنید و با همان حسابی که می‌خواهید Relay روی آن کار کند وارد شوید و دسترسی را تایید کنید. حساب رایگان گوگل هم کار می‌کند (آزمایش‌شده) و با اعتبارنامه‌ی رسمی نیازی به اضافه‌کردن تستر نیست. سپس گوگل شما را به یک آدرس localhost می‌فرستد که باز نمی‌شود؛ این طبیعی است. کل آدرس را از نوار آدرس مرورگر کپی کنید و اینجا وارد کنید.</p>
 
       <div class="row" style="margin-bottom:16px;">
         <button id="loginBtn" type="button">🔐 ورود با گوگل</button>
       </div>
 
-      <label for="callbackUrl">آدرس برگشتی (Callback URL) را اینجا پیست کن:</label>
+      <label for="callbackUrl">آدرس برگشتی (Callback URL) را اینجا وارد کنید:</label>
       <textarea id="callbackUrl" rows="3" placeholder="http://localhost:8080/callback?code=..."></textarea>
 
       <div class="row" style="margin-top:12px;">
@@ -943,7 +947,7 @@ $secs | Sort-Object -Unique</code></pre>
       <div class="callout note" style="margin-top:16px;">
         <span class="callout-icon">💡</span>
         <span class="callout-body">
-          نکته‌ها: کدی که توی آدرس است یک‌بارمصرف است و حدود ۱۰ دقیقه عمر دارد؛ اگر دیر شد، فقط کافی است دوباره «ورود با گوگل» را بزنی. اگر توکن برنگشت، اول جفت شناسه و سکرت را عوض کن. بعد از دریافت توکن، مرحله‌ی ۳ همین‌جا باز می‌شود.
+          نکته‌ها: کدی که در آدرس است یک‌بارمصرف است و حدود ۱۰ دقیقه اعتبار دارد؛ اگر دیر شد، کافی است دوباره «ورود با گوگل» را بزنید. اگر توکن برنگشت، ابتدا جفت شناسه و سکرت را تغییر دهید. پس از دریافت توکن، مرحله‌ی ۳ همین‌جا باز می‌شود.
         </span>
       </div>
 
@@ -957,12 +961,12 @@ $secs | Sort-Object -Unique</code></pre>
       <div class="section-head">
         <h2>
           <span class="stepnum">۳</span>
-          پک نصب تو آماده‌ست 🎉
+          بسته‌ی نصب شما آماده است
         </h2>
       </div>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:18px;">این مقادیر را موقع نصب توی Vercel وارد می‌کنی. کلید Relay و پسورد داشبورد را خودکار برایت ساختم. <b>این صفحه را تا تمام شدن نصب نبند و مقادیر را جای امن نگه دار.</b></p>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:18px;">این مقادیر را هنگام نصب در Vercel وارد می‌کنید. کلید Relay و پسورد داشبورد به‌صورت خودکار برای شما ساخته شده است. <b>این صفحه را تا پایان نصب نبندید و مقادیر را در جای امن نگه دارید.</b></p>
 
-      <label>AG_REFRESH_TOKEN <span style="color:var(--text-muted);font-size:12px;">(توکن گوگل — مثل رمز اکانتت، دست کسی نده)</span></label>
+      <label>AG_REFRESH_TOKEN <span style="color:var(--text-muted);font-size:12px;">(توکن گوگل — مانند رمز حسابتان، در اختیار کسی قرار ندهید)</span></label>
       <div class="row">
         <div class="out" id="outToken"></div>
         <button type="button" class="ghost" data-copy="outToken">کپی</button>
@@ -981,8 +985,8 @@ $secs | Sort-Object -Unique</code></pre>
       </div>
 
       <div style="margin-top:28px;padding-top:22px;border-top:1px solid var(--border-soft);">
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">حالا نصب با یک کلیک:</h3>
-        <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">دکمه‌ی زیر پروژه را توی Vercel خودت می‌سازد و ازت می‌خواهد همین مقادیر را وارد کنی (به‌علاوه‌ی Client ID و Secret مرحله‌ی ۱). بعد از Deploy، آدرس سرویس تو می‌شود: <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:13px;color:var(--green-text);">https://&lt;پروژه‌ت&gt;.vercel.app/v1</span></p>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">نصب با یک کلیک:</h3>
+        <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">دکمه‌ی زیر پروژه را در Vercel شما می‌سازد و از شما می‌خواهد همین مقادیر را وارد کنید (به‌علاوه‌ی Client ID و Secret مرحله‌ی ۱). پس از Deploy، آدرس سرویس شما می‌شود: <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:13px;color:var(--green-text);">https://&lt;پروژه‌ی شما&gt;.vercel.app/v1</span></p>
         <div class="row">
           <a id="deployBtn" href="#" target="_blank" rel="noopener">
             <button type="button">🚀 نصب Relay روی Vercel</button>
@@ -997,25 +1001,25 @@ $secs | Sort-Object -Unique</code></pre>
           <span class="stepnum">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           </span>
-          اگه گیر کردی
+          رفع اشکال
         </h2>
       </div>
 
-      <h3>توکن برنگشت یا ارور ورود آمد</h3>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">اول خونسرد باش؛ این خطا تقریباً همیشه یعنی جفت شناسه و سکرت با هم جور نیستند، نه اینکه حسابت خراب باشد. دلیلش این است: توی فایل‌های اپ، معمولاً دو شناسه و دو سکرتِ متفاوت هست (مال دو کلاینت مختلف گوگل) و فقط یکی از جفت‌ها کلاینتِ واقعیِ Antigravity است. دو لیستی که اسکریپت چاپ کرد، هر کدام جداگانه مرتب شده‌اند، پس «اولی با اولی» لزوماً جفت درست نیست؛ فقط وقتی مرحله‌ی ۲ توکن برگرداند، معلوم می‌شود جفت درست را زده‌ای.</p>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;"><b>مثال با اسم‌های فرضی (نه کد واقعی):</b> فرض کن لیست شناسه‌ها این دوتاست: «شناسه‌ی الف» و «شناسه‌ی ب»، و لیست سکرت‌ها هم این دوتاست: «سکرت ۱» و «سکرت ۲». پس فقط ۴ ترکیب ممکن است: الف+۱، الف+۲، ب+۱، ب+۲. هر بار یکی را توی مرحله‌ی ۱ می‌زنی و «دریافت توکن» را می‌زنی؛ ترکیب‌هایی که جواب نمی‌دهند ارور می‌دهند و رد می‌شوند. همان ترکیبی که توکن برگرداند، جفت درست است و دیگر لازم نیست بقیه را امتحان کنی. اگر هر ۴ ترکیب را زدی و هیچ‌کدام توکن نداد، یعنی یا سکرت را ناقص کپی کرده‌ای (سکرت دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">GOCSPX-</span> است) یا از راه اشتباه استخراج کرده‌ای؛ یک بار دیگر اسکریپت همان راه را بزن و خروجی را با دقت کپی کن.</p>
+      <h3>توکن برنگشت یا خطای ورود آمد</h3>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">ابتدا نگران نباشید؛ این خطا تقریباً همیشه به این معناست که جفت شناسه و سکرت با هم هماهنگ نیستند، نه اینکه حسابتان مشکلی داشته باشد. دلیل آن این است: در فایل‌های اپ، معمولاً دو شناسه و دو سکرت متفاوت وجود دارد (مربوط به دو کلاینت مختلف گوگل) و فقط یکی از جفت‌ها کلاینت واقعی Antigravity است. دو لیستی که اسکریپت چاپ کرد، هر کدام جداگانه مرتب شده‌اند، پس «اولی با اولی» لزوماً جفت درست نیست؛ فقط وقتی مرحله‌ی ۲ توکن برگرداند، مشخص می‌شود جفت درست را وارد کرده‌اید.</p>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;"><b>مثال با اسم‌های فرضی (نه کد واقعی):</b> فرض کنید لیست شناسه‌ها این دو مورد است: «شناسه‌ی الف» و «شناسه‌ی ب»، و لیست سکرت‌ها هم این دو مورد است: «سکرت ۱» و «سکرت ۲». پس فقط ۴ ترکیب ممکن است: الف+۱، الف+۲، ب+۱، ب+۲. هر بار یکی را در مرحله‌ی ۱ وارد می‌کنید و «دریافت توکن» را می‌زنید؛ ترکیب‌هایی که جواب نمی‌دهند خطا می‌دهند و رد می‌شوند. همان ترکیبی که توکن برگرداند، جفت درست است و دیگر لازم نیست بقیه را امتحان کنید. اگر هر ۴ ترکیب را امتحان کردید و هیچ‌کدام توکن نداد، یعنی یا سکرت را ناقص کپی کرده‌اید (سکرت دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">GOCSPX-</span> است) یا از راه اشتباه استخراج کرده‌اید؛ یک بار دیگر اسکریپت همان راه را اجرا کنید و خروجی را با دقت کپی کنید.</p>
 
-      <h3>کد منقضی شد (یا ارور کد نامعتبر آمد)</h3>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">کدی که توی آدرس برگشتی است، یک‌بارمصرف است و فقط حدود ۱۰ دقیقه عمر دارد؛ یعنی فقط یک بار می‌شود با آن توکن گرفت و بعد از ۱۰ دقیقه دیگر به درد نمی‌خورد. اگر دیر کردی، یا همان کد را دوبار زدی، این ارور طبیعی است و ربطی به شناسه و سکرت ندارد. راه‌حلش ساده است: دوباره «ورود با گوگل» را بزن تا گوگل یک کد تازه بدهد، این بار همان لحظه کل آدرس را کپی کن و سریع «دریافت توکن» را بزن. نکته: هر بار که «ورود با گوگل» را می‌زنی، فقط همان کدِ آخری معتبر است؛ کدهای قبلی خودبه‌خود باطل می‌شوند.</p>
+      <h3>کد منقضی شد (یا خطای کد نامعتبر آمد)</h3>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">کدی که در آدرس برگشتی است، یک‌بارمصرف است و فقط حدود ۱۰ دقیقه اعتبار دارد؛ یعنی فقط یک بار می‌توان با آن توکن گرفت و پس از ۱۰ دقیقه دیگر معتبر نیست. اگر دیر کردید، یا همان کد را دوبار وارد کردید، این خطا طبیعی است و ربطی به شناسه و سکرت ندارد. راه‌حل آن ساده است: دوباره «ورود با گوگل» را بزنید تا گوگل یک کد تازه بدهد، این بار همان لحظه کل آدرس را کپی کنید و سریع «دریافت توکن» را بزنید. نکته: هر بار که «ورود با گوگل» را می‌زنید، فقط همان کد آخری معتبر است؛ کدهای قبلی خودبه‌خود باطل می‌شوند.</p>
 
       <h3>آدرس برگشتی کد نداشت</h3>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">کل نوار آدرس مرورگر را کپی کن، نه فقط بخشی از آن. کد بعد از <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">code=</span> می‌آید و تا اولین <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">&amp;</span> ادامه دارد.</p>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">کل نوار آدرس مرورگر را کپی کنید، نه فقط بخشی از آن. کد بعد از <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">code=</span> می‌آید و تا اولین <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">&amp;</span> ادامه دارد.</p>
 
-      <h3>پوشه‌ی نصب را پیدا نکردی</h3>
+      <h3>پوشه‌ی نصب پیدا نشد</h3>
       <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">برای 9Router دستور <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">where.exe 9router</span> یا <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">npm root -g</span> مسیر نصب را نشان می‌دهد. برای اپ Antigravity، پوشه‌ی نصب معمولاً زیر <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">%LOCALAPPDATA%\Programs\antigravity</span> است.</p>
 
       <h3>بعد از Deploy داشبورد مدل‌ها را نشان نداد</h3>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">اول مطمئن شو Deploy کامل شده و وضعیتش READY است. بعد پسورد داشبورد را درست وارد کن. اگر باز هم ارور پروژه دیدی، توکن را با همان مراحل دوباره بگیر و متغیرهای محیطی را در Vercel به‌روز کن و Redeploy بزن.</p>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">ابتدا مطمئن شوید Deploy کامل شده و وضعیت آن READY است. سپس پسورد داشبورد را به‌درستی وارد کنید. اگر باز هم خطای پروژه مشاهده کردید، توکن را با همان مراحل دوباره بگیرید و متغیرهای محیطی را در Vercel به‌روز کنید و Redeploy بزنید.</p>
 
       <div class="step-nav">
         <button type="button" class="ghost" data-goto="step2">→ مرحله‌ی قبل</button>
@@ -1033,34 +1037,34 @@ $secs | Sort-Object -Unique</code></pre>
         </h2>
       </div>
 
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">این راهنما طوری ساخته شده که هیچ رازی از مرورگر تو بیرون نمی‌رود، ولی چند راز هست که خودت باید مثل رمز حسابت ازشان محافظت کنی. اول فرقشان را بشناس:</p>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">این راهنما طوری ساخته شده که هیچ رازی از مرورگر شما بیرون نمی‌رود، ولی چند راز وجود دارد که خودتان باید مانند رمز حسابتان از آن‌ها محافظت کنید. ابتدا تفاوت آن‌ها را بشناسید:</p>
 
       <h3>چه چیزی راز نیست</h3>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">شناسه و سکرت مرحله‌ی ۱، اعتبارنامه‌ی عمومیِ خود اپ Antigravity هستند؛ همراه فایل‌های نصب پخش شده‌اند و رمز شخصی تو نیستند. دانستنشان به‌تنهایی به کسی دسترسی به حسابت نمی‌دهد.</p>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">شناسه و سکرت مرحله‌ی ۱، اعتبارنامه‌ی عمومیِ خود اپ Antigravity هستند؛ همراه فایل‌های نصب منتشر شده‌اند و رمز شخصی شما نیستند. دانستن آن‌ها به‌تنهایی به کسی دسترسی به حسابتان نمی‌دهد.</p>
 
       <h3>چه چیزی راز است و چرا</h3>
       <ul style="color:var(--text-dim);font-size:14px;">
-        <li><b style="color:var(--text);">توکن گوگل (AG_REFRESH_TOKEN):</b> کلید ورود به سهمیه‌ی Antigravity حساب توست؛ هر کس آن را داشته باشد می‌تواند با سهمیه‌ی تو مدل صدا بزند. مثل رمز حسابت نگهش دار.</li>
-        <li><b style="color:var(--text);">کلید Relay (RELAY_API_KEY):</b> هر کس این کلید را داشته باشد می‌تواند از رله‌ی تو استفاده کند و سهمیه‌ات را مصرف کند.</li>
-        <li><b style="color:var(--text);">پسورد داشبورد (DASH_PASSWORD):</b> کلید ورود به صفحه‌ی مدیریت رله‌ی توست.</li>
+        <li><b style="color:var(--text);">توکن گوگل (AG_REFRESH_TOKEN):</b> کلید ورود به سهمیه‌ی Antigravity حساب شماست؛ هر کس آن را داشته باشد می‌تواند با سهمیه‌ی شما مدل صدا بزند. مانند رمز حسابتان نگهش دارید.</li>
+        <li><b style="color:var(--text);">کلید Relay (RELAY_API_KEY):</b> هر کس این کلید را داشته باشد می‌تواند از رله‌ی شما استفاده کند و سهمیه‌ی شما را مصرف کند.</li>
+        <li><b style="color:var(--text);">پسورد داشبورد (DASH_PASSWORD):</b> کلید ورود به صفحه‌ی مدیریت رله‌ی شماست.</li>
       </ul>
 
       <h3>کجا نگهشان دار</h3>
       <ul style="color:var(--text-dim);font-size:14px;">
-        <li>فقط توی متغیرهای محیطی (Environment Variables) پروژه‌ی Vercel؛ Vercel آن‌ها را رمزنگاری‌شده نگه می‌دارد. هیچ‌وقت آن‌ها را توی کد، گیت‌هاب، فایل README یا پیام عمومی ننویس.</li>
-        <li>این صفحه هیچ مقداری را ذخیره یا ارسال نمی‌کند؛ همه‌ی کارها فقط توی مرورگر خودت انجام می‌شود. با این حال، بعد از تمام شدن نصب، تب را ببند تا مقادیر از حافظه‌ی موقت مرورگر پاک شوند.</li>
-        <li>حساب گوگلی که برای رله استفاده می‌کنی، بهتر است حساب جدا باشد نه حساب اصلی‌ات؛ این‌طوری اگر روزی رازی لو رفت، فقط همان حساب درگیر است.</li>
+        <li>فقط در متغیرهای محیطی (Environment Variables) پروژه‌ی Vercel؛ Vercel آن‌ها را رمزنگاری‌شده نگه می‌دارد. هیچ‌وقت آن‌ها را در کد، گیت‌هاب، فایل README یا پیام عمومی ننویسید.</li>
+        <li>این صفحه هیچ مقداری را ذخیره یا ارسال نمی‌کند؛ همه‌ی کارها فقط در مرورگر شما انجام می‌شود. با این حال، پس از پایان نصب، تب را ببندید تا مقادیر از حافظه‌ی موقت مرورگر پاک شوند.</li>
+        <li>حساب گوگلی که برای رله استفاده می‌کنید، بهتر است حساب جداگانه باشد نه حساب اصلی شما؛ این‌طوری اگر روزی رازی لو رفت، فقط همان حساب درگیر است.</li>
       </ul>
 
-      <h3>اگر چیزی لو رفت — فوری این سه کار را بکن</h3>
+      <h3>اگر چیزی لو رفت، فوری این سه کار را انجام دهید</h3>
       <ol style="color:var(--text-dim);font-size:14px;">
-        <li>توی حساب گوگلت دسترسی اپ را قطع کن: <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">myaccount.google.com → Security → Third-party access</span> و دسترسی مربوط به Antigravity را حذف کن؛ این کار توکن قبلی را باطل می‌کند.</li>
-        <li>توی همین راهنما یک توکن تازه بگیر و کلید Relay و پسورد داشبورد تازه بساز.</li>
-        <li>مقادیر تازه را توی Vercel جایگزین کن و دوباره Deploy بزن تا مقادیر لو‌رفته دیگر کار نکنند.</li>
+        <li>در حساب گوگل خود دسترسی اپ را قطع کنید: <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">myaccount.google.com → Security → Third-party access</span> و دسترسی مربوط به Antigravity را حذف کن؛ این کار توکن قبلی را باطل می‌کند.</li>
+        <li>در همین راهنما یک توکن تازه بگیرید و کلید Relay و پسورد داشبورد تازه بسازید.</li>
+        <li>مقادیر تازه را در Vercel جایگزین کنید و دوباره Deploy بزنید تا مقادیر لو‌رفته دیگر کار نکنند.</li>
       </ol>
 
-      <h3>موقع ضبط ویدئو یا اسکرین‌شات</h3>
-      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">موقع تدوین، روی توکن، کلید و پسورد را کامل بپوشان؛ حتی چند فریم لو رفتن کافی است تا کسی آن را بردارد. برای ویدئوی آموزشی امن‌تر است که با یک پروژه‌ی آزمایشی و مقادیر یک‌بارمصرف ضبط کنی و بعد از ضبط، آن پروژه را پاک کنی.</p>
+      <h3>هنگام ضبط ویدئو یا اسکرین‌شات</h3>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">هنگام تدوین، روی توکن، کلید و پسورد را کامل بپوشانید؛ حتی چند فریم لو رفتن کافی است تا کسی آن را بردارد. برای ویدئوی آموزشی امن‌تر است که با یک پروژه‌ی آزمایشی و مقادیر یک‌بارمصرف ضبط کنید و پس از ضبط، آن پروژه را پاک کنید.</p>
 
       <div class="step-nav">
         <button type="button" class="ghost" data-goto="troubleshoot">→ مرحله‌ی قبل</button>
@@ -1074,11 +1078,13 @@ $secs | Sort-Object -Unique</code></pre>
 <footer class="site-footer">
   <div class="foot-inner">
     <div>
-      <b>⚡ Relay</b> — ابزار متن‌باز <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">KARA AI</a>
-      <div style="color:var(--text-dim);font-size:13px;margin-top:6px;">کانال: <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">t.me/kara_ai_offer</a> · سورس: <a href="https://github.com/eshghastast/ag-relay" target="_blank" rel="noopener">github.com/eshghastast/ag-relay</a></div>
-      <div style="color:var(--text-dim);font-size:13px;margin-top:4px;">درباره‌ی پروژه: Relay مدل‌های Antigravity را با حساب گوگل خودت و روی Vercel خودت در دسترس می‌گذارد؛ بدون سرور واسط، بدون اشتراک‌گذاری توکن و کاملاً متن‌باز.</div>
+      <div class="foot-brand">⚡ Relay — ابزار متن‌باز <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">KARA AI</a></div>
+      <div class="foot-about">درباره‌ی پروژه: Relay مدل‌های Antigravity را با حساب گوگل شما و روی Vercel شما در دسترس می‌گذارد؛ بدون سرور واسط، بدون اشتراک‌گذاری توکن و کاملاً متن‌باز.</div>
     </div>
-    <div id="footerLine" style="color:var(--text-dim);font-size:13px;margin-top:8px;align-self:flex-end;"></div>
+    <div>
+      <div class="foot-links"><a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">کانال تلگرام</a> · <a href="https://github.com/eshghastast/ag-relay" target="_blank" rel="noopener">سورس در گیت‌هاب</a></div>
+      <div id="footerLine"></div>
+    </div>
   </div>
 </footer>
 
@@ -1090,7 +1096,7 @@ var REPO_URL = "https://github.com/eshghastast/ag-relay";
 
 var $ = function(id){ return document.getElementById(id); };
 $("brandLine").innerHTML = 'ساخته‌شده توسط <a href="' + CHANNEL_URL + '" target="_blank" rel="noopener">' + CHANNEL_NAME + '</a>';
-$("footerLine").innerHTML = '⚡ Relay — ابزار متن‌باز <a href="' + CHANNEL_URL + '" target="_blank" rel="noopener">' + CHANNEL_NAME + '</a> · آموزش قدم‌به‌قدم توی کانال ماست.';
+$("footerLine").innerHTML = '⚡ Relay — ابزار متن‌باز <a href="' + CHANNEL_URL + '" target="_blank" rel="noopener">' + CHANNEL_NAME + '</a> · آموزش قدم‌به‌قدم در کانال ما قرار دارد.';
 
 var REDIRECT = "http://localhost:8080/callback";
 var SCOPES = [
@@ -1119,7 +1125,7 @@ async function pkce(){
 
 $("loginBtn").onclick = async function(){
   var cid = $("clientId").value.trim();
-  if (!cid) { alert("اول Client ID رو توی مرحله‌ی ۱ وارد کن."); return; }
+  if (!cid) { alert("ابتدا Client ID را در مرحله‌ی ۱ وارد کنید."); return; }
   var p = await pkce();
   sessionStorage.setItem("pkce_verifier", p.verifier);
   var state = b64u(crypto.getRandomValues(new Uint8Array(16)));
@@ -1143,14 +1149,14 @@ $("exchangeBtn").onclick = async function(){
   var raw = $("callbackUrl").value.trim();
   var cid = $("clientId").value.trim();
   var secret = $("clientSecret").value.trim();
-  if (!raw || !cid || !secret) { msg.textContent = "آدرس برگشتی، Client ID و Client Secret هر سه لازمن."; return; }
+  if (!raw || !cid || !secret) { msg.textContent = "آدرس برگشتی، Client ID و Client Secret هر سه لازم هستند."; return; }
   var code = "";
   try { code = new URL(raw).searchParams.get("code") || ""; }
   catch (e) {
     var m = raw.match(/code=([^&\s]+)/);
     code = m ? decodeURIComponent(m[1]) : "";
   }
-  if (!code) { msg.textContent = "توی آدرسی که پیست کردی کد پیدا نشد. کل آدرس نوار مرورگر رو کپی کن."; return; }
+  if (!code) { msg.textContent = "در آدرسی که وارد کردید کد پیدا نشد. کل آدرس نوار مرورگر را کپی کنید."; return; }
   msg.textContent = "در حال گرفتن توکن...";
   try {
     var body = new URLSearchParams({
@@ -1163,7 +1169,7 @@ $("exchangeBtn").onclick = async function(){
     });
     var r = await fetch("https://oauth2.googleapis.com/token", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body });
     var j = await r.json();
-    if (!j.refresh_token) { msg.textContent = "توکن برنگشت: " + ((j.error_description || j.error || "خطای نامشخص")) + " — اگه قبلاً وارد شدی، یه بار دیگه از مرحله‌ی ۲ شروع کن."; return; }
+    if (!j.refresh_token) { msg.textContent = "توکن برنگشت: " + ((j.error_description || j.error || "خطای نامشخص")) + " — اگر قبلاً وارد شده‌اید، یک بار دیگر از مرحله‌ی ۲ شروع کنید."; return; }
     msg.textContent = "";
     $("outToken").textContent = j.refresh_token;
     $("outKey").textContent = "sk-relay-" + randHex(24);
@@ -1199,7 +1205,7 @@ document.querySelectorAll("[data-copy-code]").forEach(function(b){
 // ---- wizard: one screen at a time + route picker (content/IDs/JS above untouched) ----
 (function(){
   var ORDER = ["needs","step1","step2","troubleshoot","security"];
-  var NAMES = {needs:"چی لازم داری؟",step1:"مرحله ۱: اعتبارنامه",step2:"مرحله ۲: ورود با گوگل",troubleshoot:"اگه گیر کردی",security:"امنیت"};
+  var NAMES = {needs:"پیش‌نیازها",step1:"مرحله ۱: اعتبارنامه",step2:"مرحله ۲: ورود با گوگل",troubleshoot:"رفع اشکال",security:"امنیت"};
   function W(id){ return document.getElementById(id); }
   function selectRoute(id){
     ["route-antigravity","route-9router"].forEach(function(r){ W(r).classList.remove("show"); });
