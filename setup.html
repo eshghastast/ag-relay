@@ -5,92 +5,667 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Relay — راهنمای کامل نصب</title>
 <style>
-  :root{--bg:#020617;--panel:#0E1223;--panel2:#0B1120;--border:#1E293B;--text:#E2E8F0;--dim:#94A3B8;--accent:#22C55E;--accent2:#38BDF8;--code:#010409}
-  *{box-sizing:border-box}
-  body{font-family:Tahoma,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0;line-height:2}
-  .layout{display:flex;gap:20px;padding:20px;align-items:flex-start}
-  h1{font-size:24px;margin:0} h2{font-size:18px;margin:0 0 10px;display:flex;align-items:center;gap:10px} h2::after{content:"";flex:1;height:1px;background:var(--border)} h3{font-size:15px;margin:18px 0 6px}
-  .dim{color:var(--dim);font-size:14px}
-  .badge{display:inline-block;background:#052E16;color:#86EFAC;border:1px solid #14532D;border-radius:999px;padding:2px 12px;font-size:12px}
-  .nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
-  .nav a{color:var(--text);text-decoration:none;border:1px solid var(--border);border-radius:999px;padding:4px 14px;font-size:13px;background:var(--panel)}
-  .nav a:hover{border-color:var(--accent)}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;margin:16px 0}
-  .card:hover{border-color:#243349}
-  .stepnum{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#04120A;align-items:center;justify-content:center;font-weight:700;margin-inline-end:8px}
-  .route{border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0;background:var(--panel2)}
-  .route.a{border-top:3px solid var(--accent)}
-  .route.b{border-top:3px solid var(--accent2)}
-  .route:hover{border-color:#243349}
-  .route h3{margin-top:0;font-size:16px;display:flex;align-items:center;gap:10px}
-  .route h3 img{width:30px;height:30px;border-radius:8px;flex-shrink:0}
-  .callout{border-radius:12px;padding:12px 16px;margin:12px 0;font-size:14px}
-  .tip{background:#052E16;border:1px solid #14532D}
-  .warn{background:#451A03;border:1px solid #92400E}
-  .note{background:#082F49;border:1px solid #0C4A6E}
-  .codeblock{background:var(--code);border:1px solid var(--border);border-radius:12px;margin:10px 0;overflow:hidden}
-  .codehead{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-bottom:1px solid var(--border);font-size:12px;color:var(--dim)}
-  .codehead button{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:3px 12px;cursor:pointer;font:inherit;font-size:12px}
-  pre{margin:0;padding:12px;overflow-x:auto}
-  code{direction:ltr;text-align:left;font-family:Consolas,"Courier New",monospace;font-size:12.5px}
-  input,textarea,button{font:inherit;border-radius:10px;border:1px solid var(--border);background:var(--panel2);color:var(--text);padding:9px 12px;width:100%}
-  textarea{direction:ltr;text-align:left;font-size:12px}
-  button{background:var(--accent);border-color:var(--accent);color:#04120A;cursor:pointer;width:auto;padding:9px 18px;font-weight:700}
-  button:hover{filter:brightness(1.1)}
-  button.ghost{background:var(--panel2);color:var(--text);border-color:var(--border);font-weight:400}
-  input:focus,textarea:focus{outline:none;border-color:var(--accent)}
-  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  label{display:block;font-size:13px;color:var(--dim);margin:10px 0 4px}
-  .out{background:var(--code);border:1px solid var(--border);border-radius:10px;padding:10px 12px;direction:ltr;text-align:left;word-break:break-all;font-size:12.5px}
-  .hidden{display:none}
-  a{color:#86EFAC}
-  .brand{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-  .site-header{border-bottom:1px solid var(--border);background:var(--panel);position:sticky;top:0;z-index:20}
-  .head-inner{padding:16px 24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
-  .brand-row{display:flex;align-items:center;gap:12px}
-  .brand-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#22C55E,#0EA5E9);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;flex-shrink:0}
-  .head-about{color:var(--dim);font-size:14px;max-width:680px;margin:8px 0}
-  .channel-chip{text-align:end;flex-shrink:0}
-  .channel-chip b{display:block;font-size:18px}
-  .site-footer{border-top:1px solid var(--border);background:var(--panel);margin-top:8px}
-  .foot-inner{padding:20px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .sidebar{width:250px;flex-shrink:0;position:sticky;top:16px}
-  .side-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px}
-  .side-card h3{margin:0 0 8px;font-size:15px}
-  .side-nav a{display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;padding:9px 12px;border-radius:8px;font-size:14px}
-  .side-nav svg{flex-shrink:0}
-  .side-nav img{width:22px;height:22px;border-radius:6px;flex-shrink:0}
-  .side-nav a:hover{background:var(--panel2);color:#86EFAC}
-  .screen{display:none}
-  .screen.active{display:block}
-  .side-nav a.active{background:#12281A;color:#86EFAC}
-  .step-nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
-  .pick{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .pick-btn{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:right;width:100%;font-weight:400}
-  .pick-btn:hover{border-color:var(--accent);filter:none}
-  .pick-btn img{width:34px;height:34px;border-radius:8px;display:block;margin-bottom:8px}
-  .pick-btn b{display:block;font-size:15px}
-  #route-antigravity,#route-9router{display:none}
-  #route-antigravity.show,#route-9router.show{display:block}
-  main{flex:1;min-width:0}
-  @media (max-width:820px){
-    .layout{flex-direction:column}
-    .sidebar{width:auto;position:static}
-    .side-nav{display:flex;flex-wrap:wrap;gap:6px}
-    .side-nav a{display:inline-flex}
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --bg: #07090f;
+  --surface: #0d1117;
+  --surface2: #111827;
+  --surface3: #161d2e;
+  --border: #1e2d45;
+  --border-soft: #162032;
+  --text: #e6edf3;
+  --text-dim: #7d8fa8;
+  --text-muted: #4a5568;
+  --green: #22c55e;
+  --green-dim: #16a34a;
+  --green-bg: #051a0d;
+  --green-border: #14532d;
+  --green-text: #86efac;
+  --blue: #38bdf8;
+  --blue-dim: #0ea5e9;
+  --blue-bg: #051525;
+  --blue-border: #0c4a6e;
+  --amber: #f59e0b;
+  --amber-bg: #1c0f00;
+  --amber-border: #78350f;
+  --red: #f87171;
+  --red-bg: #1a0505;
+  --red-border: #7f1d1d;
+  --code-bg: #010409;
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --shadow: 0 4px 24px rgba(0,0,0,.5);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.3);
+  --transition: .18s ease;
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Tahoma, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.9;
+  font-size: 15px;
+  min-height: 100vh;
+}
+a { color: var(--green-text); text-decoration: none; }
+a:hover { text-decoration: underline; }
+ol, ul { padding-inline-start: 22px; }
+li { margin: 7px 0; }
+
+/* ===== HEADER ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(7,9,15,.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.head-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+}
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #22c55e 0%, #0ea5e9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(34,197,94,.3);
+}
+.head-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+.head-meta {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 0 16px;
+}
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-bg);
+  color: var(--green-text);
+  border: 1px solid var(--green-border);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.head-about {
+  color: var(--text-dim);
+  font-size: 13px;
+  line-height: 1.6;
+  display: none;
+}
+.channel-chip {
+  flex-shrink: 0;
+  text-align: center;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 14px;
+  transition: border-color var(--transition);
+}
+.channel-chip:hover { border-color: var(--green); }
+.channel-chip b { display: block; font-size: 13px; color: var(--text); line-height: 1.3; }
+.channel-chip a { font-size: 12px; color: var(--green-text); }
+#brandLine { font-size: 12px; color: var(--text-dim); }
+
+/* ===== LAYOUT ===== */
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 28px 24px;
+  align-items: start;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  position: sticky;
+  top: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.side-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  overflow: hidden;
+}
+.side-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.side-nav { display: flex; flex-direction: column; gap: 2px; }
+.side-nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  transition: background var(--transition), color var(--transition);
+  border: 1px solid transparent;
+}
+.side-nav a:hover { background: var(--surface2); color: var(--text); text-decoration: none; }
+.side-nav a.active {
+  background: var(--green-bg);
+  color: var(--green-text);
+  border-color: var(--green-border);
+  font-weight: 600;
+}
+.side-nav svg { flex-shrink: 0; opacity: .7; }
+.side-nav img { width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0; }
+.side-progress {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-soft);
+}
+.side-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.prog-bar {
+  height: 4px;
+  background: var(--surface2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--blue));
+  border-radius: 99px;
+  transition: width .4s ease;
+  width: 20%;
+}
+.kara-card {
+  text-align: center;
+}
+.kara-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #22c55e, #0ea5e9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin: 0 auto 10px;
+  box-shadow: 0 0 16px rgba(34,197,94,.25);
+}
+.kara-name { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+.kara-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; margin-bottom: 12px; }
+.btn-tg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #229ed9, #1a85b5);
+  color: #fff !important;
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: filter var(--transition);
+}
+.btn-tg:hover { filter: brightness(1.15); }
+
+/* ===== MAIN ===== */
+main { min-width: 0; }
+.intro-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.step-indicator-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+#stepIndicator {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.intro-desc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.85;
+  margin-bottom: 24px;
+}
+
+/* ===== SCREEN CARDS ===== */
+.screen { display: none; }
+.screen.active { display: block; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  transition: border-color var(--transition);
+}
+.card:hover { border-color: #253550; }
+
+/* ===== SECTION HEADINGS ===== */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.section-head h2 {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.stepnum {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), var(--green-dim));
+  color: #021a09;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(34,197,94,.4);
+}
+/* legacy h2 support for sections that use plain h2 */
+.card > h2 {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 20px 0 8px;
+}
+
+/* ===== CALLOUTS ===== */
+.callout {
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 13.5px;
+  line-height: 1.75;
+  display: flex;
+  gap: 12px;
+}
+.callout-icon { flex-shrink: 0; font-size: 16px; margin-top: 2px; }
+.callout-body { flex: 1; }
+.tip { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green-text); }
+.warn { background: var(--amber-bg); border: 1px solid var(--amber-border); color: #fcd34d; }
+.note { background: var(--blue-bg); border: 1px solid var(--blue-border); color: #7dd3fc; }
+.danger { background: var(--red-bg); border: 1px solid var(--red-border); color: #fca5a5; }
+
+/* ===== ROUTE PICKER ===== */
+#routePicker { margin: 20px 0; }
+.pick-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.pick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.pick-btn {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 18px;
+  text-align: right;
+  width: 100%;
+  font-weight: 400;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition), transform var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.pick-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.pick-btn.a::before { background: linear-gradient(135deg, rgba(34,197,94,.08), transparent); }
+.pick-btn.b::before { background: linear-gradient(135deg, rgba(56,189,248,.08), transparent); }
+.pick-btn:hover { transform: translateY(-2px); }
+.pick-btn.a:hover { border-color: var(--green); }
+.pick-btn.b:hover { border-color: var(--blue); }
+.pick-btn:hover::before { opacity: 1; }
+.pick-btn img {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: block;
+  margin-bottom: 10px;
+}
+.pick-btn b { display: block; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.pick-btn .pick-sub { font-size: 12px; color: var(--text-dim); display: block; line-height: 1.5; }
+.pick-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-bottom: 8px;
+}
+.pick-badge.green { background: var(--green-bg); color: var(--green-text); border: 1px solid var(--green-border); }
+.pick-badge.blue { background: var(--blue-bg); color: #7dd3fc; border: 1px solid var(--blue-border); }
+
+/* ===== ROUTE BACK ===== */
+#routeBack { margin-bottom: 16px; }
+
+/* ===== ROUTE BLOCKS ===== */
+#route-antigravity, #route-9router { display: none; }
+#route-antigravity.show, #route-9router.show { display: block; }
+
+.route {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin: 16px 0;
+  background: var(--surface2);
+  position: relative;
+  overflow: hidden;
+}
+.route::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  height: 3px;
+}
+.route.a::before { background: linear-gradient(90deg, var(--green), var(--green-dim)); }
+.route.b::before { background: linear-gradient(90deg, var(--blue), var(--blue-dim)); }
+.route h3 {
+  margin-top: 0;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.route h3 img { width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0; }
+.route-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  margin-inline-start: auto;
+}
+.route-tag.a { background: var(--green-bg); color: var(--green-text); border: 1px solid var(--green-border); }
+.route-tag.b { background: var(--blue-bg); color: #7dd3fc; border: 1px solid var(--blue-border); }
+
+/* ===== CODE BLOCKS ===== */
+.codeblock {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 12px 0;
+  overflow: hidden;
+}
+.codehead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,.02);
+}
+.codehead-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.codehead-label::before {
+  content: "";
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+.codehead button[data-copy-code] {
+  background: var(--surface2);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background var(--transition), color var(--transition);
+  width: auto;
+  font-weight: 400;
+}
+.codehead button[data-copy-code]:hover { background: var(--surface3); color: var(--text); }
+pre { margin: 0; padding: 16px; overflow-x: auto; }
+code {
+  direction: ltr;
+  text-align: left;
+  font-family:Consolas, "Courier New", monospace;
+  font-size: 12.5px;
+  color: var(--text);
+}
+
+/* ===== STEP NAV BUTTONS ===== */
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+button {
+  font-family: inherit;
+  border-radius: var(--radius);
+  border: 1px solid var(--green);
+  background: var(--green);
+  color: #021a09;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  transition: filter var(--transition), background var(--transition), border-color var(--transition);
+  width: auto;
+}
+button:hover { filter: brightness(1.12); }
+button.ghost {
+  background: var(--surface2);
+  color: var(--text);
+  border-color: var(--border);
+  font-weight: 400;
+}
+button.ghost:hover { background: var(--surface3); border-color: #253550; filter: none; }
+
+/* ===== FORM ELEMENTS ===== */
+input, textarea {
+  font-family: inherit;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  padding: 10px 14px;
+  width: 100%;
+  font-size: 14px;
+  transition: border-color var(--transition);
+}
+input:focus, textarea:focus { outline: none; border-color: var(--green); }
+textarea { direction: ltr; text-align: left; font-size: 12.5px; resize: vertical; }
+label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 12px 0 5px;
+}
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.out {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  direction: ltr;
+  text-align: left;
+  word-break: break-all;
+  font-size: 12.5px;
+  font-family: Consolas, "Courier New", monospace;
+  color: var(--green-text);
+  flex: 1;
+}
+.hidden { display: none !important; }
+
+/* ===== FOOTER ===== */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  margin-top: 8px;
+}
+.foot-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.foot-inner b { font-size: 15px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
   }
-  ol,ul{padding-inline-start:20px}
-  li{margin:6px 0}
+  .sidebar {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+}
+@media (max-width: 600px) {
+  .sidebar { grid-template-columns: 1fr; }
+  .head-inner { height: auto; padding: 14px 16px; flex-wrap: wrap; }
+  .head-meta { display: none; }
+  .card { padding: 20px 18px; }
+  .pick { grid-template-columns: 1fr; }
+  .layout { padding: 16px; }
+}
+@media (min-width: 820px) {
+  .head-about { display: block; }
+}
 </style>
 </head>
 <body>
+
 <header class="site-header">
   <div class="head-inner">
-    <div>
-      <div class="brand-row"><div class="brand-mark">⚡</div><h1>Relay — راهنمای کامل نصب</h1></div>
-      <span class="badge">بدون ترمینالِ پیچیده · با حساب رایگان هم کار می‌کند</span>
+    <div class="brand-row">
+      <div class="brand-mark">⚡</div>
+      <span class="head-title">Relay — راهنمای کامل نصب</span>
+    </div>
+    <div class="head-meta">
+      <span class="badge-pill">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        بدون ترمینالِ پیچیده
+      </span>
+      <span class="badge-pill">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        با حساب رایگان هم کار می‌کند
+      </span>
       <p class="head-about">Relay ابزار متن‌باز KARA AI است؛ مدل‌های Antigravity را با حساب گوگل خودت و روی Vercel خودت اجرا می‌کند، بدون سرور واسط و بدون اینکه توکنت دست کسی باشد.</p>
-      <span class="dim" id="brandLine"></span>
     </div>
     <div class="channel-chip">
       <b>KARA AI</b>
@@ -98,71 +673,158 @@
     </div>
   </div>
 </header>
+
 <div class="layout">
   <aside class="sidebar">
     <div class="side-card">
-      <h3>فهرست راهنما</h3>
+      <div class="side-card-title">فهرست راهنما</div>
       <nav class="side-nav">
-        <a href="#needs"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>چی لازم داری؟</a>
-        <a href="#step1"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>مرحله ۱: اعتبارنامه</a>
-        <a href="#route-antigravity"><img src="assets/antigravity.png" alt="">اتصال با Antigravity</a>
-        <a href="#route-9router"><img src="assets/9router.svg" alt="">اتصال با 9Router</a>
-        <a href="#step2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>مرحله ۲: ورود با گوگل</a>
-        <a href="#troubleshoot"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>اگه گیر کردی</a>
-        <a href="#security"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>امنیت</a>
+        <a href="#needs" class="active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          چی لازم داری؟
+        </a>
+        <a href="#step1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+          مرحله ۱: اعتبارنامه
+        </a>
+        <a href="#route-antigravity">
+          <img src="assets/antigravity.png" alt="">
+          اتصال با Antigravity
+        </a>
+        <a href="#route-9router">
+          <img src="assets/9router.svg" alt="">
+          اتصال با 9Router
+        </a>
+        <a href="#step2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          مرحله ۲: ورود با گوگل
+        </a>
+        <a href="#troubleshoot">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          اگه گیر کردی
+        </a>
+        <a href="#security">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          امنیت
+        </a>
       </nav>
+      <div class="side-progress">
+        <div class="side-progress-label">
+          <span>پیشرفت</span>
+          <span id="progPct">۲۰٪</span>
+        </div>
+        <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+      </div>
     </div>
-    <div class="side-card">
-      <h3>KARA AI</h3>
-      <p class="dim">کانال ما برای آفرهای هوش مصنوعی و آموزش‌های کاربردی.</p>
-      <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">t.me/kara_ai_offer</a>
+    <div class="side-card kara-card">
+      <div class="kara-logo">⚡</div>
+      <div class="kara-name">KARA AI</div>
+      <div class="kara-desc">کانال ما برای آفرهای هوش مصنوعی و آموزش‌های کاربردی.</div>
+      <a class="btn-tg" href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        کانال تلگرام
+      </a>
+      <div style="margin-top:10px;font-size:12px;color:var(--text-dim)" id="brandLine"></div>
     </div>
   </aside>
+
   <main>
-  <p class="dim">این راهنما قدم‌به‌قدم نشانت می‌دهد چطور با اکانت خودت یک Relay شخصی بسازی: اول اعتبارنامه‌ی اپ را از برنامه‌ای که نصب داری برمی‌داری، بعد با حساب گوگل خودت وارد می‌شوی و توکن می‌گیری، و آخر با یک کلیک روی Vercel نصبش می‌کنی. همه‌ی کارها فقط توی مرورگر خودت انجام می‌شود؛ این صفحه هیچ‌چیز را ذخیره نمی‌کند و هیچ اطلاعاتی به هیچ سروری نمی‌فرستد.</p>
-  <div class="dim small" id="stepIndicator" style="margin-bottom:4px"></div>
-
-  <div class="card screen" id="needs">
-    <h2>چی لازم داری؟</h2>
-    <ul>
-      <li><b>یکی از این دو برنامه روی کامپیوترت:</b> اپ Antigravity یا 9Router. هر کدام را داری کافی است؛ لازم نیست هر دو را نصب کنی.</li>
-      <li><b>یک حساب گوگل:</b> حساب رایگان هم جواب می‌دهد (تست‌شده). بهتر است حساب جدا باشد، نه حساب اصلی‌ات.</li>
-      <li><b>یک حساب Vercel:</b> ساخت حساب رایگان است.</li>
-      <li><b>پاورشل ویندوز:</b> برای دستورهای استخراج زیر. نیازی به نصب برنامه‌ی اضافه نیست.</li>
-    </ul>
-    <div class="callout note">نکته: این راهنما را تا آخر با همان حسابی که می‌خواهی Relay رویش کار کند جلو برو؛ وسط راه حساب را عوض نکن.</div>
-    <div class="step-nav"><span></span><button type="button" data-goto="step1">مرحله‌ی بعد: اعتبارنامه ←</button></div>
-  </div>
-
-  <div class="card screen" id="step1">
-    <h2><span class="stepnum">۱</span>اعتبارنامه‌ی اپ Antigravity</h2>
-    <p class="dim">دو مقدار لازم داری: Client ID و Client Secret. این دو مقدار، رمز شخصی تو نیستند؛ اعتبارنامه‌ی عمومیِ اپ دسکتاپ Antigravity هستند که گوگل همراه خود اپ پخش کرده. بسته به اینکه کدام برنامه را داری، یکی از دو راه زیر را برو:</p>
-    <div class="callout note">نکته: دستورهای این صفحه به نام کاربری کامپیوترت کاری ندارند؛ <span dir="ltr">$env:LOCALAPPDATA</span> و <span dir="ltr">npm root -g</span> خودشان مسیر مخصوص همان کاربر را پیدا می‌کنند، پس روی هر کامپیوتری همین دستورها را بدون تغییر بزن.</div>
-    <div id="routePicker">
-      <p class="dim">کدام برنامه را داری؟ یکی را انتخاب کن تا فقط دستورهای همان یکی را ببینی:</p>
-      <div class="pick">
-        <button type="button" class="pick-btn" data-route="route-antigravity"><img src="assets/antigravity.png" alt=""><b>اپ رسمی Antigravity</b><span class="dim">اگر اپ Antigravity را نصب داری</span></button>
-        <button type="button" class="pick-btn" data-route="route-9router"><img src="assets/9router.svg" alt=""><b>9Router</b><span class="dim">اگر 9Router را نصب داری؛ نیازی به نصب Antigravity نیست</span></button>
+    <div class="intro-bar">
+      <div class="step-indicator-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span id="stepIndicator">صفحه‌ی ۱ از ۵: چی لازم داری؟</span>
       </div>
     </div>
-    <div id="routeBack" class="hidden" style="margin-bottom:12px"><button type="button" class="ghost" id="routeBackBtn">→ انتخاب دوباره‌ی برنامه</button></div>
+    <div class="intro-desc">
+      این راهنما قدم‌به‌قدم نشانت می‌دهد چطور با اکانت خودت یک Relay شخصی بسازی: اول اعتبارنامه‌ی اپ را از برنامه‌ای که نصب داری برمی‌داری، بعد با حساب گوگل خودت وارد می‌شوی و توکن می‌گیری، و آخر با یک کلیک روی Vercel نصبش می‌کنی. همه‌ی کارها فقط توی مرورگر خودت انجام می‌شود؛ این صفحه هیچ‌چیز را ذخیره نمی‌کند و هیچ اطلاعاتی به هیچ سروری نمی‌فرستد.
+    </div>
 
-    <div class="route a" id="route-antigravity">
-      <h3><img src="assets/antigravity.png" alt="">راه الف — از اپ رسمی Antigravity</h3>
-      <ol>
-        <li>اپ رسمی Antigravity را روی کامپیوترت نصب کن. برای همین استخراج، وارد شدن به اپ لازم نیست؛ مقدارها توی خود فایل‌های نصب هستند.</li>
-        <li>پاورشل را باز کن و این دستور را بزن تا فایل‌هایی که مقدار را دارند پیدا شوند:</li>
-      </ol>
-      <div class="codeblock">
-        <div class="codehead"><span>پاورشل — پیدا کردن فایل‌ها</span><button data-copy-code>کپی</button></div>
-        <pre><code>findstr /S /M "apps.googleusercontent.com" "$env:LOCALAPPDATA\Programs\antigravity\*"</code></pre>
+    <div class="card screen active" id="needs">
+      <div class="section-head">
+        <h2>
+          <span class="stepnum">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </span>
+          چی لازم داری؟
+        </h2>
       </div>
-      <ol start="3">
-        <li>حالا این اسکریپت را بزن تا شناسه‌ها و سکرت‌ها تمیز و بدون تکرار چاپ شوند:</li>
-      </ol>
-      <div class="codeblock">
-        <div class="codehead"><span>پاورشل — استخراج شناسه و سکرت</span><button data-copy-code>کپی</button></div>
-        <pre><code>$root = "$env:LOCALAPPDATA\Programs\antigravity"
+      <ul>
+        <li><b>یکی از این دو برنامه روی کامپیوترتنصب داری:</b> اپ Antigravity یا 9Router. هر کدام را داری کافی است؛ لازم نیست هر دو را نصب کنی.</li>
+        <li><b>یک حساب گوگل:</b> حساب رایگان هم جواب می‌دهد (تست‌شده). بهتر است حساب جدا باشد، نه حساب اصلی‌ات.</li>
+        <li><b>یک حساب Vercel:</b> ساخت حساب رایگان است.</li>
+        <li><b>پاورشل ویندوز:</b> برای دستورهای استخراج زیر. نیازی به نصب برنامه‌ی اضافه نیست.</li>
+      </ul>
+      <div class="callout note">
+        <span class="callout-icon">💡</span>
+        <span class="callout-body">نکته: این راهنما را تا آخر با همان حسابی که می‌خواهی Relay رویش کار کند جلو برو؛ وسط راه حساب را عوض نکن.</span>
+      </div>
+      <div class="step-nav">
+        <span></span>
+        <button type="button" data-goto="step1">مرحله‌ی بعد: اعتبارنامه ←</button>
+      </div>
+    </div>
+
+    <div class="card screen" id="step1">
+      <div class="section-head">
+        <h2>
+          <span class="stepnum">۱</span>
+          اعتبارنامه‌ی اپ Antigravity
+        </h2>
+      </div>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">دو مقدار لازم داری: Client ID و Client Secret. این دو مقدار، رمز شخصی تو نیستند؛ اعتبارنامه‌ی عمومیِ اپ دسکتاپ Antigravity هستند که گوگل همراه خود اپ پخش کرده. بسته به اینکه کدام برنامه را داری، یکی از دو راه زیر را برو:</p>
+      <div class="callout note">
+        <span class="callout-icon">💡</span>
+        <span class="callout-body">نکته: دستورهای این صفحه به نام کاربری کامپیوترت کاری ندارند؛ <span dir="ltr">$env:LOCALAPPDATA</span> و <span dir="ltr">npm root -g</span> خودشان مسیر مخصوص همان کاربر را پیدا می‌کنند، پس روی هر کامپیوتری همین دستورها را بدون تغییر بزن.</span>
+      </div>
+
+      <div id="routePicker">
+        <p class="pick-label">کدام برنامه را داری؟ یکی را انتخاب کن تا فقط دستورهای همان یکی را ببینی:</p>
+        <div class="pick">
+          <button type="button" class="pick-btn a" data-route="route-antigravity">
+            <span class="pick-badge green">راه الف</span>
+            <img src="assets/antigravity.png" alt="Antigravity">
+            <b>اپ رسمی Antigravity</b>
+            <span class="pick-sub">اگر اپ Antigravity را نصب داری</span>
+          </button>
+          <button type="button" class="pick-btn b" data-route="route-9router">
+            <span class="pick-badge blue">راه ب</span>
+            <img src="assets/9router.svg" alt="9Router">
+            <b>9Router</b>
+            <span class="pick-sub">اگر 9Router را نصب داری؛ نیازی به نصب Antigravity نیست</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="routeBack" class="hidden">
+        <button type="button" class="ghost" id="routeBackBtn">→ انتخاب دوباره‌ی برنامه</button>
+      </div>
+
+      <div class="route a" id="route-antigravity">
+        <h3>
+          <img src="assets/antigravity.png" alt="Antigravity">
+          راه الف — از اپ رسمی Antigravity
+          <span class="route-tag a">Antigravity</span>
+        </h3>
+        <ol>
+          <li>اپ رسمی Antigravity را روی کامپیوترت نصب کن. برای همین استخراج، وارد شدن به اپ لازم نیست؛ مقدارها توی خود فایل‌های نصب هستند.</li>
+          <li>پاورشل را باز کن و این دستور را بزن تا فایل‌هایی که مقدار را دارند پیدا شوند:</li>
+        </ol>
+        <div class="codeblock">
+          <div class="codehead">
+            <span class="codehead-label">پاورشل — پیدا کردن فایل‌ها</span>
+            <button data-copy-code>کپی</button>
+          </div>
+          <pre><code>findstr /S /M "apps.googleusercontent.com" "$env:LOCALAPPDATA\Programs\antigravity\*"</code></pre>
+        </div>
+        <ol start="3">
+          <li>حالا این اسکریپت را بزن تا شناسه‌ها و سکرت‌ها تمیز و بدون تکرار چاپ شوند:</li>
+        </ol>
+        <div class="codeblock">
+          <div class="codehead">
+            <span class="codehead-label">پاورشل — استخراج شناسه و سکرت</span>
+            <button data-copy-code>کپی</button>
+          </div>
+          <pre><code>$root = "$env:LOCALAPPDATA\Programs\antigravity"
 $ids = @()
 $secs = @()
 Get-ChildItem -Path $root -Recurse -File | ForEach-Object {
@@ -172,30 +834,43 @@ Get-ChildItem -Path $root -Recurse -File | ForEach-Object {
 }
 $ids | Sort-Object -Unique
 $secs | Sort-Object -Unique</code></pre>
+        </div>
+        <ol start="4">
+          <li>دو لیست می‌بینی: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردار و پایین همین صفحه، توی فیلدهای مرحله‌ی ۱، پیست کن. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کن (نکته‌ی زیر را بخوان).</li>
+        </ol>
+        <div class="callout tip">
+          <span class="callout-icon">✅</span>
+          <span class="callout-body">نکته: فایل‌های خیلی بزرگ را با نوت‌پد باز نکن؛ هنگ می‌کند. همین اسکریپت بالا کار استخراج را می‌کند و لازم نیست فایل را باز کنی.</span>
+        </div>
       </div>
-      <ol start="4">
-        <li>دو لیست می‌بینی: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردار و پایین همین صفحه، توی مرحله‌ی ۱، پیست کن. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کن (نکته‌ی زیر را بخوان).</li>
-      </ol>
-      <div class="callout tip">نکته: فایل‌های خیلی بزرگ را با نوت‌پد باز نکن؛ هنگ می‌کند. همین اسکریپت بالا کار استخراج را می‌کند و لازم نیست فایل را باز کنی.</div>
-    </div>
 
-    <div class="route b" id="route-9router">
-      <h3><img src="assets/9router.svg" alt="">راه ب — از 9Router (اگر نصبش داری، نیازی به نصب Antigravity نیست)</h3>
-      <ol>
-        <li><b>اول:</b> توی 9Router از بخش Providers یک بار Antigravity را اضافه کن. بعد از این کار، مقدارها توی فایل‌های نصب 9Router هستند.</li>
-        <li>پاورشل را باز کن و این دو دستور را بزن تا اول مسیر نصب پیدا شود و بعد فایل‌های حاوی مقدار مشخص شوند:</li>
-      </ol>
-      <div class="codeblock">
-        <div class="codehead"><span>پاورشل — مسیر نصب و پیدا کردن فایل‌ها</span><button data-copy-code>کپی</button></div>
-        <pre><code>$pkg = Join-Path (npm root -g) "9router"
+      <div class="route b" id="route-9router">
+        <h3>
+          <img src="assets/9router.svg" alt="9Router">
+          راه ب — از 9Router (اگر نصبش داری، نیازی به نصب Antigravity نیست)
+          <span class="route-tag b">9Router</span>
+        </h3>
+        <ol>
+          <li><b>اول:</b> توی 9Router از بخش Providers یک بار Antigravity را اضافه کن. بعد از این کار، مقدارها توی فایل‌های نصب 9Router هستند.</li>
+          <li>پاورشل را باز کن و این دو دستور را بزن تا اول مسیر نصب پیدا شود و بعد فایل‌های حاوی مقدار مشخص شوند:</li>
+        </ol>
+        <div class="codeblock">
+          <div class="codehead">
+            <span class="codehead-label">پاورشل — مسیر نصب و پیدا کردن فایل‌ها</span>
+            <button data-copy-code>کپی</button>
+          </div>
+          <pre><code>$pkg = Join-Path (npm root -g) "9router"
 findstr /S /M "apps.googleusercontent.com" "$pkg\*"</code></pre>
-      </div>
-      <ol start="3">
-        <li>حالا این اسکریپت را بزن تا شناسه‌ها و سکرت‌ها تمیز و بدون تکرار چاپ شوند:</li>
-      </ol>
-      <div class="codeblock">
-        <div class="codehead"><span>پاورشل — استخراج شناسه و سکرت</span><button data-copy-code>کپی</button></div>
-        <pre><code>$pkg = Join-Path (npm root -g) "9router"
+        </div>
+        <ol start="3">
+          <li>حالا این اسکریپت را بزن تا شناسه‌ها و سکرت‌ها تمیز و بدون تکرار چاپ شوند:</li>
+        </ol>
+        <div class="codeblock">
+          <div class="codehead">
+            <span class="codehead-label">پاورشل — استخراج شناسه و سکرت</span>
+            <button data-copy-code>کپی</button>
+          </div>
+          <pre><code>$pkg = Join-Path (npm root -g) "9router"
 $root = Join-Path $pkg "app\.next-cli-build"
 $ids = @()
 $secs = @()
@@ -206,113 +881,204 @@ Get-ChildItem -Path $root -Recurse -File | ForEach-Object {
 }
 $ids | Sort-Object -Unique
 $secs | Sort-Object -Unique</code></pre>
+        </div>
+        <ol start="4">
+          <li>دو لیست می‌بینی: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردار و پایین همین صفحه، توی فیلدهای مرحله‌ی ۱، پیست کن. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کن.</li>
+        </ol>
+        <div class="callout note">
+          <span class="callout-icon">💡</span>
+          <span class="callout-body">نکته: اگر از آن پوشه چیزی درنیامد، اسکریپت را یک بار روی کل پوشه‌ی نصب 9Router هم امتحان کن؛ در بعضی نسخه‌ها مقدارها توی پوشه‌ی دیگری از همان نصب هستند.</span>
+        </div>
       </div>
-      <ol start="4">
-        <li>دو لیست می‌بینی: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردار و پایین همین صفحه، توی مرحله‌ی ۱، پیست کن. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کن.</li>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <span class="callout-body">
+          <b>چند نکته که خودمان یاد گرفتیم:</b><br>
+          • سکرت واقعی دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> است؛ اگر رشته‌ی بلندتری دیدی، دنباله‌اش اضافه‌ی فایل است و فقط همان ۲۸ کاراکتر را بردار.<br>
+          • دو لیست جدا جدا مرتب می‌شوند، پس «اولی با اولی» لزوماً جفت نیست؛ جفت درست با تست مشخص میشود: وقتی مرحله‌ی ۲ توکن برگرداند، یعنی جفت درست است.<br>
+          • با دو شناسه و دو سکرت، حداکثر ۴ ترکیب وجود دارد؛ پس اگر اولی نشد، ناامید نشو و بقیه را امتحان کن.
+        </span>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <span class="callout-body">
+          <b>کلاینت شخصی نساز:</b> ساخت اعتبارنامه‌ی شخصی توی کنسول گوگل برای این کار جواب نمی‌دهد؛ پروژه‌ی شخصی به سرویس خصوصی Cloud Code دسترسی ندارد و رله ارور می‌دهد. فقط از راه الف یا ب استفاده کن.
+        </span>
+      </div>
+
+      <label for="clientId">Client ID</label>
+      <input id="clientId" dir="ltr" placeholder="...apps.googleusercontent.com" autocomplete="off">
+      <label for="clientSecret">Client Secret</label>
+      <input id="clientSecret" dir="ltr" type="password" placeholder="GOCSPX-..." autocomplete="off">
+
+      <div class="step-nav">
+        <button type="button" class="ghost" data-goto="needs">→ مرحله‌ی قبل</button>
+        <button type="button" data-goto="step2">مرحله‌ی بعد: ورود با گوگل ←</button>
+      </div>
+    </div>
+
+    <div class="card screen" id="step2">
+      <div class="section-head">
+        <h2>
+          <span class="stepnum">۲</span>
+          ورود با گوگل
+        </h2>
+      </div>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">دکمه را بزن و با همان حسابی که می‌خواهی Relay رویش کار کند وارد شو و دسترسی را تایید کن. حساب رایگان گوگل هم جواب می‌دهد (تست‌شده) و با اعتبارنامه‌ی رسمی نیازی به اضافه‌کردن تستر نیست. بعد گوگل تو را به یک آدرس localhost می‌فرستد که باز نمی‌شود — طبیعی است! کل آدرس را از نوار آدرس مرورگر کپی کن و اینجا پیست کن.</p>
+
+      <div class="row" style="margin-bottom:16px;">
+        <button id="loginBtn" type="button">🔐 ورود با گوگل</button>
+      </div>
+
+      <label for="callbackUrl">آدرس برگشتی (Callback URL) را اینجا پیست کن:</label>
+      <textarea id="callbackUrl" rows="3" placeholder="http://localhost:8080/callback?code=..."></textarea>
+
+      <div class="row" style="margin-top:12px;">
+        <button id="exchangeBtn" type="button">دریافت توکن</button>
+        <span style="color:var(--text-dim);font-size:13px;" id="exchangeMsg"></span>
+      </div>
+
+      <div class="callout note" style="margin-top:16px;">
+        <span class="callout-icon">💡</span>
+        <span class="callout-body">
+          نکته‌ها: کدی که توی آدرس است یک‌بارمصرف است و حدود ۱۰ دقیقه عمر دارد؛ اگر دیر شد، فقط کافی است دوباره «ورود با گوگل» را بزنی. اگر توکن برنگشت، اول جفت شناسه و سکرت را عوض کن. بعد از دریافت توکن، مرحله‌ی ۳ همین‌جا باز می‌شود.
+        </span>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="ghost" data-goto="step1">→ مرحله‌ی قبل</button>
+        <button type="button" data-goto="troubleshoot">مرحله‌ی بعد: رفع اشکال ←</button>
+      </div>
+    </div>
+
+    <div class="card hidden" id="resultCard">
+      <div class="section-head">
+        <h2>
+          <span class="stepnum">۳</span>
+          پک نصب تو آماده‌ست 🎉
+        </h2>
+      </div>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:18px;">این مقادیر را موقع نصب توی Vercel وارد می‌کنی. کلید Relay و پسورد داشبورد را خودکار برایت ساختم. <b>این صفحه را تا تمام شدن نصب نبند و مقادیر را جای امن نگه دار.</b></p>
+
+      <label>AG_REFRESH_TOKEN <span style="color:var(--text-muted);font-size:12px;">(توکن گوگل — مثل رمز اکانتت، دست کسی نده)</span></label>
+      <div class="row">
+        <div class="out" id="outToken"></div>
+        <button type="button" class="ghost" data-copy="outToken">کپی</button>
+      </div>
+
+      <label>RELAY_API_KEY <span style="color:var(--text-muted);font-size:12px;">(کلید Relay)</span></label>
+      <div class="row">
+        <div class="out" id="outKey"></div>
+        <button type="button" class="ghost" data-copy="outKey">کپی</button>
+      </div>
+
+      <label>DASH_PASSWORD <span style="color:var(--text-muted);font-size:12px;">(پسورد داشبورد)</span></label>
+      <div class="row">
+        <div class="out" id="outPass"></div>
+        <button type="button" class="ghost" data-copy="outPass">کپی</button>
+      </div>
+
+      <div style="margin-top:28px;padding-top:22px;border-top:1px solid var(--border-soft);">
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">حالا نصب با یک کلیک:</h3>
+        <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">دکمه‌ی زیر پروژه را توی Vercel خودت می‌سازد و ازت می‌خواهد همین مقادیر را وارد کنی (به‌علاوه‌ی Client ID و Secret مرحله‌ی ۱). بعد از Deploy، آدرس سرویس تو می‌شود: <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:13px;color:var(--green-text);">https://&lt;پروژه‌ت&gt;.vercel.app/v1</span></p>
+        <div class="row">
+          <a id="deployBtn" href="#" target="_blank" rel="noopener">
+            <button type="button">🚀 نصب Relay روی Vercel</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card screen" id="troubleshoot">
+      <div class="section-head">
+        <h2>
+          <span class="stepnum">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </span>
+          اگه گیر کردی
+        </h2>
+      </div>
+
+      <h3>توکن برنگشت یا ارور ورود آمد</h3>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">اول خونسرد باش؛ این خطا تقریباً همیشه یعنی جفت شناسه و سکرت با هم جور نیستند، نه اینکه حسابت خراب باشد. دلیلش این است: توی فایل‌های اپ، معمولاً دو شناسه و دو سکرتِ متفاوت هست (مال دو کلاینت مختلف گوگل) و فقط یکی از جفت‌ها کلاینتِ واقعیِ Antigravity است. دو لیستی که اسکریپت چاپ کرد، هر کدام جداگانه مرتب شده‌اند، پس «اولی با اولی» لزوماً جفت درست نیست؛ فقط وقتی مرحله‌ی ۲ توکن برگرداند، معلوم می‌شود جفت درست را زده‌ای.</p>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;"><b>مثال با اسم‌های فرضی (نه کد واقعی):</b> فرض کن لیست شناسه‌ها این دوتاست: «شناسه‌ی الف» و «شناسه‌ی ب»، و لیست سکرت‌ها هم این دوتاست: «سکرت ۱» و «سکرت ۲». پس فقط ۴ ترکیب ممکن است: الف+۱، الف+۲، ب+۱، ب+۲. هر بار یکی را توی مرحله‌ی ۱ می‌زنی و «دریافت توکن» را می‌زنی؛ ترکیب‌هایی که جواب نمی‌دهند ارور می‌دهند و رد می‌شوند. همان ترکیبی که توکن برگرداند، جفت درست است و دیگر لازم نیست بقیه را امتحان کنی. اگر هر ۴ ترکیب را زدی و هیچ‌کدام توکن نداد، یعنی یا سکرت را ناقص کپی کرده‌ای (سکرت دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">GOCSPX-</span> است) یا از راه اشتباه استخراج کرده‌ای؛ یک بار دیگر اسکریپت همان راه را بزن و خروجی را با دقت کپی کن.</p>
+
+      <h3>کد منقضی شد (یا ارور کد نامعتبر آمد)</h3>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">کدی که توی آدرس برگشتی است، یک‌بارمصرف است و فقط حدود ۱۰ دقیقه عمر دارد؛ یعنی فقط یک بار می‌شود با آن توکن گرفت و بعد از ۱۰ دقیقه دیگر به درد نمی‌خورد. اگر دیر کردی، یا همان کد را دوبار زدی، این ارور طبیعی است و ربطی به شناسه و سکرت ندارد. راه‌حلش ساده است: دوباره «ورود با گوگل» را بزن تا گوگل یک کد تازه بدهد، این بار همان لحظه کل آدرس را کپی کن و سریع «دریافت توکن» را بزن. نکته: هر بار که «ورود با گوگل» را می‌زنی، فقط همان کدِ آخری معتبر است؛ کدهای قبلی خودبه‌خود باطل می‌شوند.</p>
+
+      <h3>آدرس برگشتی کد نداشت</h3>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">کل نوار آدرس مرورگر را کپی کن، نه فقط بخشی از آن. کد بعد از <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">code=</span> می‌آید و تا اولین <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">&amp;</span> ادامه دارد.</p>
+
+      <h3>پوشه‌ی نصب را پیدا نکردی</h3>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">برای 9Router دستور <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">where.exe 9router</span> یا <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">npm root -g</span> مسیر نصب را نشان می‌دهد. برای اپ Antigravity، پوشه‌ی نصب معمولاً زیر <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">%LOCALAPPDATA%\Programs\antigravity</span> است.</p>
+
+      <h3>بعد از Deploy داشبورد مدل‌ها را نشان نداد</h3>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">اول مطمئن شو Deploy کامل شده و وضعیتش READY است. بعد پسورد داشبورد را درست وارد کن. اگر باز هم ارور پروژه دیدی، توکن را با همان مراحل دوباره بگیر و متغیرهای محیطی را در Vercel به‌روز کن و Redeploy بزن.</p>
+
+      <div class="step-nav">
+        <button type="button" class="ghost" data-goto="step2">→ مرحله‌ی قبل</button>
+        <button type="button" data-goto="security">مرحله‌ی بعد: امنیت ←</button>
+      </div>
+    </div>
+
+    <div class="card screen" id="security">
+      <div class="section-head">
+        <h2>
+          <span class="stepnum">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          امنیت
+        </h2>
+      </div>
+
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:14px;">این راهنما طوری ساخته شده که هیچ رازی از مرورگر تو بیرون نمی‌رود، ولی چند راز هست که خودت باید مثل رمز حسابت ازشان محافظت کنی. اول فرقشان را بشناس:</p>
+
+      <h3>چه چیزی راز نیست</h3>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">شناسه و سکرت مرحله‌ی ۱، اعتبارنامه‌ی عمومیِ خود اپ Antigravity هستند؛ همراه فایل‌های نصب پخش شده‌اند و رمز شخصی تو نیستند. دانستنشان به‌تنهایی به کسی دسترسی به حسابت نمی‌دهد.</p>
+
+      <h3>چه چیزی راز است و چرا</h3>
+      <ul style="color:var(--text-dim);font-size:14px;">
+        <li><b style="color:var(--text);">توکن گوگل (AG_REFRESH_TOKEN):</b> کلید ورود به سهمیه‌ی Antigravity حساب توست؛ هر کس آن را داشته باشد می‌تواند با سهمیه‌ی تو مدل صدا بزند. مثل رمز حسابت نگهش دار.</li>
+        <li><b style="color:var(--text);">کلید Relay (RELAY_API_KEY):</b> هر کس این کلید را داشته باشد می‌تواند از رله‌ی تو استفاده کند و سهمیه‌ات را مصرف کند.</li>
+        <li><b style="color:var(--text);">پسورد داشبورد (DASH_PASSWORD):</b> کلید ورود به صفحه‌ی مدیریت رله‌ی توست.</li>
+      </ul>
+
+      <h3>کجا نگهشان دار</h3>
+      <ul style="color:var(--text-dim);font-size:14px;">
+        <li>فقط توی متغیرهای محیطی (Environment Variables) پروژه‌ی Vercel؛ Vercel آن‌ها را رمزنگاری‌شده نگه می‌دارد. هیچ‌وقت آن‌ها را توی کد، گیت‌هاب، فایل README یا پیام عمومی ننویس.</li>
+        <li>این صفحه هیچ مقداری را ذخیره یا ارسال نمی‌کند؛ همه‌ی کارها فقط توی مرورگر خودت انجام می‌شود. با این حال، بعد از تمام شدن نصب، تب را ببند تا مقادیر از حافظه‌ی موقت مرورگر پاک شوند.</li>
+        <li>حساب گوگلی که برای رله استفاده می‌کنی، بهتر است حساب جدا باشد نه حساب اصلی‌ات؛ این‌طوری اگر روزی رازی لو رفت، فقط همان حساب درگیر است.</li>
+      </ul>
+
+      <h3>اگر چیزی لو رفت — فوری این سه کار را بکن</h3>
+      <ol style="color:var(--text-dim);font-size:14px;">
+        <li>توی حساب گوگلت دسترسی اپ را قطع کن: <span dir="ltr" style="font-family:Consolas,'Courier New',monospace;font-size:12.5px;">myaccount.google.com → Security → Third-party access</span> و دسترسی مربوط به Antigravity را حذف کن؛ این کار توکن قبلی را باطل می‌کند.</li>
+        <li>توی همین راهنما یک توکن تازه بگیر و کلید Relay و پسورد داشبورد تازه بساز.</li>
+        <li>مقادیر تازه را توی Vercel جایگزین کن و دوباره Deploy بزن تا مقادیر لو‌رفته دیگر کار نکنند.</li>
       </ol>
-      <div class="callout note">نکته: اگر از آن پوشه چیزی درنیامد، اسکریپت را یک بار روی کل پوشه‌ی نصب 9Router هم امتحان کن؛ در بعضی نسخه‌ها مقدارها توی پوشه‌ی دیگری از همان نصب هستند.</div>
+
+      <h3>موقع ضبط ویدئو یا اسکرین‌شات</h3>
+      <p style="color:var(--text-dim);font-size:14px;margin-bottom:10px;">موقع تدوین، روی توکن، کلید و پسورد را کامل بپوشان؛ حتی چند فریم لو رفتن کافی است تا کسی آن را بردارد. برای ویدئوی آموزشی امن‌تر است که با یک پروژه‌ی آزمایشی و مقادیر یک‌بارمصرف ضبط کنی و بعد از ضبط، آن پروژه را پاک کنی.</p>
+
+      <div class="step-nav">
+        <button type="button" class="ghost" data-goto="troubleshoot">→ مرحله‌ی قبل</button>
+        <span></span>
+      </div>
     </div>
-
-    <div class="callout warn"><b>چند نکته که خودمان یاد گرفتیم:</b><br>
-    • سکرت واقعی دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> است؛ اگر رشته‌ی بلندتری دیدی، دنباله‌اش اضافه‌ی فایل است و فقط همان ۲۸ کاراکتر را بردار.<br>
-    • دو لیست جدا جدا مرتب می‌شوند، پس «اولی با اولی» لزوماً جفت نیست؛ جفت درست با تست مشخص می‌شود: وقتی مرحله‌ی ۲ توکن برگرداند، یعنی جفت درست است.<br>
-    • با دو شناسه و دو سکرت، حداکثر ۴ ترکیب وجود دارد؛ پس اگر اولی نشد، ناامید نشو و بقیه را امتحان کن.</div>
-
-    <div class="callout warn"><b>⚠️ کلاینت شخصی نساز:</b> ساخت اعتبارنامه‌ی شخصی توی کنسول گوگل برای این کار جواب نمی‌دهد؛ پروژه‌ی شخصی به سرویس خصوصی Cloud Code دسترسی ندارد و رله ارور می‌دهد. فقط از راه الف یا ب استفاده کن.</div>
-
-    <label>Client ID</label>
-    <input id="clientId" dir="ltr" placeholder="...apps.googleusercontent.com">
-    <label>Client Secret</label>
-    <input id="clientSecret" dir="ltr" type="password" placeholder="GOCSPX-...">
-    <div class="step-nav"><button type="button" class="ghost" data-goto="needs">→ مرحله‌ی قبل</button><button type="button" data-goto="step2">مرحله‌ی بعد: ورود با گوگل ←</button></div>
-  </div>
-
-  <div class="card screen" id="step2">
-    <h2><span class="stepnum">۲</span>ورود با گوگل</h2>
-    <p class="dim">دکمه را بزن و با همان حسابی که می‌خواهی Relay رویش کار کند وارد شو و دسترسی را تایید کن. حساب رایگان گوگل هم جواب می‌دهد (تست‌شده) و با اعتبارنامه‌ی رسمی نیازی به اضافه‌کردن تستر نیست. بعد گوگل تو را به یک آدرس localhost می‌فرستد که باز نمی‌شود — طبیعی است! کل آدرس را از نوار آدرس مرورگر کپی کن و اینجا پیست کن.</p>
-    <div class="row">
-      <button id="loginBtn">🔐 ورود با گوگل</button>
-    </div>
-    <label>آدرس برگشتی (Callback URL) را اینجا پیست کن:</label>
-    <textarea id="callbackUrl" rows="3" placeholder="http://localhost:8080/callback?code=..."></textarea>
-    <div class="row" style="margin-top:10px">
-      <button id="exchangeBtn">دریافت توکن</button>
-      <span class="dim" id="exchangeMsg"></span>
-    </div>
-    <div class="callout note">نکته‌ها: کدی که توی آدرس است یک‌بارمصرف است و حدود ۱۰ دقیقه عمر دارد؛ اگر دیر شد، فقط کافی است دوباره «ورود با گوگل» را بزنی. اگر توکن برنگشت، اول جفت شناسه و سکرت را عوض کن (بخش «اگه گیر کردی» را ببین). بعد از دریافت توکن، مرحله‌ی ۳ همین‌جا باز می‌شود.</div>
-    <div class="step-nav"><button type="button" class="ghost" data-goto="step1">→ مرحله‌ی قبل</button><button type="button" data-goto="troubleshoot">مرحله‌ی بعد: رفع اشکال ←</button></div>
-  </div>
-
-  <div class="card hidden" id="resultCard">
-    <h2><span class="stepnum">۳</span>پک نصب تو آماده‌ست 🎉</h2>
-    <p class="dim">این مقادیر را موقع نصب توی Vercel وارد می‌کنی. کلید Relay و پسورد داشبورد را خودکار برایت ساختم. <b>این صفحه را تا تمام شدن نصب نبند و مقادیر را جای امن نگه دار.</b></p>
-    <label>AG_REFRESH_TOKEN (توکن گوگل — مثل رمز اکانتت، دست کسی نده)</label>
-    <div class="row"><div class="out" style="flex:1" id="outToken"></div><button class="ghost" data-copy="outToken">کپی</button></div>
-    <label>RELAY_API_KEY (کلید Relay)</label>
-    <div class="row"><div class="out" style="flex:1" id="outKey"></div><button class="ghost" data-copy="outKey">کپی</button></div>
-    <label>DASH_PASSWORD (پسورد داشبورد)</label>
-    <div class="row"><div class="out" style="flex:1" id="outPass"></div><button class="ghost" data-copy="outPass">کپی</button></div>
-    <h2 style="margin-top:18px">حالا نصب با یک کلیک:</h2>
-    <p class="dim">دکمه‌ی زیر پروژه را توی Vercel خودت می‌سازد و ازت می‌خواهد همین مقادیر را وارد کنی (به‌علاوه‌ی Client ID و Secret مرحله‌ی ۱). بعد از Deploy، آدرس سرویس تو می‌شود: <span dir="ltr">https://&lt;پروژه‌ت&gt;.vercel.app/v1</span></p>
-    <div class="row">
-      <a id="deployBtn" href="#" target="_blank" rel="noopener"><button>🚀 نصب Relay روی Vercel</button></a>
-    </div>
-  </div>
-
-  <div class="card screen" id="troubleshoot">
-    <h2>اگه گیر کردی</h2>
-    <h3>توکن برنگشت یا ارور ورود آمد</h3>
-    <p class="dim">اول خونسرد باش؛ این خطا تقریباً همیشه یعنی جفت شناسه و سکرت با هم جور نیستند، نه اینکه حسابت خراب باشد. دلیلش این است: توی فایل‌های اپ، معمولاً دو شناسه و دو سکرتِ متفاوت هست (مال دو کلاینت مختلف گوگل) و فقط یکی از جفت‌ها کلاینتِ واقعیِ Antigravity است. دو لیستی که اسکریپت چاپ کرد، هر کدام جداگانه مرتب شده‌اند، پس «اولی با اولی» لزوماً جفت درست نیست؛ فقط وقتی مرحله‌ی ۲ توکن برگرداند، معلوم می‌شود جفت درست را زده‌ای.</p>
-    <p class="dim"><b>مثال با اسم‌های فرضی (نه کد واقعی):</b> فرض کن لیست شناسه‌ها این دوتاست: «شناسه‌ی الف» و «شناسه‌ی ب»، و لیست سکرت‌ها هم این دوتاست: «سکرت ۱» و «سکرت ۲». پس فقط ۴ ترکیب ممکن است: الف+۱، الف+۲، ب+۱، ب+۲. هر بار یکی را توی مرحله‌ی ۱ می‌زنی و «دریافت توکن» را می‌زنی؛ ترکیب‌هایی که جواب نمی‌دهند ارور می‌دهند و رد می‌شوند. همان ترکیبی که توکن برگرداند، جفت درست است و دیگر لازم نیست بقیه را امتحان کنی. اگر هر ۴ ترکیب را زدی و هیچ‌کدام توکن نداد، یعنی یا سکرت را ناقص کپی کرده‌ای (سکرت دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> است) یا از راه اشتباه استخراج کرده‌ای؛ یک بار دیگر اسکریپت همان راه را بزن و خروجی را با دقت کپی کن.</p>
-    <h3>کد منقضی شد (یا ارور کد نامعتبر آمد)</h3>
-    <p class="dim">کدی که توی آدرس برگشتی است، یک‌بارمصرف است و فقط حدود ۱۰ دقیقه عمر دارد؛ یعنی فقط یک بار می‌شود با آن توکن گرفت و بعد از ۱۰ دقیقه دیگر به درد نمی‌خورد. اگر دیر کردی، یا همان کد را دوبار زدی، این ارور طبیعی است و ربطی به شناسه و سکرت ندارد. راه‌حلش ساده است: دوباره «ورود با گوگل» را بزن تا گوگل یک کد تازه بدهد، این بار همان لحظه کل آدرس را کپی کن و سریع «دریافت توکن» را بزن. نکته: هر بار که «ورود با گوگل» را می‌زنی، فقط همان کدِ آخری معتبر است؛ کدهای قبلی خودبه‌خود باطل می‌شوند.</p>
-    <h3>آدرس برگشتی کد نداشت</h3>
-    <p class="dim">کل نوار آدرس مرورگر را کپی کن، نه فقط بخشی از آن. کد بعد از <span dir="ltr">code=</span> می‌آید.</p>
-    <h3>پوشه‌ی نصب را پیدا نکردی</h3>
-    <p class="dim">برای 9Router دستور <span dir="ltr">where.exe 9router</span> یا <span dir="ltr">npm root -g</span> مسیر نصب را نشان می‌دهد. برای اپ Antigravity، پوشه‌ی نصب معمولاً زیر <span dir="ltr">%LOCALAPPDATA%\Programs\antigravity</span> است.</p>
-    <h3>بعد از Deploy داشبورد مدل‌ها را نشان نداد</h3>
-    <p class="dim">اول مطمئن شو Deploy کامل شده و وضعیتش READY است. بعد پسورد داشبورد را درست وارد کن. اگر باز هم ارور پروژه دیدی، توکن را با همان مراحل دوباره بگیر.</p>
-    <div class="step-nav"><button type="button" class="ghost" data-goto="step2">→ مرحله‌ی قبل</button><button type="button" data-goto="security">مرحله‌ی بعد: امنیت ←</button></div>
-  </div>
-
-  <div class="card screen" id="security">
-    <h2>امنیت</h2>
-    <p class="dim">این راهنما طوری ساخته شده که هیچ رازی از مرورگر تو بیرون نمی‌رود، ولی چند راز هست که خودت باید مثل رمز حسابت ازشان محافظت کنی. اول فرقشان را بشناس:</p>
-    <h3>چه چیزی راز نیست</h3>
-    <p class="dim">شناسه و سکرت مرحله‌ی ۱، اعتبارنامه‌ی عمومیِ خود اپ Antigravity هستند؛ همراه فایل‌های نصب پخش شده‌اند و رمز شخصی تو نیستند. دانستنشان به‌تنهایی به کسی دسترسی به حسابت نمی‌دهد.</p>
-    <h3>چه چیزی راز است و چرا</h3>
-    <ul>
-      <li><b>توکن گوگل (AG_REFRESH_TOKEN):</b> کلید ورود به سهمیه‌ی Antigravity حساب توست؛ هر کس آن را داشته باشد می‌تواند با سهمیه‌ی تو مدل صدا بزند. مثل رمز حسابت نگهش دار.</li>
-      <li><b>کلید Relay (RELAY_API_KEY):</b> هر کس این کلید را داشته باشد می‌تواند از رله‌ی تو استفاده کند و سهمیه‌ات را مصرف کند.</li>
-      <li><b>پسورد داشبورد (DASH_PASSWORD):</b> کلید ورود به صفحه‌ی مدیریت رله‌ی توست.</li>
-    </ul>
-    <h3>کجا نگهشان دار</h3>
-    <ul>
-      <li>فقط توی متغیرهای محیطی (Environment Variables) پروژه‌ی Vercel؛ Vercel آن‌ها را رمزنگاری‌شده نگه می‌دارد. هیچ‌وقت آن‌ها را توی کد، گیت‌هاب، فایل README یا پیام عمومی ننویس.</li>
-      <li>این صفحه هیچ مقداری را ذخیره یا ارسال نمی‌کند؛ همه‌ی کارها فقط توی مرورگر خودت انجام می‌شود. با این حال، بعد از تمام شدن نصب، تب را ببند تا مقادیر از حافظه‌ی موقت مرورگر پاک شوند.</li>
-      <li>حساب گوگلی که برای رله استفاده می‌کنی، بهتر است حساب جدا باشد نه حساب اصلی‌ات؛ این‌طوری اگر روزی رازی لو رفت، فقط همان حساب درگیر است.</li>
-    </ul>
-    <h3>اگر چیزی لو رفت — فوری این سه کار را بکن</h3>
-    <ol>
-      <li>توی حساب گوگلت دسترسی اپ را قطع کن: <span dir="ltr">myaccount.google.com → Security → Third-party access</span> و دسترسی مربوط به Antigravity را حذف کن؛ این کار توکن قبلی را باطل می‌کند.</li>
-      <li>توی همین راهنما یک توکن تازه بگیر و کلید Relay و پسورد داشبورد تازه بساز.</li>
-      <li>مقادیر تازه را توی Vercel جایگزین کن و دوباره Deploy بزن تا مقادیر لو‌رفته دیگر کار نکنند.</li>
-    </ol>
-    <h3>موقع ضبط ویدئو یا اسکرین‌شات</h3>
-    <p class="dim">موقع تدوین، روی توکن، کلید و پسورد را کامل بپوشان؛ حتی چند فریم لو رفتن کافی است تا کسی آن را بردارد. برای ویدئوی آموزشی امن‌تر است که با یک پروژه‌ی آزمایشی و مقادیر یک‌بارمصرف ضبط کنی و بعد از ضبط، آن پروژه را پاک کنی.</p>
-    <div class="step-nav"><button type="button" class="ghost" data-goto="troubleshoot">→ مرحله‌ی قبل</button><span></span></div>
-  </div>
 
   </main>
 </div>
+
 <footer class="site-footer">
   <div class="foot-inner">
     <div>
       <b>⚡ Relay</b> — ابزار متن‌باز <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">KARA AI</a>
-      <div class="dim">کانال: <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">t.me/kara_ai_offer</a> · سورس: <a href="https://github.com/eshghastast/ag-relay" target="_blank" rel="noopener">github.com/eshghastast/ag-relay</a></div>
-      <div class="dim">درباره‌ی پروژه: Relay مدل‌های Antigravity را با حساب گوگل خودت و روی Vercel خودت در دسترس می‌گذارد؛ بدون سرور واسط، بدون اشتراک‌گذاری توکن و کاملاً متن‌باز.</div>
+      <div style="color:var(--text-dim);font-size:13px;margin-top:6px;">کانال: <a href="https://t.me/kara_ai_offer" target="_blank" rel="noopener">t.me/kara_ai_offer</a> · سورس: <a href="https://github.com/eshghastast/ag-relay" target="_blank" rel="noopener">github.com/eshghastast/ag-relay</a></div>
+      <div style="color:var(--text-dim);font-size:13px;margin-top:4px;">درباره‌ی پروژه: Relay مدل‌های Antigravity را با حساب گوگل خودت و روی Vercel خودت در دسترس می‌گذارد؛ بدون سرور واسط، بدون اشتراک‌گذاری توکن و کاملاً متن‌باز.</div>
     </div>
-    <div id="footerLine" class="dim" style="margin-top:8px"></div>
+    <div id="footerLine" style="color:var(--text-dim);font-size:13px;margin-top:8px;align-self:flex-end;"></div>
   </div>
 </footer>
 
