@@ -378,6 +378,11 @@ main { min-width: 0; }
 .note { background: var(--blue-bg); border: 1px solid var(--blue-border); color: #7dd3fc; }
 .danger { background: var(--red-bg); border: 1px solid var(--red-border); color: #fca5a5; }
 
+/* ===== GUIDE SCREENSHOTS ===== */
+figure.guide-shot { margin: 16px 0; }
+figure.guide-shot img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid var(--border); }
+figure.guide-shot figcaption { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-top: 8px; }
+
 /* ===== ROUTE PICKER ===== */
 #routePicker { margin: 20px 0; }
 .pick-label {
@@ -767,6 +772,10 @@ label {
         <li><b>یک حساب Vercel:</b> ساخت حساب رایگان است.</li>
         <li><b>پاورشل ویندوز:</b> برای دستورهای استخراج زیر. نیازی به نصب برنامه‌ی اضافی نیست.</li>
       </ul>
+      <figure class="guide-shot">
+        <img src="assets/terminal-install-9router-mock.png" alt="نمونه نصب 9Router با دستور npm در پاورشل">
+        <figcaption>اگر 9Router را هنوز نصب نکرده‌اید، نصب آن با همین یک دستور در پاورشل انجام می‌شود. مقدار نسخه در تصویر فقط نمونه است.</figcaption>
+      </figure>
       <div class="callout note">
         <span class="callout-icon">💡</span>
         <span class="callout-body">نکته: این راهنما را تا پایان با همان حسابی دنبال کنید که قرار است Relay روی آن کار کند؛ در میانه‌ی راه حساب را تغییر ندهید.</span>
@@ -859,6 +868,10 @@ $ids | Sort-Object -Unique
 # سکرت‌ها را مرتب می‌کند و تکراری‌ها را حذف می‌کند
 $secs | Sort-Object -Unique</code></pre>
         </div>
+        <figure class="guide-shot">
+          <img src="assets/terminal-extraction-antigravity-mock-3x3.png" alt="نمونه خروجی استخراج از Antigravity: سه شناسه و سه سکرت">
+          <figcaption>نمونه خروجی اسکریپت بالا — مقدارها ساختگی‌اند و فقط شکل خروجی را نشان می‌دهند: سه شناسه در بالا و سه سکرت در پایین. هر جفت را یکی‌یکی امتحان کنید.</figcaption>
+        </figure>
         <ol start="4">
           <li>دو لیست مشاهده می‌کنید: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردارید و پایین همین صفحه، در فیلدهای مرحله‌ی ۱، وارد کنید. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کنید (نکته‌ی زیر را بخوانید).</li>
         </ol>
@@ -918,6 +931,10 @@ $ids | Sort-Object -Unique
 # سکرت‌ها را مرتب می‌کند و تکراری‌ها را حذف می‌کند
 $secs | Sort-Object -Unique</code></pre>
         </div>
+        <figure class="guide-shot">
+          <img src="assets/terminal-extraction-9router-mock-3x3.png" alt="نمونه خروجی استخراج از 9Router: سه شناسه و سه سکرت">
+          <figcaption>نمونه خروجی اسکریپت بالا — مقدارها ساختگی‌اند و فقط شکل خروجی را نشان می‌دهند: سه شناسه در بالا و سه سکرت در پایین. هر جفت را یکی‌یکی امتحان کنید.</figcaption>
+        </figure>
         <ol start="4">
           <li>دو لیست مشاهده می‌کنید: یکی شناسه‌ها و یکی سکرت‌ها. یکی از هر لیست را بردارید و پایین همین صفحه، در فیلدهای مرحله‌ی ۱، وارد کنید. اگر جفت اول جواب نداد، ترکیب بعدی را امتحان کنید.</li>
         </ol>
@@ -936,6 +953,11 @@ $secs | Sort-Object -Unique</code></pre>
           • یک دام رایج هم هست: گاهی سکرتی که از فایل درمی‌آید، بلندتر از حد واقعی است، چون دنباله‌اش تکه‌ای از داده‌های اطراف آن در فایل است. سکرت واقعی دقیقاً ۲۸ کاراکتر بعد از <span dir="ltr">GOCSPX-</span> است؛ بقیه‌ی رشته را نادیده بگیرید و فقط همان ۲۸ کاراکتر را وارد کنید.
         </span>
       </div>
+
+      <figure class="guide-shot">
+        <img src="assets/extraction-example.png" alt="خروجی واقعی یک اجرا: سه شناسه و سه سکرت">
+        <figcaption>خروجی واقعی یک اجرا (مقدارها پوشانده شده‌اند): سه شناسه و سه سکرت — یعنی در بدترین حالت ۹ ترکیب. اگر جفت اول جواب نداد، سراغ ترکیب بعدی بروید.</figcaption>
+      </figure>
 
       <div class="callout warn">
         <span class="callout-icon">⚠️</span>
