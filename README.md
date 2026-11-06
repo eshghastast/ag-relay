@@ -32,7 +32,10 @@
 
 ![صفحه‌ی ستاپ — راهنمای قدم‌به‌قدم نصب](assets/setup-guide.png)
 
-۲. دکمه‌ی **Deploy with Vercel** پایین‌تر رو بزن و مقادیر پک رو توی فرم Vercel وارد کن.
+۲. دکمه‌ی زیر رو بزن و مقادیر پک رو توی فرم Vercel وارد کن:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Feshghastast%2Fag-relay&env=AG_REFRESH_TOKEN%2CAG_CLIENT_ID%2CAG_CLIENT_SECRET%2CRELAY_API_KEY%2CDASH_PASSWORD&envDescription=Paste%20the%20values%20from%20the%20Relay%20setup%20page%3A%20your%20Google%20refresh%20token%2C%20the%20Antigravity%20client%20credentials%2C%20and%20the%20generated%20relay%20key%20%2B%20dashboard%20password.&project-name=ag-relay&repository-name=ag-relay)
+
 ۳. داشبورد رو باز کن، پسورد رو بزن، کلید رو ثبت کن و یه مدل رو تست کن. تمام!
 
 داشبورد این شکلیه — سهمیه‌ی هر دو استخر (Gemini و Claude + GPT) و چت داخلی برای تست مدل‌ها:
