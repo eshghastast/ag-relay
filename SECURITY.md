@@ -36,6 +36,13 @@ credentials like account passwords.
   the relay talks to Google through the same internal API the official
   client uses, but from an unofficial client — if Google ever restricts the
   account, only that account is affected.
+- If your main account has Google AI Pro, put the second account in a
+  Google One family group and turn on **Share Google One with family**: the
+  second account inherits the Pro AI benefits, including Antigravity,
+  without a second subscription. The Antigravity weekly cap is shared
+  across the whole family group — the second account draws from the same
+  pool, it does not get a separate cap. Family rules: same country,
+  personal accounts only, 18+ for Antigravity.
 - Keep your deployment's environment variables marked **sensitive** in your
   host's dashboard so their values are never shown back.
 

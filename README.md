@@ -46,7 +46,7 @@
 
 **شرط لازم:** یه اکانت گوگلِ دارای مجوز Antigravity — اکانت **Pro**، یا اکانت رایگانی که ریجنش کشور پشتیبانی‌شده‌ست و تأیید گوگل رو رد کرده. آموزش ساخت اکانت Vercel و تغییر ریجن، قدم‌به‌قدم توی کانال ماست.
 
-**امنیت:** همه‌ی رازها فقط توی متغیرهای محیطی (Environment Variables) پروژه‌ی خودت ذخیره می‌شن، هیچ‌چیز توی کد نیست. توصیه‌ی جدی: Relay رو با یه **اکانت جدا** راه بنداز، نه اکانت اصلیت. جزئیات توی [SECURITY.md](SECURITY.md).
+**امنیت:** همه‌ی رازها فقط توی متغیرهای محیطی (Environment Variables) پروژه‌ی خودت ذخیره می‌شن، هیچ‌چیز توی کد نیست. توصیه‌ی جدی: Relay رو با یه **اکانت جدا** راه بنداز، نه اکانت اصلیت. اگه اکانت اصلیت Pro داره، توی Google One یه گروه خانواده بساز، اکانت دوم رو اضافه کن و «Share Google One with family» رو روشن کن تا اکانت دوم هم به مزایای هوش مصنوعی پرو (از جمله Antigravity) دسترسی پیدا کنه؛ ولی سقف هفتگی Antigravity برای کل خانواده یکی و مشترکه، یعنی اکانت دوم سقف جداگانه نمی‌گیره. جزئیات توی [SECURITY.md](SECURITY.md).
 
 **هدف سرویس:** فقط برای دسترسی به سرویس‌هایی که ایران رو تحریم کردن؛ به هیچ وجه برای دور زدن اینترنت داخلی نیست.
 
@@ -284,6 +284,7 @@ There is no official token counter — heavy agent loops can drain a free accoun
   2FA on both your hosting account and the Google account the relay uses.
 - Recommended: run the relay under a **dedicated** Google account that holds
   the Antigravity license rather than your main account.
+- If your main account has Google AI Pro, you don't need a second Pro subscription: create a Google One family group, add the second account, and turn on **Share Google One with family** — the second account then gets the Pro AI benefits, including Antigravity. Note the Antigravity weekly cap is **shared across the whole family**, not per member: the second account draws from the same pool, it does not get a separate cap.
 - Full notes: [SECURITY.md](SECURITY.md).
 
 ### 🗂️ Layout
